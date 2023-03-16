@@ -1,5 +1,16 @@
 #include "execute.h"
 
+char *strjoin(const char *s1, const char *s2) {
+    size_t len1 = strlen(s1);
+    size_t len2 = strlen(s2);
+    char *result = malloc(len1 + len2 + 1);
+    if (!result) return NULL;
+    memcpy(result, s1, len1);
+    memcpy(result + len1, s2, len2 + 1);
+    return result;
+}
+
+
 
 void ft_pwd_func()
 {
@@ -31,50 +42,21 @@ void ft_echo_func(char **argv) // 이건 -> 연결리스트와 같은 데이터�
     write(1, "\n", flag);
 }
 
-<<<<<<< Updated upstream
-void ft_exit_func()
+
+int main(int argc, char **argv, char **env)
 {
-    // free 하는 함수도 구현해야함. -> 지금은 뭘 해야 할지 모르겠넹..?
-    exit();
-}
+    char    *user = NULL;
+    int     i = 0;
 
-
-
-int main(int argc, char **argv)
-=======
-char	*get_value(char *envp[], char *key)
-{
-	char	*ret;
-	int		flag;
-	int		i;
-	int		j;
-
-	i = 0;
-	ret = 0;
-	while (envp[i])
-	{
-		j = 0;
-		flag = 1;
-		while (envp[i][j] && envp[i][j] != '=')
-		{
-			if (key[j] != envp[i][j])
-			{
-				flag = -1;
-				break ;
-			}
-			j ++;
-		}
-		if (flag != -1)
-			return (cut_value(envp[i], envp));
-		i ++;
-	}
-	return (ret);
-}
-
-
-int main(int argc, char **argv, char **envp)
->>>>>>> Stashed changes
-{
+    /*유저 조회*/
+    while (env[i++])
+    {
+        if (strncmp(env[i], "USER=", 5) == 0) 
+        {
+            user = env[i] + 5;
+            break;
+        }
+    }
     if (argc >= 2)
     {
         if (strncmp(argv[1], "pwd", 3) == 0)
@@ -94,11 +76,15 @@ int main(int argc, char **argv, char **envp)
         {
             setbuf(stdout, NULL);
             int ch;
-            if (!argv[2])
-            {
-                char *temp;
-                temp = get_value(envp, "HOME");
-                ch = chdir(temp);
+            char *home_dir = ".\\home\\";
+            if (!argv[2]) {
+                ch = chdir("/");
+                char *new_dir = strjoin(home_dir, user);
+                printf("new dir : %s\n", new_dir);
+                if (new_dir) {
+                    ch = chdir(new_dir);
+                    free(new_dir);
+                }
             }
             else
                 ch = chdir("C:\\Coding\\42seoul\\minishell_project\\");
