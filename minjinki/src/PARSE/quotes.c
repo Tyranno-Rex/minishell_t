@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:24:44 by minjinki          #+#    #+#             */
-/*   Updated: 2023/03/16 16:34:25 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/03/16 16:49:49 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ t_bool	split_quote(int len, char *start, char *cmd)
 
 	ft_lstadd_back(&(g_glob.tok), malloc_node(len, start));
 	if (*cmd == '\'')
-		end = single_quote();	// check til single quote appears
+		end = single_quote();	// check till single quote appears
 	else if (*cmd == '\"')
 		end = double_quote();	// check till double quote appears
 	return (end + 1);	// return next index of closed quote
@@ -62,3 +62,6 @@ void	deal_quotes(char *cmd)
 		}
 	}
 }
+/*
+** i랑 len이랑 꼬임 >> cmd 스캔 변수랑 split하는 길이 변수 다시 구분하고 확인
+*/
