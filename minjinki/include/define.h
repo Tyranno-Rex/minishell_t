@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 12:30:38 by minjinki          #+#    #+#             */
-/*   Updated: 2023/03/16 14:50:37 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/03/16 17:02:12 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,6 @@
 # define RREDI 62		// >
 # define RRREDI 6262	// >>
 
-typedef int	t_bool;
+typedef int		t_bool;
 
 #endif

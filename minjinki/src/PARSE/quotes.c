@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:24:44 by minjinki          #+#    #+#             */
-/*   Updated: 2023/03/16 16:49:49 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/03/16 17:01:00 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,22 +19,24 @@ t_token	*malloc_node(int len, char *start)
 	new = ft_calloc(1, sizeof(t_token));
 	if (!new)
 	{
-		ft_lstclear(&(g_glob.tok));
-		return (print_error("Fail to allocate memory: g_glob.tok\n"));
+		ft_lstclear(&(g_glob.tok), del_func);	//add del func
+		print_error("Fail to allocate memory: g_glob.tok\n");
+		return (NULL);
 	}
 	new->data = ft_calloc(len + 1, sizeof(char));
 	if (!(new->data))
 	{
 		free(new);
-		ft_lstclear(&(g_glob.tok));
-		return (print_error("Fail to allocate memory: g_glob.tok->data\n"));
+		ft_lstclear(&(g_glob.tok), del_func);	//add del func
+		print_error("Fail to allocate memory: g_glob.tok->data\n");
+		return (NULL);
 	}
 	ft_strlcpy(new->data, start, len + 1);
 	printf("%s\n", new->data);	/*** remove ***/
 	return (new);
 }
 
-t_bool	split_quote(int len, char *start, char *cmd)
+int	split_quote(int len, char *start, char *cmd)
 {
 	int end;	// save index of 2nd quote
 
@@ -64,4 +66,5 @@ void	deal_quotes(char *cmd)
 }
 /*
 ** i랑 len이랑 꼬임 >> cmd 스캔 변수랑 split하는 길이 변수 다시 구분하고 확인
+** libft ft_lst*랑 t_token이랑 호환 x > modify libft lst funcs
 */
