@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 12:20:32 by minjinki          #+#    #+#             */
-/*   Updated: 2023/03/16 14:53:56 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/03/16 16:26:17 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <readline/history.h>
 # include "define.h"
 # include "env.h"
+# include "parse.h"
 # include "structs.h"
 # include "utils.h"
 # include "../src/LIBFT/libft.h"
