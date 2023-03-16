@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 12:35:17 by minjinki          #+#    #+#             */
-/*   Updated: 2023/03/16 14:37:36 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/03/16 14:39:08 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,6 @@ void	print_env(char ***env)
 	printf("\n\n");
 }
 
-/*
-** 초기 세팅이라 exit() 사용
-*/
 t_bool	copy_env(char ***env)
 {
 	int	matrix;
