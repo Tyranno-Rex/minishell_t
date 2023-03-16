@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 12:20:32 by minjinki          #+#    #+#             */
-/*   Updated: 2023/03/16 14:21:23 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/03/16 14:53:56 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 # define MINISHELL_H
 
 # include <stdio.h>
+# include <readline/readline.h>
+# include <readline/history.h>
 # include "define.h"
 # include "env.h"
 # include "structs.h"

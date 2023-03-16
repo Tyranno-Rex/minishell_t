@@ -6,7 +6,7 @@
 #    By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/16 14:12:28 by minjinki          #+#    #+#              #
-#    Updated: 2023/03/16 14:37:58 by minjinki         ###   ########.fr        #
+#    Updated: 2023/03/16 14:54:08 by minjinki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,7 @@ MAIN_DIR	=	src/MAIN/
 MAIN_SRC	=	main
 
 PARSE_DIR	=	src/PARSE/
-PARSE_SRC	=	parse
+PARSE_SRC	=	tokenize
 
 UTILS_DIR	=	src/UTILS/
 UTILS_SRC	=	error\

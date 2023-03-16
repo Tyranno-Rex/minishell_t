@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 12:35:17 by minjinki          #+#    #+#             */
-/*   Updated: 2023/03/16 14:39:08 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/03/16 15:02:36 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ t_bool	copy_env(char ***env)
 			return (print_error("Fail to allocate memory: g_glob.env[i\n"));
 		}
 		ft_strlcpy(g_glob.env[i], (*env)[i], len + 1);
-		printf("%s\n", g_glob.env[i]);
 	}
 	return (TRUE);
 }

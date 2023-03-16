@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 12:30:38 by minjinki          #+#    #+#             */
-/*   Updated: 2023/03/16 14:07:12 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/03/16 14:50:37 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,9 @@
 # define TRUE 1
 # define FALSE 0
 # define ERROR -1
+
+# define SUCCESS 0
+# define FAILURE 1
 
 # define NONE 0
 # define STR 1
