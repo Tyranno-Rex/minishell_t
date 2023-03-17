@@ -12,15 +12,15 @@
 
 #include "../../include/minishell.h"
 
-void	print_env(char ***env)
-{
-	int	i;
+//void	print_env(char ***env)
+//{
+//	int	i;
 
-	i = -1;
-	while ((*env)[++i])
-		printf("%s\n", (*env)[i]);
-	printf("\n\n");
-}
+//	i = -1;
+//	while ((*env)[++i])
+//		printf("%s\n", (*env)[i]);
+//	printf("\n\n");
+//}
 
 t_bool	copy_env(char ***env)
 {
@@ -40,7 +40,7 @@ t_bool	copy_env(char ***env)
 		if (!(g_glob.env[i]))
 		{
 			free_matrix(g_glob.env);
-			return (print_error("Fail to allocate memory: g_glob.env[i\n"));
+			return (print_error("Fail to allocate memory: g_glob.env[i]\n"));
 		}
 		ft_strlcpy(g_glob.env[i], (*env)[i], len + 1);
 	}
