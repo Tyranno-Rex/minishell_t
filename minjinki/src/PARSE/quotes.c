@@ -51,20 +51,23 @@ int	split_quote(int len, char *start, char *cmd)
 void	deal_quotes(char *cmd)
 {
 	int		i;
+	int		last;
 	char	*start;
 
 	i = -1;
+	last = 0;
 	start = cmd;
 	while (cmd[++i])
 	{
 		if (cmd[i] == '\'' || cmd[i] == '\"')
 		{
-			i = split_quote(i, start, cmd + i);
+			i = split_quote(i - last, start, cmd + i);
 			start = cmd + i;
+			last = i;
 		}
 	}
 }
 /*
-** i랑 len이랑 꼬임 >> cmd 스캔 변수랑 split하는 길이 변수 다시 구분하고 확인
+** deal_quot() i랑 split_quote() len이랑 꼬임 >> cmd 스캔 변수랑 split하는 길이 변수 다시 구분하고 확인
 ** libft ft_lst*랑 t_token이랑 호환 x > modify libft lst funcs
 */
