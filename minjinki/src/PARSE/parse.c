@@ -12,8 +12,22 @@
 
 #include "../../include/minishell.h"
 
+t_bool	is_space_only(char *cmd)
+{
+	int i;
+
+	i = -1;
+	while (cmd[++i])
+	{
+		if (!ft_is_space(cmd[i]))
+			return (FALSE);
+	}
+	return (TRUE);
+}
+
 void	parse(char *cmd)
 {
-	// check if cmd is consist of spaces only
+	if (is_space_only(cmd))
+		return ;
 	deal_quotes(cmd);
 }
