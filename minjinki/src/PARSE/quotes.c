@@ -6,18 +6,19 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:24:44 by minjinki          #+#    #+#             */
-/*   Updated: 2023/03/18 19:04:43 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/03/18 19:28:34 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
 /*
-** parsing phase 1: split by quotes
+** parsing phase one
+**	: split by quotes
 ** 
-** e.g. ls -al "hi"'hello' "take me home" TT
-** >> `ls -al `(STR) / `hi`(DOUBLE) / `hello`(SINGLE) \
-**	/ ` `(STR) / `take me home`(DOUBLE) / ` TT`(STR)
+** e.g. ls -al "hi"'hello' "take me home" TT T
+**	>> `ls -al `, `hi`,  `hello`,   ` `, `take me home`, ` TT T`-> data
+**	>>	(STR), (DOUBLE), (SINGLE), (STR), (DOUBLE),      (STR)	-> type
 ** string between ` saved. ` is not saved
 */
 
@@ -53,12 +54,17 @@ t_token	*add_node(int type, int len, char *start)
 	return (new);
 }
 
+/*
+** ft_strnlen()
+**	returns the length before a given char
+**	returns ERROR(-1) if there is no char
+*/
 int	quotes(int type, char *cmd)
 {
 	int	len;
 
 	len = ft_strnlen(cmd + 1, type);
-	if (len == -1)
+	if (len == ERROR)
 	{
 		ft_lstclear(&(g_glob.tok));
 		print_error("syntax error: unclosed quotes\n");
@@ -68,20 +74,34 @@ int	quotes(int type, char *cmd)
 	return (len);
 }
 
+/*
+** split_quote()
+**	first step of tokenization
+** 	split by quotes
+** 
+** if (cmd != quote)
+**	to execute quotes() immediatly
+**	when openning quote appears very next to closing quote.
+** 
+** ERROR: to deal unclosed quote
+** 
+** end == index of closing quote
+** I tried to return end + 1 but it doesn't work well🤔
+*/
 int	split_quote(int len, char *cmd, char *quote)
 {
-	int	end;	// save index of 2nd quote
+	int	end;
 
 	end = 0;
 	if (cmd != quote)
 		ft_lstadd_back(&(g_glob.tok), add_node(STR, len, cmd));
 	if (*quote == SINGLE)
-		end = quotes(SINGLE, quote);	// check till single quote appears
+		end = quotes(SINGLE, quote);
 	else if (*quote == DOUBLE)
-		end = quotes(DOUBLE, quote);	// check till double quote appears
+		end = quotes(DOUBLE, quote);
 	if (end == ERROR)
 		return (ERROR);
-	return (end);	// return index of closed quote
+	return (end);
 }
 
 void	deal_quotes(char *cmd)
@@ -106,7 +126,9 @@ void	deal_quotes(char *cmd)
 			last = i + 1;
 		}
 	}
+	if (start == cmd)
+		ft_lstadd_back(&(g_glob.tok), add_node(STR, i, cmd));
 	if (*start)
 		split_quote(i + 1, start, cmd);
-	ft_lstprint(&(g_glob.tok));
+	ft_lstprint(&(g_glob.tok));	/*** remove ***/
 }
