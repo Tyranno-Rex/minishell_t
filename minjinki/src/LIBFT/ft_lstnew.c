@@ -3,23 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minjinki <minjinki@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 15:48:15 by minjinki          #+#    #+#             */
-/*   Updated: 2022/07/19 18:48:35 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/03/18 14:29:52 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-t_list	*ft_lstnew(void *content)
+t_token	*ft_lstnew(int type, char *s)
 {
-	t_list	*node;
+	t_token	*node;
 
-	node = (t_list *)malloc(sizeof(t_list));
+	node = (t_token *)malloc(sizeof(t_token));
 	if (!node)
 		return (NULL);
-	node->content = content;
+	node->type = type;
+	node->data = s;
 	node->next = NULL;
 	return (node);
 }

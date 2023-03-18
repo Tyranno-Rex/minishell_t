@@ -3,25 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstclear.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minjinki <minjinki@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 16:25:57 by minjinki          #+#    #+#             */
-/*   Updated: 2022/07/19 18:39:25 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/03/18 14:29:15 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstclear(t_list **lst, void (*del)(void *))
+void	ft_lstclear(t_token **lst)
 {
-	t_list	*tmp;
+	t_token	*tmp;
 
 	if (!lst)
 		return ;
 	while (*lst)
 	{
 		tmp = (*lst)->next;
-		ft_lstdelone(*lst, del);
+		ft_lstdelone(*lst);
 		*lst = tmp;
 	}
 }
