@@ -6,11 +6,20 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:24:44 by minjinki          #+#    #+#             */
-/*   Updated: 2023/03/18 18:51:32 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/03/18 19:04:43 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+/*
+** parsing phase 1: split by quotes
+** 
+** e.g. ls -al "hi"'hello' "take me home" TT
+** >> `ls -al `(STR) / `hi`(DOUBLE) / `hello`(SINGLE) \
+**	/ ` `(STR) / `take me home`(DOUBLE) / ` TT`(STR)
+** string between ` saved. ` is not saved
+*/
 
 t_token	*malloc_node(int len)
 {
@@ -41,8 +50,6 @@ t_token	*add_node(int type, int len, char *start)
 	new = malloc_node(len);
 	new->type = type;
 	ft_strlcpy(new->data, start, len + 1);
-	printf("type: %d\n", new->type);
-	printf("data: %s\n\n", new->data); /*** remove ***/
 	return (new);
 }
 
@@ -101,8 +108,5 @@ void	deal_quotes(char *cmd)
 	}
 	if (*start)
 		split_quote(i + 1, start, cmd);
+	ft_lstprint(&(g_glob.tok));
 }
-/*
-** deal_quot() i랑 split_quote() len이랑 꼬임 >> cmd 스캔 변수랑 split하는 길이 변수 다시 구분하고 확인
-** libft ft_lst*랑 t_token이랑 호환 x > modify libft lst funcs
-*/
