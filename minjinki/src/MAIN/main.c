@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 12:20:02 by minjinki          #+#    #+#             */
-/*   Updated: 2023/03/16 15:52:20 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/03/18 19:20:00 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	minishell(void)
 		cmd = readline(" minishell_$ ");
 		add_history(cmd);
 		parse(cmd);
-		free(cmd);
+		free_cmd(cmd);
 	}
 }
 

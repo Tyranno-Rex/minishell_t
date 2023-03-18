@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 14:00:15 by minjinki          #+#    #+#             */
-/*   Updated: 2023/03/16 14:10:47 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/03/18 19:20:32 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,12 @@ void	free_matrix(char **matrix)
 	}
 	free(matrix);
 	matrix = NULL;
+}
+
+void	free_cmd(char *cmd)
+{
+	free(cmd);
+	ft_lstclear(&(g_glob.tok));
 }
 
 void	free_all(void)
