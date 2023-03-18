@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 15:25:24 by minjinki          #+#    #+#             */
-/*   Updated: 2023/03/18 14:30:46 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/03/18 18:16:51 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,11 @@ int		ft_toupper(int c);
 size_t	ft_strlcat(char *dst, const char *src, size_t destsize);
 size_t	ft_strlcpy(char *dst, const char *src, size_t destsize);
 size_t	ft_strlen(const char *s);
+size_t	ft_strnlen(char *s, int c);
 
 t_token	*ft_lstlast(t_token *lst);
 t_token	*ft_lstmap(t_token *lst, void *(*f)(void *));
-t_token	*ft_lstnew(void *content);
+t_token	*ft_lstnew(int type, char *s);
 
 void	ft_bzero(void *s, size_t n);
 void	*ft_calloc(size_t count, size_t size);

@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 16:41:31 by minjinki          #+#    #+#             */
-/*   Updated: 2023/03/18 14:29:42 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/03/18 18:22:49 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ t_token	*ft_lstmap(t_token *lst, void *(*f)(void *))
 	if (!lst || !f)
 		return (NULL);
 	tmp = f(lst->data);
-	head = ft_lstnew(tmp);
+	head = ft_lstnew(lst->type, tmp);
 	if (!head)
 		return (ft_free_node(head, tmp));
 	cur = head;
@@ -36,7 +36,7 @@ t_token	*ft_lstmap(t_token *lst, void *(*f)(void *))
 	{
 		lst = lst->next;
 		tmp = f(lst->data);
-		cur->next = ft_lstnew(tmp);
+		cur->next = ft_lstnew(lst->type, tmp);
 		if (!cur->next)
 			return (ft_free_node(head, tmp));
 		cur = cur->next;
