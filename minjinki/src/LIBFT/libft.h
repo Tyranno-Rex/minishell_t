@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 15:25:24 by minjinki          #+#    #+#             */
-/*   Updated: 2023/03/18 19:02:33 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/03/18 19:41:02 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,6 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include "../../include/structs.h"
-
-# define TRUE 1
-# define FALSE 0
 
 char	*ft_itoa(int n);
 char	**ft_split(char const *s, char c);
