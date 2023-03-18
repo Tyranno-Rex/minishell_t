@@ -6,7 +6,7 @@
 #    By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/13 17:47:48 by minjinki          #+#    #+#              #
-#    Updated: 2023/03/18 18:17:01 by minjinki         ###   ########.fr        #
+#    Updated: 2023/03/18 19:02:47 by minjinki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,6 +56,7 @@ SRCS		=\
 			ft_lstlast.c\
 			ft_lstmap.c\
 			ft_lstnew.c\
+			ft_lstprint.c\
 			ft_lstsize.c
 
 HDRS	= ./libft.h
