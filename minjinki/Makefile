@@ -6,7 +6,7 @@
 #    By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/16 14:12:28 by minjinki          #+#    #+#              #
-#    Updated: 2023/03/16 16:52:58 by minjinki         ###   ########.fr        #
+#    Updated: 2023/03/19 13:51:30 by minjinki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,8 @@ MAIN_SRC	=	main
 
 PARSE_DIR	=	src/PARSE/
 PARSE_SRC	=	parse\
-				quotes
+				quotes\
+				spaces
 
 UTILS_DIR	=	src/UTILS/
 UTILS_SRC	=	error\
