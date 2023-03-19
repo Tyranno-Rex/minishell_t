@@ -4,7 +4,8 @@ void ft_pwd_func()
 {
     char *now_dir;
     now_dir = getcwd(NULL, 0);
-    write(1, now_dir, strlen(now_dir)); // strlen -> ft_strlen 교체
+    // strlen -> ft_strlen 교체
+    write(1, now_dir, strlen(now_dir)); 
     free(now_dir);
 }
 
@@ -41,44 +42,26 @@ void ft_echo_func(char **argv) // 이건 -> 연결리스트와 같은 데이터�
 void ft_cd_func(char **argv, char **env)
 {
     int ch;
-    char *user_id;
-    char *home_dir = ".\\home\\";
+    char *home_dir;
 
-    if (!argv[2]) 
+        
+    if (!argv[2])
     {
-        ch = chdir("/");
-        user_id = ft_get_userid(env);
-        char *new_dir = strjoin(home_dir, user_id);
-        printf("new dir : %s\n", new_dir);
-        if (new_dir) 
-        {
-            ch = chdir(new_dir);
-            free(new_dir);
-        }
-    }
-    else if (strncmp(argv[2], "..", 2))
-    {
-        char *now_dir;
-        now_dir = getcwd(NULL, 0);
-        printf("now_dir :  %s", now_dir);
-    }
+        home_dir = getenv("HOME");
+        ch = chdir(home_dir);
+    }    
+    path = find_path(argv, env);
+    // else if (strncmp(argv[2], "..", 2))
+    // {
+    //     char *now_dir;
+    //     now_dir = getcwd(NULL, 0);
+    //     printf("now_dir :  %s", now_dir);
+    // }
 }
-
-
-void ft_export_func(char **argv, t_data data)
-{
-
-    data.msg = 
-
-}
-
-
-
 
 int main(int argc, char **argv, char **env)
 {
     int     i = 0;
-    t_data  export_data;
 
     if (argc >= 2)
     {
@@ -105,16 +88,16 @@ int main(int argc, char **argv, char **env)
         {
             setbuf(stdout, NULL);
             ft_cd_func(argv, env);
-            // printf("cd command execute :");
-            // ft_pwd_func();
-            // if( ch == 0 ) 
-            //     printf("\nChange directory\n") ; // 디렉토리 이동 성공
-            // else 
-            //     printf("\nFailed change directory!\n") ; // 디렉토리 이동 실패 
+            printf("cd command execute :");
+            ft_pwd_func();
+            if( ch == 0 ) 
+                printf("\nChange directory\n") ; // 디렉토리 이동 성공
+            else 
+                printf("\nFailed change directory!\n") ; // 디렉토리 이동 실패 
         }
-        else if (strncmp(argv[1], "export", 6) == 0)
-        {
-            ft_export_func(argv, export_data);
-        }
+        // else if (strncmp(argv[1], "export", 6) == 0)
+        // {
+        //     ft_export_func(argv, export_data);
+        // }
     }
 }

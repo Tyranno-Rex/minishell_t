@@ -6,8 +6,3 @@
 char *strjoin(const char *s1, const char *s2);
 char *ft_get_userid(char **env);
 
-typedef struct s_data
-{
-    char    *msg;
-    t_data  *next;
-}  t_data;
