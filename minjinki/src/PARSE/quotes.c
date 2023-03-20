@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:24:44 by minjinki          #+#    #+#             */
-/*   Updated: 2023/03/20 18:36:14 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/03/20 18:39:22 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,10 @@
 ** string between ` saved. ` is not saved
 */
 
-t_token	*malloc_node(int len)
+t_token	*malloc_node(void)
 {
 	t_token	*new;
 
-	(void)len;
 	new = ft_calloc(1, sizeof(t_token));
 	if (!new)
 	{
@@ -34,14 +33,6 @@ t_token	*malloc_node(int len)
 		print_error("Fail to allocate memory: g_glob.tok\n");
 		return (NULL);
 	}
-	// new->data = ft_calloc(len + 1, sizeof(char));
-	// if (!(new->data))
-	// {
-	// 	free(new);
-	// 	ft_lstclear(&(g_glob.tok));
-	// 	print_error("Fail to allocate memory: g_glob.tok->data\n");
-	// 	return (NULL);
-	// }
 	return (new);
 }
 
@@ -49,7 +40,7 @@ t_token	*add_node(int type, int len, char *start)
 {
 	t_token	*new;
 
-	new = malloc_node(len);
+	new = malloc_node();
 	new->type = type;
 	new->data = ft_strndup(start, len);
 	if (!(new->data))
@@ -57,7 +48,6 @@ t_token	*add_node(int type, int len, char *start)
 		print_error("Fail to allocate memory: g_glob.tok->data\n");
 		return (NULL);
 	}
-	//ft_strlcpy(new->data, start, len + 1);
 	return (new);
 }
 
