@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 12:20:56 by minjinki          #+#    #+#             */
-/*   Updated: 2023/03/20 18:00:42 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/03/20 18:35:51 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,5 @@ void	parse(char *cmd)
 	if (is_space_only(cmd))
 		return ;
 	deal_quotes(cmd);
-	deal_spaces();
+	//deal_spaces(cmd);
 }
