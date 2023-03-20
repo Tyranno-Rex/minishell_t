@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 12:26:40 by minjinki          #+#    #+#             */
-/*   Updated: 2023/03/18 13:18:53 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/03/20 17:57:47 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef struct s_token
 typedef struct s_glob
 {
 	char	**env;
+	char	*cmd;
 	t_token	*tok;
 }	t_glob;
 

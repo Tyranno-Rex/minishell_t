@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 12:20:02 by minjinki          #+#    #+#             */
-/*   Updated: 2023/03/20 17:11:12 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/03/20 17:58:17 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,13 @@ void	print_pwd(void)
 
 void	minishell(void)
 {
-	char	*cmd;
-	int	i = 3;
-
-	while (i--)
+	while (TRUE)
 	{
 		print_pwd();
-		cmd = readline(" minishell_$ ");
-		add_history(cmd);
-		parse(cmd);
-		free_cmd(cmd);
+		g_glob.cmd = readline(" minishell_$ ");
+		add_history(g_glob.cmd);
+		parse(g_glob.cmd);
+		free_cmd(g_glob.cmd);
 	}
 }
 
