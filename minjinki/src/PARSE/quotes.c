@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:24:44 by minjinki          #+#    #+#             */
-/*   Updated: 2023/03/20 18:39:22 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/03/20 18:42:51 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ t_token	*malloc_node(void)
 	if (!new)
 	{
 		ft_lstclear(&(g_glob.tok));
-		print_error("Fail to allocate memory: g_glob.tok\n");
+		print_error("Fail to allocate memory: t_token\n");
 		return (NULL);
 	}
 	return (new);
@@ -45,7 +45,7 @@ t_token	*add_node(int type, int len, char *start)
 	new->data = ft_strndup(start, len);
 	if (!(new->data))
 	{
-		print_error("Fail to allocate memory: g_glob.tok->data\n");
+		print_error("Fail to allocate memory: t_token.data\n");
 		return (NULL);
 	}
 	return (new);
