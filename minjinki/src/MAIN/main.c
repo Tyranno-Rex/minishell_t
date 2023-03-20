@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 12:20:02 by minjinki          #+#    #+#             */
-/*   Updated: 2023/03/18 19:20:00 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/03/20 17:11:12 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,12 @@ void	print_pwd(void)
 	free(pwd);
 }
 
-int	minishell(void)
+void	minishell(void)
 {
 	char	*cmd;
+	int	i = 3;
 
-	while (TRUE)
+	while (i--)
 	{
 		print_pwd();
 		cmd = readline(" minishell_$ ");
@@ -41,7 +42,8 @@ int	main(int ac, char **av, char **env)
 	(void)av;
 	if (ac != 1)
 		exit_with_code("usage: ./minishell\n", 126);
-	copy_env(&env);
+	init_env(&env);
 	minishell();
 	free_all();
+	return (SUCCESS);
 }

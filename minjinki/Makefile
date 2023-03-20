@@ -6,12 +6,12 @@
 #    By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/16 14:12:28 by minjinki          #+#    #+#              #
-#    Updated: 2023/03/19 13:51:30 by minjinki         ###   ########.fr        #
+#    Updated: 2023/03/20 17:08:34 by minjinki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC			=	cc
-CFLAGS		=	-Wall -Wextra -Werror
+CFLAGS		=	-g -Wall -Wextra -Werror
 RM			=	rm -f
 AR			=	ar
 ARFLAGS		=	src
@@ -24,7 +24,8 @@ RL_LIB		=	-lreadline -L${HOME}/.brew/opt/readline/lib
 RL_INC		=	-I${HOME}/.brew/opt/readline/include
 
 ENV_DIR		=	src/ENV/
-ENV_SRC		=	init_env
+ENV_SRC		=	init_env\
+				parse_env
 
 MAIN_DIR	=	src/MAIN/
 MAIN_SRC	=	main
@@ -36,7 +37,8 @@ PARSE_SRC	=	parse\
 
 UTILS_DIR	=	src/UTILS/
 UTILS_SRC	=	error\
-				free
+				free\
+				linked_list
 
 SRCS		=	$(addprefix $(ENV_DIR), $(addsuffix .c, $(ENV_SRC)))
 SRCS		+=	$(addprefix $(MAIN_DIR), $(addsuffix .c, $(MAIN_SRC)))

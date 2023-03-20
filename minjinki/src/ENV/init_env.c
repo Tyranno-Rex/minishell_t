@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 12:35:17 by minjinki          #+#    #+#             */
-/*   Updated: 2023/03/16 15:02:36 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/03/20 17:04:27 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,5 +44,13 @@ t_bool	copy_env(char ***env)
 		}
 		ft_strlcpy(g_glob.env[i], (*env)[i], len + 1);
 	}
+	return (TRUE);
+}
+
+t_bool	init_env(char ***env)
+{
+	if (!copy_env(env))
+		return (FALSE);
+	//parse_env();
 	return (TRUE);
 }

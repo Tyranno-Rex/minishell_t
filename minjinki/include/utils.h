@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 12:22:34 by minjinki          #+#    #+#             */
-/*   Updated: 2023/03/18 19:20:52 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/03/20 17:03:26 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,9 @@ t_bool	print_error(char *s);
 void	free_all(void);
 void	free_cmd(char *cmd);
 void	free_matrix(char **matrix);
+
+/*
+** linked_list.c
+*/
 
 #endif
