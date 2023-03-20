@@ -6,7 +6,7 @@
 #    By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/13 17:47:48 by minjinki          #+#    #+#              #
-#    Updated: 2023/03/18 19:02:47 by minjinki         ###   ########.fr        #
+#    Updated: 2023/03/20 18:37:25 by minjinki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,6 +34,7 @@ SRCS		=\
 			ft_split.c\
 			ft_strchr.c\
 			ft_strdup.c\
+			ft_strndup.c\
 			ft_striteri.c\
 			ft_strjoin.c\
 			ft_strlcat.c\
