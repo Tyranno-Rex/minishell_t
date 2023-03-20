@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/19 13:49:31 by minjinki          #+#    #+#             */
-/*   Updated: 2023/03/20 18:46:53 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/03/20 18:47:43 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ t_bool	split_by_space(t_token *pre, t_token *cur)
 	new = malloc_node();
 	if (!new)
 		return (FALSE);
+	new->type = STR;
 	matrix = ft_split(cur->data, ' ');
 	if (!matrix)
 		return (print_error("Fail to allocate memory: ft_split()\n"));
