@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 12:20:56 by minjinki          #+#    #+#             */
-/*   Updated: 2023/03/20 17:56:59 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/03/20 18:00:42 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 t_bool	is_space_only(char *cmd)
 {
-	int i;
+	int	i;
 
 	i = -1;
 	while (cmd[++i])
