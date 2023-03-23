@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:24:44 by minjinki          #+#    #+#             */
-/*   Updated: 2023/03/20 18:42:51 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/03/23 14:57:03 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,5 +127,4 @@ void	deal_quotes(char *cmd)
 		ft_lstadd_back(&(g_glob.tok), add_node(STR, i, cmd));
 	if (*start)
 		split_quote(i + 1, start, cmd);
-	ft_lstprint(&(g_glob.tok));	/*** remove ***/
 }

@@ -6,63 +6,86 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/19 13:49:31 by minjinki          #+#    #+#             */
-/*   Updated: 2023/03/23 12:26:30 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/03/23 15:12:16 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-t_bool	split_by_space(t_token *pre, t_token *cur)
+t_bool	free_lst(t_token **tmp)
 {
-	int		i;
-	char	*matrix;
+	ft_lstclear(tmp);
+	ft_lstclear(&(g_glob.tok));
+	return (print_error("Fail to allocate memory: split_by_space()\n"));
+}
+
+t_bool	split_by_space(t_token **tmp, t_token *cur)
+{
+	int		start;
+	int		len;
+	char	*s;
 	t_token	*new;
 
-	new = malloc_node();
-	if (!new)
-		return (FALSE);
-	new->type = STR;
-	matrix = ft_split(cur->data, ' ');
-	if (!matrix)
-		return (print_error("Fail to allocate memory: ft_split()\n"));
-	i = -1;
-	while (matrix[++i])
+	start = -1;
+	while (cur->data[++start])
 	{
-		new->data = ft_strdup(matrix[i]);
-		// ft_lstinsert(pre, new, cur);
-		free(matrix[i]);
+		while (cur->data[start] && ft_is_space(cur->data[start]))
+			start++;
+		if (!(cur->data[start]))
+			break ;
+		len = ft_strnlen(&(cur->data[start]), ' ');
+		s = ft_strndup(&(cur->data[start]), len);
+		if (!s)
+			return (free_lst(tmp));
+		new = ft_lstnew(STR, s);
+		if (!new)
+			return (free_lst(tmp));
+		ft_lstadd_back(tmp, new);
+		start += len;
 	}
 	return (TRUE);
 }
 
-void	is_blank(t_token *pre, t_token *cur)
+t_bool	add_quotes(t_token **tmp, t_token *cur)
 {
-	if (is_space_only(cur->data))
+	char	*s;
+	t_token	*new;
+
+	new = malloc_node();
+	if (!new)
 	{
-		pre->next = cur->next;
-		ft_lstdelone(cur);
-		cur = pre->next;
-		return (TRUE);
+		ft_lstclear(tmp);
+		return (FALSE);
 	}
-	return (FALSE);
+	new->type = cur->type;
+	s = ft_strdup(cur->data);
+	if (!s)
+		return (free_lst(tmp));
+	new->data = s;
+	ft_lstadd_back(tmp, new);
+	return (TRUE);
 }
 
-void	deal_spaces(char *cmd)
+void	deal_spaces(void)
 {
 	t_token	*cur;
-	t_token	*pre;
+	t_token	*tmp;
 
-	pre = NULL;
+	tmp = NULL;
 	cur = g_glob.tok;
 	while (cur)
 	{
 		if (cur->type == STR)
 		{
-			if (is_blank(pre, cur))
-				continue ;
-			split_by_space(pre, cur);
+			split_by_space(&tmp, cur);
 		}
-		pre = cur;
+		else
+		{
+			if (!add_quotes(&tmp, cur))
+				return ;
+		}
 		cur = cur->next;
 	}
+	ft_lstclear(&(g_glob.tok));
+	g_glob.tok = tmp;
 }
