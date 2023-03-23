@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 16:16:58 by minjinki          #+#    #+#             */
-/*   Updated: 2023/03/23 19:14:56 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/03/23 19:27:08 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,12 @@
 void	env_lstprint(void)
 {
 	t_env	*cur;
-	t_val	*val;
 
 	cur = g_glob.env;
 	while (cur)
 	{
 		printf("key: %s\n", cur->key);
-		val = cur->val;
-		while (val)
-		{
-			printf("val: %s\n", val->val);
-			val = val->next;
-		}
+		printf("val: %s\n", cur->val);
 		printf("--------------------------------------\n");
 		cur = cur->next;
 	}
@@ -51,7 +45,7 @@ void	env_lstadd_back(t_env **lst, t_env *new)
 		env_lstlast(*lst)->next = new;
 }
 
-t_env	*env_lstnew(char *key)
+t_env	*env_lstnew(char *key, char *value)
 {
 	t_env	*new;
 
@@ -59,6 +53,7 @@ t_env	*env_lstnew(char *key)
 	if (!new)
 		return (NULL);
 	new->key = key;
+	new->val = value;
 	return (new);
 }
 
@@ -72,7 +67,7 @@ t_bool	env_lstclear(t_env **lst)
 	{
 		tmp = (*lst)->next;
 		free((*lst)->key);
-		val_lstclear(&((*lst)->val));
+		free((*lst)->val);
 	}
 	return (FALSE);
 }

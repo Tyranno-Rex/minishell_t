@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 12:26:40 by minjinki          #+#    #+#             */
-/*   Updated: 2023/03/23 17:55:06 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/03/23 19:24:33 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,10 @@ typedef struct s_token
 /*
 ** linked list for parse env
 */
-typedef struct s_val
-{
-	char			*val;
-	struct s_val	*next;
-}	t_val;
-
 typedef struct s_env
 {
 	char			*key;
-	t_val			*val;
+	char			*val;
 	struct s_env	*next;
 }	t_env;
 
