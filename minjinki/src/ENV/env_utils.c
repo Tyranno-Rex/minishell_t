@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 16:16:58 by minjinki          #+#    #+#             */
-/*   Updated: 2023/03/23 16:42:56 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/03/23 19:14:56 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,19 @@
 void	env_lstprint(void)
 {
 	t_env	*cur;
+	t_val	*val;
 
 	cur = g_glob.env;
 	while (cur)
 	{
 		printf("key: %s\n", cur->key);
-		for (int i = 0; (cur->val)[i]; i++)
-			printf("val: %s\n", (cur->val)[i]);
+		val = cur->val;
+		while (val)
+		{
+			printf("val: %s\n", val->val);
+			val = val->next;
+		}
+		printf("--------------------------------------\n");
 		cur = cur->next;
 	}
 }
@@ -45,7 +51,7 @@ void	env_lstadd_back(t_env **lst, t_env *new)
 		env_lstlast(*lst)->next = new;
 }
 
-t_env	*env_lstnew(char *key, char **val)
+t_env	*env_lstnew(char *key)
 {
 	t_env	*new;
 
@@ -53,21 +59,20 @@ t_env	*env_lstnew(char *key, char **val)
 	if (!new)
 		return (NULL);
 	new->key = key;
-	new->val = val;
-	new->next = NULL;
 	return (new);
 }
 
-void	env_lstclear(t_env **lst)
+t_bool	env_lstclear(t_env **lst)
 {
 	t_env	*tmp;
 
 	if (!lst)
-		return ;
+		return (TRUE);
 	while (*lst)
 	{
 		tmp = (*lst)->next;
 		free((*lst)->key);
-		free_matrix((*lst)->val);
+		val_lstclear(&((*lst)->val));
 	}
+	return (FALSE);
 }

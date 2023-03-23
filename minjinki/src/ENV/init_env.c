@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 12:35:17 by minjinki          #+#    #+#             */
-/*   Updated: 2023/03/23 16:47:58 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/03/23 19:13:40 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ t_bool	init_env(char ***env)
 {
 	if (!copy_env(env))
 		return (FALSE);
-	parse_env(&(g_glob.env_ori));
+	if (!parse_env(&(g_glob.env_ori)))
+		return (FALSE);
 	return (TRUE);
 }
