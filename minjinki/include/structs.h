@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 12:26:40 by minjinki          #+#    #+#             */
-/*   Updated: 2023/03/20 17:57:47 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/03/23 15:17:03 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include "define.h"
 
 /*
-** linked list: for tokenize
+** linked list for tokenize
 */
 typedef struct s_token
 {
@@ -24,6 +24,16 @@ typedef struct s_token
 	char			*data;
 	struct s_token	*next;
 }	t_token;
+
+/*
+** linked list for parse env
+*/
+typedef struct s_env
+{
+	char			*key;
+	char			**val;
+	struct s_env	*next;
+}	t_env;
 
 /*
 ** global variable
