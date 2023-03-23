@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/19 13:49:31 by minjinki          #+#    #+#             */
-/*   Updated: 2023/03/20 18:47:43 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/03/23 12:26:30 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,18 @@ t_bool	split_by_space(t_token *pre, t_token *cur)
 	return (TRUE);
 }
 
+void	is_blank(t_token *pre, t_token *cur)
+{
+	if (is_space_only(cur->data))
+	{
+		pre->next = cur->next;
+		ft_lstdelone(cur);
+		cur = pre->next;
+		return (TRUE);
+	}
+	return (FALSE);
+}
+
 void	deal_spaces(char *cmd)
 {
 	t_token	*cur;
@@ -46,6 +58,8 @@ void	deal_spaces(char *cmd)
 	{
 		if (cur->type == STR)
 		{
+			if (is_blank(pre, cur))
+				continue ;
 			split_by_space(pre, cur);
 		}
 		pre = cur;
