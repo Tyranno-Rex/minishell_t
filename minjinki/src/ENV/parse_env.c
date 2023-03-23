@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 16:57:08 by minjinki          #+#    #+#             */
-/*   Updated: 2023/03/23 19:19:05 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/03/23 19:20:52 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ t_bool	env_list(char *k, char *v)
 	key = ft_strdup(k);
 	if (!key)
 		return (FALSE);
-	if (ft_strcmp("PATH", key))
+	if (!ft_strcmp("PATH", key))
 		parse_path(key, v);
 	else
 	{
