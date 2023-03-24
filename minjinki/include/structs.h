@@ -64,7 +64,6 @@ typedef struct s_rdata
 	char	*av;
 }	t_rdata;
 
-
 typedef struct s_redi
 {
 	t_rdata			*rdata;
