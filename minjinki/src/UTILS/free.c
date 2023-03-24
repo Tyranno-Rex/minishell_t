@@ -28,13 +28,20 @@ void	free_matrix(char **matrix)
 
 void	free_cmd(char *cmd)
 {
-	free(cmd);
-	ft_lstclear(&(g_glob.tok));
+	if (cmd)
+		free(cmd);
+	if (&(g_glob.tok))
+		ft_lstclear(&(g_glob.tok));
 }
 
 void	free_all(void)
 {
-	free_cmd(g_glob.cmd);
-	free_matrix(g_glob.env_ori);
-	free_matrix(g_glob.path);
+	if (g_glob.cmd)
+		free_cmd(g_glob.cmd);
+	if (g_glob.env_ori)
+		free_matrix(g_glob.env_ori);
+	if (g_glob.path)
+		free_matrix(g_glob.path);
+	if (g_glob.env)
+		env_lstclear(g_glob.env);
 }
