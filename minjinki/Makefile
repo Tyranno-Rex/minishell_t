@@ -34,8 +34,8 @@ MAIN_SRC	=	main
 
 PARSE_DIR	=	src/PARSE/
 PARSE_SRC	=	parse\
-				quotes\
-				spaces
+				t_quotes\
+				t_spaces
 
 UTILS_DIR	=	src/UTILS/
 UTILS_SRC	=	error\
