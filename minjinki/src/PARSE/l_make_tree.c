@@ -12,6 +12,14 @@
 
 #include "../../include/minishell.h"
 
+t_bool	add_nodes()
+{
+	//cmd -> scmd && redi func
+	//pipe -> exec cmd func in pipe
+}
+
 t_bool	make_ast_tree()
 {
+	//make_root();
+	//add_nodes();
 }

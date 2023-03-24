@@ -73,6 +73,6 @@ t_bool	parse_env(char ***env)
 	}
 	if (!parse_path())
 		return (FALSE);
-	env_lstprint();
+	env_lstprint(); /*** remove ***/
 	return (TRUE);
 }
