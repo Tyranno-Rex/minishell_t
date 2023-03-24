@@ -39,8 +39,7 @@ PARSE_SRC	=	parse\
 
 UTILS_DIR	=	src/UTILS/
 UTILS_SRC	=	error\
-				free\
-				linked_list
+				free
 
 SRCS		=	$(addprefix $(ENV_DIR), $(addsuffix .c, $(ENV_SRC)))
 SRCS		+=	$(addprefix $(MAIN_DIR), $(addsuffix .c, $(MAIN_SRC)))
