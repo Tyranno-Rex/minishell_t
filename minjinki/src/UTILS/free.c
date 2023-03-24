@@ -36,4 +36,5 @@ void	free_all(void)
 {
 	free_cmd(g_glob.cmd);
 	free_matrix(g_glob.env_ori);
+	free_matrix(g_glob.path);
 }
