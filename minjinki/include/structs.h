@@ -47,4 +47,49 @@ typedef struct s_glob
 	char	**path;
 }	t_glob;
 
+/*
+** AST tree
+*/
+typedef struct s_scmd;
+{
+	char	*ori;
+	char	*scmd;
+	char	*op;
+	char	**av;
+}	t_scmd;
+
+typedef struct s_rdata
+{
+	char	*redi;
+	char	*av;
+}	t_rdata;
+
+
+typedef struct s_redi
+{
+	t_rdata			*rdata;
+	struct t_redi	*redi;
+};
+
+typedef struct s_cmd
+{
+	t_scmd	*scmd;
+	t_redi	*redi;
+}	t_cmd;
+
+typedef struct s_pipe
+{
+	t_cmd			*cmd;
+	int				fd[2];
+	struct s_pipe	*pipe;
+}	t_pipe;
+
+typedef struct s_tree
+{
+	int		is_here;
+	char	*heredoc;
+	t_cmd	*cmd;
+	t_pipe	*pipe;
+}	t_tree;
+
 #endif
