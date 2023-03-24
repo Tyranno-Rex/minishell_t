@@ -12,6 +12,17 @@
 
 #include "../../include/minishell.h"
 
+t_bool	parse_path(void)
+{
+	char	**path;
+
+	path = ft_split(get_env("PATH"), ':');
+	if (!path)
+		return (print_error("Fail to allocate memory: parse_path\n"));
+	g_glob.path = path;
+	return (TRUE);
+}
+
 t_bool	make_envnode(char *key, char *val)
 {
 	t_env	*new;
@@ -60,6 +71,8 @@ t_bool	parse_env(char ***env)
 		}
 		free_matrix(kv);
 	}
+	if (!parse_path())
+		return (FALSE);
 	env_lstprint();
 	return (TRUE);
 }

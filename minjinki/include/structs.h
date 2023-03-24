@@ -44,6 +44,7 @@ typedef struct s_glob
 	char	*cmd;
 	t_token	*tok;
 	t_env	*env;
+	char	**path;
 }	t_glob;
 
 #endif

@@ -25,6 +25,7 @@ RL_INC		=	-I${HOME}/.brew/opt/readline/include
 
 ENV_DIR		=	src/ENV/
 ENV_SRC		=	env_utils\
+				env_utils2\
 				init_env\
 				parse_env
 
