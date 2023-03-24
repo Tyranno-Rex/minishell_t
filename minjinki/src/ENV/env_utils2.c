@@ -12,7 +12,7 @@
 
 #include "../../include/minishell.h"
 
-t_env	*search_key(char *key)
+t_env	*env_search_key(char *key)
 {
 	t_env	*cur;
 
