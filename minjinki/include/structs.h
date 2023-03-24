@@ -16,7 +16,7 @@
 # include "define.h"
 
 /*
-** linked list for tokenize
+** linked list for tokenization
 */
 typedef struct s_token
 {
