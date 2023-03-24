@@ -22,13 +22,13 @@ void	parse(char *cmd);
 t_bool	is_space_only(char *cmd);
 
 /*
-** quotes.c
+** t_quotes.c
 */
 void	deal_quotes(char *cmd);
 t_token	*malloc_node(void);
 
 /*
-** spaces.c
+** t_spaces.c
 */
 void	deal_spaces(void);
 
