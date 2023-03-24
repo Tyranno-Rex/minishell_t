@@ -31,5 +31,7 @@ void	parse(char *cmd)
 		return ;
 	deal_quotes(cmd);
 	deal_spaces();
+	//deal_pipe_n_redi();
+	//chk_cmd_is_valid(); // syntax error
 	ft_lstprint(&(g_glob.tok));
 }
