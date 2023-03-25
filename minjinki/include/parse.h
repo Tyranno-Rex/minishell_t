@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:25:20 by minjinki          #+#    #+#             */
-/*   Updated: 2023/03/25 16:47:02 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/03/25 17:30:16 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,5 +41,10 @@ t_bool	make_ast_tree(void);
 ** l_root_utils.c
 */
 t_bool	init_root(void);
+
+/*
+** l_put_token_to_tree.c
+*/
+t_bool	lexer(void);
 
 #endif
