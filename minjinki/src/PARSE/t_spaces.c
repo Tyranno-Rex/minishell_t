@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   spaces.c                                           :+:      :+:    :+:   */
+/*   t_spaces.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/19 13:49:31 by minjinki          #+#    #+#             */
-/*   Updated: 2023/03/23 15:12:16 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/03/25 18:39:30 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,3 +89,4 @@ void	deal_spaces(void)
 	ft_lstclear(&(g_glob.tok));
 	g_glob.tok = tmp;
 }
+// make void to t_bool > parse.c: if (!deal_quotes()) if (!deal_spaces())
