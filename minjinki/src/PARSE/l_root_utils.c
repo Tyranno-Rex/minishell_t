@@ -1,45 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse.h                                            :+:      :+:    :+:   */
+/*   l_root_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/16 16:25:20 by minjinki          #+#    #+#             */
-/*   Updated: 2023/03/25 16:47:02 by minjinki         ###   ########.fr       */
+/*   Created: 2023/03/25 16:45:32 by minjinki          #+#    #+#             */
+/*   Updated: 2023/03/25 16:52:40 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSE_H
-# define PARSE_H
+#include "../../include/minishell.h"
 
-# include "structs.h"
-
-/*
-** parse.c
-*/
-void	parse(char *cmd);
-t_bool	is_space_only(char *cmd);
-
-/*
-** t_quotes.c
-*/
-void	deal_quotes(char *cmd);
-t_token	*malloc_node(void);
-
-/*
-** t_spaces.c
-*/
-void	deal_spaces(void);
-
-/*
-** l_make_tree.c
-*/
-t_bool	make_ast_tree(void);
-
-/*
-** l_root_utils.c
-*/
-t_bool	init_root(void);
-
-#endif
+t_bool	init_root(void)
+{
+	g_glob.root = ft_calloc(1, sizeof(t_tree));
+	if (!(g_glob.root))
+		return (FALSE);
+	g_glob.root->cmd = ft_calloc(1, sizeof(t_cmd));
+	if (!(g_glob.root->cmd))
+		return (FALSE);
+}
