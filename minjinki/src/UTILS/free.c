@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 14:00:15 by minjinki          #+#    #+#             */
-/*   Updated: 2023/03/23 17:12:50 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/03/28 14:55:40 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void	free_cmd(char *cmd)
 {
 	free(cmd);
 	ft_lstclear(&(g_glob.tok));
+	// free_tree();
 }
 
 void	free_all(void)
@@ -37,4 +38,5 @@ void	free_all(void)
 	free_cmd(g_glob.cmd);
 	free_matrix(g_glob.env_ori);
 	free_matrix(g_glob.path);
+	env_lstclear(&(g_glob.env));
 }
