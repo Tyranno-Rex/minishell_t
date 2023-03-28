@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:25:20 by minjinki          #+#    #+#             */
-/*   Updated: 2023/03/28 17:01:32 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/03/28 18:45:40 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,11 @@ t_token	*malloc_node(void);
 */
 t_bool	deal_spaces(void);
 t_bool	add_quotes(t_token **tmp, t_token *cur);
+
+/*
+** t_pipe_n_redi.c
+*/
+t_bool	deal_pipe_n_redi(void);
 
 /*
 ** l_make_tree.c

@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 12:30:38 by minjinki          #+#    #+#             */
-/*   Updated: 2023/03/28 17:12:05 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/03/28 18:43:49 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@
 # define FILES 3
 # define OPT 4
 # define ARGV 5
+# define TMP 6
 
 typedef int		t_bool;
 
