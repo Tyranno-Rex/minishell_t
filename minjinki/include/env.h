@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 14:11:08 by minjinki          #+#    #+#             */
-/*   Updated: 2023/03/23 19:28:49 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/03/28 14:26:04 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,10 @@ t_env	*env_lstnew(char *key, char *value);
 void	env_lstadd_back(t_env **lst, t_env *new);
 t_bool	env_lstclear(t_env **lst);
 void	env_lstprint(void);
+
+/*
+** env_utils2.c
+*/
+t_env	*env_search_key(char *key);
 
 #endif

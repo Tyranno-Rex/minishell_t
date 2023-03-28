@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 12:26:40 by minjinki          #+#    #+#             */
-/*   Updated: 2023/03/25 16:45:13 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/03/28 14:21:55 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ typedef struct s_redi
 {
 	t_rdata			*rdata;
 	struct t_redi	*redi;
-};
+}	t_redi;
 
 typedef struct s_cmd
 {
