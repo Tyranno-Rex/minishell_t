@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 15:25:24 by minjinki          #+#    #+#             */
-/*   Updated: 2023/03/23 17:50:50 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/03/28 16:57:55 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,14 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t destsize);
 size_t	ft_strlen(const char *s);
 size_t	ft_strnlen(char *s, int c);
 
+t_bool	ft_lstadd_back(t_token **lst, t_token *new);
+
 t_token	*ft_lstlast(t_token *lst);
 t_token	*ft_lstmap(t_token *lst, void *(*f)(void *));
 t_token	*ft_lstnew(int type, char *s);
 
 void	ft_bzero(void *s, size_t n);
 void	*ft_calloc(size_t count, size_t size);
-void	ft_lstadd_back(t_token **lst, t_token *new);
 void	ft_lstadd_front(t_token **lst, t_token *new);
 void	ft_lstclear(t_token **lst);
 void	ft_lstdelone(t_token *lst);

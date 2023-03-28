@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 12:30:38 by minjinki          #+#    #+#             */
-/*   Updated: 2023/03/28 15:49:48 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/03/28 17:12:05 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 # define HEREDOC 6060	// <<
 # define RREDI 62		// >
 # define RRREDI 6262	// >>
-# define FILE 3
+# define FILES 3
 # define OPT 4
 # define ARGV 5
 

@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/19 13:49:31 by minjinki          #+#    #+#             */
-/*   Updated: 2023/03/25 18:39:30 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/03/28 17:11:34 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_bool	free_lst(t_token **tmp)
 {
 	ft_lstclear(tmp);
 	ft_lstclear(&(g_glob.tok));
-	return (print_error("Fail to allocate memory: split_by_space()\n"));
+	return (FALSE);
 }
 
 t_bool	split_by_space(t_token **tmp, t_token *cur)
@@ -66,7 +66,7 @@ t_bool	add_quotes(t_token **tmp, t_token *cur)
 	return (TRUE);
 }
 
-void	deal_spaces(void)
+t_bool	deal_spaces(void)
 {
 	t_token	*cur;
 	t_token	*tmp;
@@ -77,16 +77,17 @@ void	deal_spaces(void)
 	{
 		if (cur->type == STR)
 		{
-			split_by_space(&tmp, cur);
+			if (!split_by_space(&tmp, cur))
+				return (print_error("Fail to allocate memory: split_by_spaces()\n"));
 		}
 		else
 		{
 			if (!add_quotes(&tmp, cur))
-				return ;
+				return (print_error("Fail to allocate memory: split_by_spaces()\n"));
 		}
 		cur = cur->next;
 	}
 	ft_lstclear(&(g_glob.tok));
 	g_glob.tok = tmp;
+	return (TRUE);
 }
-// make void to t_bool > parse.c: if (!deal_quotes()) if (!deal_spaces())

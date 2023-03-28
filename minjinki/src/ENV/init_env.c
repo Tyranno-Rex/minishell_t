@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 12:35:17 by minjinki          #+#    #+#             */
-/*   Updated: 2023/03/28 14:27:56 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/03/28 17:04:23 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,5 @@ t_bool	init_env(char ***env)
 		return (FALSE);
 	if (!add_oldpath(g_glob.env))
 		return (FALSE);
-	env_lstprint();
-	for (int i = 0; g_glob.path[i]; i++)
-		printf("%s\n", g_glob.path[i]);
 	return (TRUE);
 }

@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 13:47:34 by minjinki          #+#    #+#             */
-/*   Updated: 2023/03/28 13:47:48 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/03/28 16:06:13 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,4 +14,15 @@
 
 void	set_types()
 {
+	int		flag;
+	t_token	*cur;
+	t_token	*tmp;
+
+	flag = CMD;
+	tmp = NULL;
+	cur = g_glob.tok;
+	while (cur)
+	{
+		cur = cur->next;
+	}
 }
