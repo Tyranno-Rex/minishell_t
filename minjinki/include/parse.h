@@ -26,6 +26,7 @@ t_bool	is_space_only(char *cmd);
 */
 void	deal_quotes(char *cmd);
 t_token	*malloc_node(void);
+t_bool	add_quotes(t_token **tmp, t_token *cur);
 
 /*
 ** t_spaces.c

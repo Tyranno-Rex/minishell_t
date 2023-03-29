@@ -34,6 +34,7 @@ MAIN_SRC	=	main
 
 PARSE_DIR	=	src/PARSE/
 PARSE_SRC	=	parse\
+				t_pipe_n_redi\
 				t_quotes\
 				t_spaces
 
