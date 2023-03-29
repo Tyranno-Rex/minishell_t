@@ -41,7 +41,7 @@ void	free_cmd(char *cmd)
 		ft_lstclear(&(g_glob.tok));
 }
 
-void	free_all(void)
+t_bool	free_all(void)
 {
 	if (g_glob.cmd)
 		free_cmd(g_glob.cmd);
@@ -51,4 +51,5 @@ void	free_all(void)
 		free_matrix(g_glob.path);
 	if (g_glob.env)
 		env_lstclear(g_glob.env);
+	return (FALSE);
 }

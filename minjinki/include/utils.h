@@ -22,7 +22,7 @@ t_bool	print_error(char *s);
 /*
 ** free.c
 */
-void	free_all(void);
+t_bool	free_all(void);
 void	free_cmd(char *cmd);
 void	free_matrix(char **matrix);
 t_bool	ft_free(void *av);
