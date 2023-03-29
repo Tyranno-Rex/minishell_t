@@ -36,9 +36,15 @@ void	check_type(t_token *cur)
 		else if (len == 2)
 			cur->type = RRREDI;
 	}
-	else
+	else if (*(cur->data) == PIPE)
 		if (len == 1)
 			cur->type = PIPE;
+}
+
+t_bool	deal_lredis(char *redi)
+{
+	// check_error if문 내에 있는 내용 여기로 빼기
+	// length에 따라서 60할 지 6060할 지 조건으로 넣기
 }
 
 /*
@@ -46,7 +52,33 @@ void	check_type(t_token *cur)
 */
 t_bool	check_error(t_token *cur)
 {
+	char	*tmp;
+	char	*type;
+	t_token	*new;
 
+	tmp = cur->data;
+	if (ft_strcmp(cur->data, "|<"))
+	{
+		cur->data = ft_strdup("|");
+		if (!(cur->data))
+			return (ft_free(tmp));
+		type = ft_strdup("<");
+		if (!type)
+			return (ft_free(tmp));
+		new = ft_lstnew(LREDI, type);
+		if (!new)
+		{
+			free(type);
+			return (ft_free(tmp));
+		}
+	}
+	else if (ft_strcmp(cur->data, "|<<"))
+	{
+		// same as upper condition
+		// 함수로 빼서 s로 "<"나 "<<" 넘겨주기
+		// 한 함수로 두 개 다 커버하기
+	}
+	free(tmp);
 }
 
 t_bool	set_pipe_n_redi(void)

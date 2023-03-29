@@ -25,6 +25,7 @@ t_bool	print_error(char *s);
 void	free_all(void);
 void	free_cmd(char *cmd);
 void	free_matrix(char **matrix);
+t_bool	ft_free(void *av);
 
 /*
 ** linked_list.c

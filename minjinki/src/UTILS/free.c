@@ -12,6 +12,13 @@
 
 #include "../../include/minishell.h"
 
+t_bool	ft_free(void *av)
+{
+	if (av)
+		free(av);
+	return (FALSE);
+}
+
 void	free_matrix(char **matrix)
 {
 	int	i;
