@@ -1,28 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   t_set_types.c                                      :+:      :+:    :+:   */
+/*   t_set_pipe_n_redi.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: MJKim <zinnnn37@gmail.com>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/28 13:47:34 by minjinki          #+#    #+#             */
-/*   Updated: 2023/03/28 16:06:13 by minjinki         ###   ########.fr       */
+/*   Created: 2023/03/29 14:56:11 by MJKim             #+#    #+#             */
+/*   Updated: 2023/03/29 14:56:11 by MJKim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	set_types(void)
+t_bool	set_pipe_n_redi(void)
 {
-	int		flag;
-	t_token	*cur;
-	t_token	*tmp;
-
-	flag = CMD;
-	tmp = NULL;
-	cur = g_glob.tok;
-	while (cur)
-	{
-		cur = cur->next;
-	}
+	
 }
