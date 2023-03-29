@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   quotes.c                                           :+:      :+:    :+:   */
+/*   t_quotes.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:24:44 by minjinki          #+#    #+#             */
-/*   Updated: 2023/03/23 14:57:03 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/03/28 17:06:59 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,12 @@ t_token	*malloc_node(void)
 	if (!new)
 	{
 		ft_lstclear(&(g_glob.tok));
-		print_error("Fail to allocate memory: t_token\n");
 		return (NULL);
 	}
 	return (new);
 }
 
-t_token	*add_node(int type, int len, char *start)
+t_token	*add_node(int type, int len, const char *start)
 {
 	t_token	*new;
 
@@ -44,10 +43,7 @@ t_token	*add_node(int type, int len, char *start)
 	new->type = type;
 	new->data = ft_strndup(start, len);
 	if (!(new->data))
-	{
-		print_error("Fail to allocate memory: t_token.data\n");
 		return (NULL);
-	}
 	return (new);
 }
 
@@ -85,7 +81,7 @@ int	quotes(int type, char *cmd)
 ** end == index of closing quote
 ** I tried to return end + 1 but it doesn't work well🤔
 */
-int	split_quote(int len, char *cmd, char *quote)
+int	split_quote(int len, const char *cmd, char *quote)
 {
 	int	end;
 
@@ -101,30 +97,31 @@ int	split_quote(int len, char *cmd, char *quote)
 	return (end);
 }
 
-void	deal_quotes(char *cmd)
+t_bool	deal_quotes(char *cmd)
 {
-	int		i;
-	int		gap;
-	int		last;
-	char	*start;
+	int			i;
+	int			gap;
+	static int	last = 0;
+	const char	*start = cmd;
 
 	i = -1;
-	last = 0;
-	start = cmd;
 	while (cmd[++i])
 	{
 		if (cmd[i] == SINGLE || cmd[i] == DOUBLE)
 		{
 			gap = split_quote(i - last, start, cmd + i);
 			if (gap == ERROR)
-				return ;
+				return (print_error("Fail to tokenize\n"));
 			i += (gap + 1);
 			start = cmd + i + 1;
 			last = i + 1;
 		}
 	}
 	if (start == cmd)
-		ft_lstadd_back(&(g_glob.tok), add_node(STR, i, cmd));
+		if (!ft_lstadd_back(&(g_glob.tok), add_node(STR, i, cmd)))
+			return (print_error("Fail to tokenize\n"));
 	if (*start)
-		split_quote(i + 1, start, cmd);
+		if (split_quote(i + 1, start, cmd) == ERROR)
+			return (print_error("Fail to tokenize: quotes\n"));
+	return (TRUE);
 }

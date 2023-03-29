@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 12:20:56 by minjinki          #+#    #+#             */
-/*   Updated: 2023/03/23 15:13:12 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/03/28 18:50:20 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,10 @@ void	parse(char *cmd)
 		return ;
 	deal_quotes(cmd);
 	deal_spaces();
-	//deal_pipe_n_redi();
+	ft_lstprint(&(g_glob.tok));
+	deal_pipe_n_redi();
+	//chk_pipe_n_redi_is_valid();
 	//chk_cmd_is_valid(); // syntax error
 	ft_lstprint(&(g_glob.tok));
 }
+// should add error handling

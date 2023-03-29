@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minjinki <minjinki@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 18:16:00 by minjinki          #+#    #+#             */
-/*   Updated: 2022/09/23 11:12:47 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/03/28 17:05:03 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 char	*ft_strtrim(char const *s1, char const *set)
 {
 	char	*res;
-	int		front; // size_t로 되어 있으면 밑에 rear == -1이 비교 불가능하지.. 바보야
+	int		front;
 	int		rear;
 
 	if (!s1 || !set)

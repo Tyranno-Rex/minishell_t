@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 12:26:40 by minjinki          #+#    #+#             */
-/*   Updated: 2023/03/23 19:24:33 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/03/28 14:21:55 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,21 +36,9 @@ typedef struct s_env
 }	t_env;
 
 /*
-** global variable
-*/
-typedef struct s_glob
-{
-	char	**env_ori;
-	char	*cmd;
-	t_token	*tok;
-	t_env	*env;
-	char	**path;
-}	t_glob;
-
-/*
 ** AST tree
 */
-typedef struct s_scmd;
+typedef struct s_scmd
 {
 	char	*ori;
 	char	*scmd;
@@ -68,7 +56,7 @@ typedef struct s_redi
 {
 	t_rdata			*rdata;
 	struct t_redi	*redi;
-};
+}	t_redi;
 
 typedef struct s_cmd
 {
@@ -90,5 +78,18 @@ typedef struct s_tree
 	t_cmd	*cmd;
 	t_pipe	*pipe;
 }	t_tree;
+
+/*
+** global variable
+*/
+typedef struct s_glob
+{
+	t_tree	*root;
+	char	**env_ori;
+	char	*cmd;
+	t_token	*tok;
+	t_env	*env;
+	char	**path;
+}	t_glob;
 
 #endif

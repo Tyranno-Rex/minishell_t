@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 16:57:08 by minjinki          #+#    #+#             */
-/*   Updated: 2023/03/23 19:28:28 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/03/28 14:25:40 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_bool	parse_path(void)
 {
 	char	**path;
 
-	path = ft_split(get_env("PATH"), ':');
+	path = ft_split(env_search_key("PATH")->val, ':');
 	if (!path)
 		return (print_error("Fail to allocate memory: parse_path\n"));
 	g_glob.path = path;

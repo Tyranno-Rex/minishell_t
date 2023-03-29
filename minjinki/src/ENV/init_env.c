@@ -6,11 +6,25 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 12:35:17 by minjinki          #+#    #+#             */
-/*   Updated: 2023/03/23 19:13:40 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/03/28 17:04:23 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+t_bool	add_oldpath(t_env *env)
+{
+	char	*pwd;
+	t_env	*new;
+
+	pwd = NULL;
+	new = env_lstnew("OLDPWD", NULL);
+	if (!new)
+		return (FALSE);
+	new->val = getcwd(pwd, 0);
+	env_lstadd_back(&env, new);
+	return (TRUE);
+}
 
 void	print_env(char ***env)
 {
@@ -52,6 +66,8 @@ t_bool	init_env(char ***env)
 	if (!copy_env(env))
 		return (FALSE);
 	if (!parse_env(&(g_glob.env_ori)))
+		return (FALSE);
+	if (!add_oldpath(g_glob.env))
 		return (FALSE);
 	return (TRUE);
 }
