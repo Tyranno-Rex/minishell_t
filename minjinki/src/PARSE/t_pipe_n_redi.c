@@ -34,9 +34,9 @@ t_bool	add_redi_pipe(t_token **tmp, char *s, int len)
 	new = ft_lstnew(ERROR, NULL);
 	if (!new)
 		return (FALSE);
-	while (i++ < len)
+	while (++i < len)
 	{
-		if (c != s[i])
+		if (s[i] != c)
 		{
 			new->data = ft_strndup(s, len);
 			if (!(new->data))
@@ -50,6 +50,9 @@ t_bool	add_redi_pipe(t_token **tmp, char *s, int len)
 	ft_lstadd_back(tmp, new);
 	return (TRUE);
 }
+// 왜 ERROR로 지정되는거임 ....
+// len 확인해봐야 알 듯
+// 이제 아마 될 듯 함
 
 t_bool	split_by_pipe_n_redi(t_token **tmp, t_token *cur)
 {
@@ -72,7 +75,7 @@ t_bool	split_by_pipe_n_redi(t_token **tmp, t_token *cur)
 			if (!ft_strchr("<|>", cur->data[end]))
 				break ;
 		}
-		printf("s[end]: %s, %d\n", cur->data + end, end - start);
+		printf("s[end]: %s, len: %d\n", cur->data + end, end - start);
 		if (!add_str(tmp, pre, pre - (cur->data + start)))
 			return (FALSE);
 		if (!add_redi_pipe(tmp, cur->data + start, end - start))
