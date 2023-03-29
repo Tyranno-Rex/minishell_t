@@ -15,9 +15,30 @@
 /*
 ** check if type is pipe or redirection
 */
-t_bool	check_type(t_token *cur)
+void	check_type(t_token *cur)
 {
+	int	len;
 
+	len = ft_strlen(cur->data);
+	if (len > 2 || (*(cur->data)) == PIPE && len > 1)
+		cur->type = ERROR;
+	else if (*(cur->data) == LREDI)
+	{
+		if (len == 1)
+			cur->type = LREDI;
+		else if (len == 2)
+			cur->type = HEREDOC;
+	}
+	else if (*(cur->data) = RREDI)
+	{
+		if (len == 1)
+			cur->type = RREDI;
+		else if (len == 2)
+			cur->type = RRREDI;
+	}
+	else
+		if (len == 1)
+			cur->type = PIPE;
 }
 
 /*
@@ -36,8 +57,7 @@ t_bool	set_pipe_n_redi(void)
 	while (cur)
 	{
 		if (cur->type == TMP)
-			if (!check_type(cur))
-				return (FALSE);
+			check_type(cur);
 		else if (cur->type == ERROR)
 			if (!check_error(cur))
 				return (FALSE);
