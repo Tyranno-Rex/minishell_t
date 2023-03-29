@@ -12,7 +12,36 @@
 
 #include "../../include/minishell.h"
 
+/*
+** check if type is pipe or redirection
+*/
+t_bool	check_type(t_token *cur)
+{
+
+}
+
+/*
+** check if type ERROR is |< or |<< -> should be splited as | < and | <<
+*/
+t_bool	check_error(t_token *cur)
+{
+
+}
+
 t_bool	set_pipe_n_redi(void)
 {
-	
+	t_token	*cur;
+
+	cur = g_glob.tok;
+	while (cur)
+	{
+		if (cur->type == TMP)
+			if (!check_type(cur))
+				return (FALSE);
+		else if (cur->type == ERROR)
+			if (!check_error(cur))
+				return (FALSE);
+		cur = cur->next;
+	}
+	return (TRUE);
 }

@@ -33,7 +33,8 @@ void	parse(char *cmd)
 	deal_spaces();
 	ft_lstprint(&(g_glob.tok));
 	deal_pipe_n_redi();
-	//chk_pipe_n_redi_is_valid();
+	if (!set_pipe_n_redi())
+		return (FALSE);
 	//chk_cmd_is_valid(); // syntax error
 	ft_lstprint(&(g_glob.tok));
 }

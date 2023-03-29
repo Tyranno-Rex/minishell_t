@@ -29,7 +29,11 @@ void	minishell(void)
 		print_pwd();
 		g_glob.cmd = readline(" minishell_$ ");
 		add_history(g_glob.cmd);
-		parse(g_glob.cmd);
+		if (!parse(g_glob.cmd))
+		{
+			free_all();
+			continue ;
+		}
 		free_cmd(g_glob.cmd);
 	}
 }
