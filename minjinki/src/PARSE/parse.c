@@ -29,13 +29,15 @@ void	parse(char *cmd)
 {
 	if (is_space_only(cmd))
 		return ;
-	deal_quotes(cmd);
-	deal_spaces();
+	if (!deal_quotes(cmd) || !deal_spaces())
+		return (free_all());
 	ft_lstprint(&(g_glob.tok));
-	deal_pipe_n_redi();
+	if (!deal_pipe_n_redi())
+		return (free_all())
 	if (!set_pipe_n_redi())
 		return (FALSE);
 	//chk_cmd_is_valid(); // syntax error
 	ft_lstprint(&(g_glob.tok));
+	// init_tree();
 }
 // should add error handling

@@ -12,7 +12,6 @@
 
 #include "../../include/minishell.h"
 
-<<<<<<< HEAD
 t_bool	add_nodes()
 {
 	//cmd -> scmd && redi func
@@ -21,14 +20,6 @@ t_bool	add_nodes()
 
 t_bool	make_ast_tree()
 {
-	//make_root();
+	//init_root();
 	//add_nodes();
-=======
-t_bool	make_ast_tree(void)
-{
-	if (!init_root())
-		return (print_error("Fail to initialize root\n"));
-	if (!lexer())
-		return (print_error("Lexical analysis failed\n"));
->>>>>>> f1e41cb0e77c83b80cc0d32416aa36cac86bb425
 }
