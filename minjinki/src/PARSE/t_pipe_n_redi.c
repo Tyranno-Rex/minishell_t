@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 15:14:29 by minjinki          #+#    #+#             */
-/*   Updated: 2023/03/28 18:58:04 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/03/30 16:28:25 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ t_bool	add_str(t_token **tmp, char *s, int len)
 {
 	t_token	*new;
 
+	if (len < 1)
+		return (TRUE);
 	new = ft_lstnew(STR, ft_strndup(s, len));
 	if (!new)
 		return (FALSE);
@@ -70,7 +72,7 @@ t_bool	split_by_pipe_n_redi(t_token **tmp, t_token *cur)
 			return (add_str(tmp, cur->data, ft_strlen(cur->data)));
 		end = start;
 		printf("s[start]: %s\n", cur->data + start);
-		while (cur->data[end++])
+		while (cur->data[++end])
 		{
 			if (!ft_strchr("<|>", cur->data[end]))
 				break ;

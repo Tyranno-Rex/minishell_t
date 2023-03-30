@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 14:00:15 by minjinki          #+#    #+#             */
-/*   Updated: 2023/03/28 14:55:40 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/03/30 13:32:11 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,6 @@ t_bool	free_all(void)
 	if (g_glob.path)
 		free_matrix(g_glob.path);
 	if (g_glob.env)
-		env_lstclear(g_glob.env);
+		env_lstclear(&(g_glob.env));
 	return (FALSE);
 }

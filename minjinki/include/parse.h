@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:25:20 by minjinki          #+#    #+#             */
-/*   Updated: 2023/03/28 18:45:40 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/03/30 13:29:58 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 /*
 ** parse.c
 */
-void	parse(char *cmd);
+t_bool	parse(char *cmd);
 t_bool	is_space_only(char *cmd);
 
 /*
@@ -37,6 +37,11 @@ t_bool	add_quotes(t_token **tmp, t_token *cur);
 ** t_pipe_n_redi.c
 */
 t_bool	deal_pipe_n_redi(void);
+
+/*
+** t_set_pipe_n_redi.c
+*/
+t_bool	set_pipe_n_redi(void);
 
 /*
 ** l_make_tree.c
