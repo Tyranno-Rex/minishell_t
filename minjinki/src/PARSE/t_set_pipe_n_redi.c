@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 14:56:11 by MJKim             #+#    #+#             */
-/*   Updated: 2023/03/30 16:51:17 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/03/30 16:58:20 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,20 +59,20 @@ t_bool	check_error(t_token *cur)
 	t_token	*new;
 
 	tmp = cur->data;
-	if (ft_strcmp(cur->data, "|<"))
+	if (!ft_strcmp(cur->data, "|<"))
 	{
+		printf("entered to check error: |<\n\n");
+		cur->type = PIPE;
 		cur->data = ft_strdup("|");
 		if (!(cur->data))
-			return (ft_free(tmp));
+			return (FALSE);
 		type = ft_strdup("<");
 		if (!type)
-			return (ft_free(tmp));
+			return (FALSE);
 		new = ft_lstnew(LREDI, type);
 		if (!new)
-		{
-			free(type);
-			return (ft_free(tmp));
-		}
+			return (ft_free(type));
+		// new insert
 	}
 	else if (ft_strcmp(cur->data, "|<<"))
 	{
@@ -80,7 +80,6 @@ t_bool	check_error(t_token *cur)
 		// 함수로 빼서 s로 "<"나 "<<" 넘겨주기
 		// 한 함수로 두 개 다 커버하기
 	}
-	free(tmp);
 	return (TRUE);
 }
 
@@ -103,4 +102,6 @@ t_bool	set_pipe_n_redi(void)
 	return (TRUE);
 }
 // 파이프나 리다이 반복일 때 제대로 안 돌아가는 듯
-// |< 넣었을 때 메모리 이중 해제 발생..
+// |<a 이런 경우 제대로 안돌아감
+// |< 넣었을 때 메모리 이중 해제 발생.. -> 해결
+// -> cur->data tmp에 넣고 메모리 해제해서 그런가
