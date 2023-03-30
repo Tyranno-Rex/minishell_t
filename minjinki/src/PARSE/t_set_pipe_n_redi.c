@@ -93,8 +93,6 @@ t_bool	set_pipe_n_redi(void)
 		else if (cur->type == ERROR)
 			if (!check_error(cur))
 				return (FALSE);
-		else if (cur->type == DOUBLE || cur->type == STR)
-			convert_env(cur);
 		cur = cur->next;
 	}
 	return (TRUE);
