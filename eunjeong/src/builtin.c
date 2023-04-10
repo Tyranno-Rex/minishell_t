@@ -1,6 +1,6 @@
 #include "../inc/minishell.h"
 
-int	handler_builtins(char **data)
+int	handler_builtins(char **data, char **env)
 {
 	if (ft_strncmp(data[1], "pwd", 3) == 0)
 		ft_exec_pwd(data);
@@ -10,19 +10,11 @@ int	handler_builtins(char **data)
 		ft_exec_echo(data);
 	if (ft_strncmp(data[1], "cd", 2) == 0)
 		ft_exec_cd(data);
+	if (ft_strncmp(data[1], "env", 3) == 0)
+		ft_exec_env(data, env);
 	return (1);
-	// if (ft_strcmp(data[1],"export") == 0)
-	// 	ft_export(data);
-	// if (ft_strcmp(data[1], "unset") == 0)
-	// 	ft_unset(data);
-	// if (ft_strcmp(data[1], "env") == 0)
-	// 	ft_env(data);
-}
-
-
-int main(int argc, char **argv)
-{
-    int hello = 0;
-	hello = handler_builtins(argv);
-	printf("\n1 success. 0 wrong: %d\n", hello);
+	// if (ft_strncmp(data[1], "export", 6) == 0)
+	// 	ft_exec_export(data);
+	// if (ft_strncmp(data[1], "unset", 5) == 0)
+	// 	ft_exec_unset(data);
 }

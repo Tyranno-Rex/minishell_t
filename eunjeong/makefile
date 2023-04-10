@@ -2,7 +2,7 @@ NAME = minishell_exec
 
 SRCDIR = ./src/
 
-SRCS = $(addprefix $(SRCDIR),builtin_exec.c builtin.c pwd.c exit.c echo.c cd.c)
+SRCS = $(addprefix $(SRCDIR),builtin_exec.c builtin.c pwd.c exit.c echo.c cd.c env.c main.c)
 OBJS = $(SRCS:.c=.o)
 
 COMPILER = cc
