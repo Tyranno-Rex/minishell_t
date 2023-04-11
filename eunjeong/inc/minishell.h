@@ -6,13 +6,13 @@
 #include "../libft/libft.h"
 
 
-// static char	*validate_args(char **data);
-// int	        ft_cd_len(char **tab);
-// static char *check_dots(char **args);
-// void	    ft_setenv(t_builtin_vars *builtins, char *name, char *value);
-// static void change_value(t_node *current, char **splitted, char *value);
-// char	    *get_env_path(char *path, t_builtin_vars *builtin);
-// void	    ft_setenv(t_builtin_vars *builtins, char *name, char *value);
+typedef struct s_export
+{
+    char        *name;
+    char        *data;
+    t_export    *next;
+} t_export;
+
 
 
 // builtin.c

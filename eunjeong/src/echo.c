@@ -1,5 +1,11 @@
 #include "../inc/minishell.h"
 
+void	ft_print_export(char **argv)
+{
+	return ;
+}
+
+
 int	count_declar(char **argv)
 {
 	int	size;
@@ -26,13 +32,15 @@ int	ft_exec_echo(char **argv)
 		}
 		while (argv[i])
 		{
+			if (argv[i] == '$')
+				ft_print_export(argv);
 			ft_putstr_fd(argv[i], 1);
 			if (argv[i][0] != '\0' && argv[i + 1])
 				write(1, " ", 1);
 			i++;
 		}
 	}
-	if (n_line == false)
+	if (n_line == true)
 		write(1, "\n", 1);
 	return (0);
 }

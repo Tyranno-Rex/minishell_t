@@ -1,13 +1,13 @@
-NAME = minishell_exec
+NAME = minishell
 
 SRCDIR = ./src/
-
 SRCS = $(addprefix $(SRCDIR),builtin_exec.c builtin.c pwd.c exit.c echo.c cd.c env.c main.c)
+
 OBJS = $(SRCS:.c=.o)
 
 COMPILER = cc
 # CFLAGS = -Wall -Werror -Wextra
-CFLAGS =
+CFLAGS =z
 
 all: extern $(NAME)
 
