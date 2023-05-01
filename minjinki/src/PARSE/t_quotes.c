@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:24:44 by minjinki          #+#    #+#             */
-/*   Updated: 2023/03/28 17:06:59 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/05/01 16:38:27 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,11 +83,15 @@ int	quotes(int type, char *cmd)
 */
 int	split_quote(int len, const char *cmd, char *quote)
 {
-	int	end;
+	int		end;
+	t_token	*new;
 
 	end = 0;
 	if (cmd != quote)
-		ft_lstadd_back(&(g_glob.tok), add_node(STR, len, cmd));
+	{
+		new = add_node(STR, len, cmd);
+		ft_lstadd_back(&(g_glob.tok), new);
+	}
 	if (*quote == SINGLE)
 		end = quotes(SINGLE, quote);
 	else if (*quote == DOUBLE)
@@ -97,14 +101,13 @@ int	split_quote(int len, const char *cmd, char *quote)
 	return (end);
 }
 
-t_bool	deal_quotes(char *cmd)
+t_bool	deal_quotes(char *cmd, int i)
 {
-	int			i;
 	int			gap;
-	static int	last = 0;
+	int			last;
 	const char	*start = cmd;
 
-	i = -1;
+	last = 0;
 	while (cmd[++i])
 	{
 		if (cmd[i] == SINGLE || cmd[i] == DOUBLE)

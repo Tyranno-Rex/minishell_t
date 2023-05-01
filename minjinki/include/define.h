@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 12:30:38 by minjinki          #+#    #+#             */
-/*   Updated: 2023/03/28 18:43:49 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/05/01 15:28:59 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@
 # define OPT 4
 # define ARGV 5
 # define TMP 6
+# define SPACE 7
 
 typedef int		t_bool;
 

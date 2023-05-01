@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/19 13:49:31 by minjinki          #+#    #+#             */
-/*   Updated: 2023/03/28 17:11:34 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/05/01 16:42:52 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,30 +19,48 @@ t_bool	free_lst(t_token **tmp)
 	return (FALSE);
 }
 
+t_bool	add_space(t_token **tmp)
+{
+	char	*s;
+	t_token	*new;
+
+	s = ft_strdup(" ");
+	if (!s)
+		return (FALSE);
+	new = ft_lstnew(SPACE, s);
+	if (!new)
+		return (free_lst(tmp));
+	ft_lstadd_back(tmp, new);
+	return (TRUE);
+}
+
 t_bool	split_by_space(t_token **tmp, t_token *cur)
 {
 	int		start;
 	int		len;
+	int		n;
 	char	*s;
-	t_token	*new;
 
 	start = -1;
-	while (cur->data[++start])
+	n = ft_strlen(cur->data);
+	while (cur->data[++start] && start < n)
 	{
 		while (cur->data[start] && ft_is_space(cur->data[start]))
 			start++;
+		if (start > 0 && ft_is_space(cur->data[start - 1]))
+			add_space(tmp);
 		if (!(cur->data[start]))
 			break ;
 		len = ft_strnlen(&(cur->data[start]), ' ');
 		s = ft_strndup(&(cur->data[start]), len);
 		if (!s)
 			return (free_lst(tmp));
-		new = ft_lstnew(STR, s);
-		if (!new)
+		if (!ft_lstadd_back(tmp, ft_lstnew(STR, s)))
 			return (free_lst(tmp));
-		ft_lstadd_back(tmp, new);
 		start += len;
 	}
+	if (ft_lstlast(*tmp)->type != SPACE && ft_is_space(cur->data[start - 1]))
+		add_space(tmp);
 	return (TRUE);
 }
 

@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 12:20:56 by minjinki          #+#    #+#             */
-/*   Updated: 2023/03/30 13:29:08 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/05/01 16:52:37 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ t_bool	is_space_only(char *cmd)
 
 t_bool	parse(char *cmd)
 {
-	if (is_space_only(cmd))
-		return (FALSE);
-	if (!deal_quotes(cmd) || !deal_spaces())
+	if (ft_strlen(cmd) == 0 || is_space_only(cmd))
+		return (TRUE);
+	if (!deal_quotes(cmd, -1) || !deal_spaces())
 		return (free_all());
 	ft_lstprint(&(g_glob.tok));
 	if (!deal_pipe_n_redi())
@@ -37,7 +37,7 @@ t_bool	parse(char *cmd)
 	if (!set_pipe_n_redi())
 		return (FALSE);
 	//chk_cmd_is_valid(); // syntax error
-	ft_lstprint(&(g_glob.tok));
+	//ft_lstprint(&(g_glob.tok));
 	// init_tree();
 	return (TRUE);
 }
