@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:25:20 by minjinki          #+#    #+#             */
-/*   Updated: 2023/05/01 16:32:53 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/05/02 16:00:48 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,14 +44,24 @@ t_bool	deal_pipe_n_redi(void);
 t_bool	set_pipe_n_redi(void);
 
 /*
-** l_make_tree.c
+** l_init_tree.c
 */
-t_bool	make_ast_tree(void);
+t_bool	init_tree(void);
 
 /*
-** l_root_utils.c
+** l_cmd.c
 */
-t_bool	init_root(void);
+t_cmd	*add_cmd(t_token *token);
+
+/*
+** l_scmd.c
+*/
+t_scmd	add_scmd(t_token *token);
+
+/*
+** l_reditree.c
+*/
+t_reditree	*add_reditree(t_token *token);
 
 /*
 ** l_put_token_to_tree.c
