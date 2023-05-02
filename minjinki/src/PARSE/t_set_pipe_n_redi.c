@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 14:56:11 by MJKim             #+#    #+#             */
-/*   Updated: 2023/05/02 18:19:42 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/05/02 18:21:13 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ t_bool	check_error(t_token *cur)
 		new = ft_lstnew(LREDI, type);
 		if (!new)
 			return (ft_free(type));
-		// ft_lstinsert()
+		// ft_lstinsert(); 생성
 	}
 	else if (ft_strcmp(cur->data, "|<<"))
 	{
