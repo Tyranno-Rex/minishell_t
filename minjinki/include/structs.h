@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 12:26:40 by minjinki          #+#    #+#             */
-/*   Updated: 2023/05/02 13:13:02 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/05/02 17:05:56 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ typedef struct s_redi
 {
 	char	*redi;
 	char	*av;
-}	t_rdata;
+}	t_redi;
 
 typedef struct s_reditree
 {
@@ -60,7 +60,7 @@ typedef struct s_reditree
 
 typedef struct s_cmd
 {
-	t_redi		*redi
+	t_redi		*redi;
 	t_scmd		*scmd;
 	t_reditree	*reditree;
 }	t_cmd;

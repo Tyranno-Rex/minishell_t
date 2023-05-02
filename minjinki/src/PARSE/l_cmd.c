@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 12:50:17 by minjinki          #+#    #+#             */
-/*   Updated: 2023/05/02 16:52:13 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/05/02 17:02:32 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ t_cmd	*add_cmd(t_token *token)
 	cmd = ft_calloc(1, sizeof(t_cmd));
 	if (!cmd)
 		return (NULL);
-	if (token->type == REDI)
+	if (token->type == LREDI || token->type == HEREDOC
+		|| token->type == RREDI || token->type == RRREDI)
 	{
 		cmd->redi = add_redi(token);
 		if (!(cmd->redi))

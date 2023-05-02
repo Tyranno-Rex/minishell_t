@@ -1,28 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   l_reditree.c                                       :+:      :+:    :+:   */
+/*   t_syntax_error.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/02 14:03:49 by minjinki          #+#    #+#             */
-/*   Updated: 2023/05/02 17:01:30 by minjinki         ###   ########.fr       */
+/*   Created: 2023/05/02 17:03:50 by minjinki          #+#    #+#             */
+/*   Updated: 2023/05/02 17:04:22 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-t_reditree	*add_reditree(t_token *token)
+t_bool	t_syntax_error()
 {
-	t_reditree	*reditree;
-
-	reditree = NULL;
-	if (token && token->type != PIPE)
-	{
-		reditree = ft_calloc(1, sizeof(t_reditree));
-		reditree->redi = add_redi(token);
-		token = token->next->next; // redi는 리다이렉션이랑 파일 하나니까 2만큼 옮김
-		reditree->reditree = add_redutree(token);
-	}
-	return (reditree);
+	// 하드코딩..
 }
