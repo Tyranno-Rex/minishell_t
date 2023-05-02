@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 13:58:01 by minjinki          #+#    #+#             */
-/*   Updated: 2023/05/02 17:15:29 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/05/02 17:23:14 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,29 @@ char	*join_ori(char *s1, char *s2)
 	free(s1);
 	s1 = NULL;
 	return (res);
+}
+
+t_bool	join_argv(t_token *token, char *ori, char **av)
+{
+	int		i;
+	int		cnt;
+	t_token	*tmp;
+
+	cnt = 0;
+	tmp = token
+	while (++cnt && tmp && tmp->data == ARGV)
+		tmp = tmp->next;
+	av = ft_calloc(cnt, sizeof(char *));
+	i = -1;
+	while (++i < cnt - 1)
+	{
+		ori = join_ori(ori, token->data);
+		av[i] = ft_strdup(token->data);
+		if (!ori || !(av[i]))
+			return (FALSE);
+		token = token->next;
+	}
+	return (TRUE);
 }
 
 t_scmd	add_scmd(t_token *token)
@@ -42,6 +65,9 @@ t_scmd	add_scmd(t_token *token)
 		scmd->opt = ft_strdup(token->data);		// options
 		scmd->ori = join_ori(scmd->ori, token->data);
 		if (!(scmd->opt) || !(scmd->ori))
+			return (NULL);
+		token = token->next;
+		if (!join_argv(token, scmd->ori, scmd->av))
 			return (NULL);
 		//	-> 중복은 지우고 중복 아닌 건 join으로 합쳐서 -abc... 형태로
 		// av에는 OPT 이하 ARGV들 저장
