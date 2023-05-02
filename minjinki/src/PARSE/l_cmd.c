@@ -1,44 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse.c                                            :+:      :+:    :+:   */
+/*   l_cmd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/16 12:20:56 by minjinki          #+#    #+#             */
-/*   Updated: 2023/05/02 12:46:59 by minjinki         ###   ########.fr       */
+/*   Created: 2023/05/02 12:50:17 by minjinki          #+#    #+#             */
+/*   Updated: 2023/05/02 14:08:48 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-t_bool	is_space_only(char *cmd)
+t_cmd	*add_cmd(t_token *token)
 {
-	int	i;
+	t_cmd	*cmd;
 
-	i = -1;
-	while (cmd[++i])
+	cmd = ft_calloc(1, sizeof(t_cmd));
+	if (!cmd)
+		return (NULL);
+	if (token->type == REDI)
 	{
-		if (!ft_is_space(cmd[i]))
+		cmd->redi = add_redi(token);
+		if (!(cmd->redi))
 			return (FALSE);
+		while (token->type != CMD)
+			token = token->next;
 	}
-	return (TRUE);
+	cmd->scmd = add_scmd(token);
+	if (!(cmd->scmd))
+		return (FAlSE);
+	// CMD, OPT, ARGV 아닐 때까지 token 뒤로 옮기기
+	cmd->reditree = add_reditree(token);
+	if (!(cmd->reditree))
+		return (FALSE);
+	return (cmd);
 }
-
-t_bool	parse(char *cmd)
-{
-	if (ft_strlen(cmd) == 0 || is_space_only(cmd))
-		return (TRUE);
-	if (!deal_quotes(cmd, -1) || !deal_spaces())
-		return (FALSE);
-	ft_lstprint(&(g_glob.tok));
-	if (!deal_pipe_n_redi())
-		return (FALSE);
-	if (!set_pipe_n_redi())
-		return (FALSE);
-	//chk_cmd_is_valid(); // syntax error
-	if (!init_tree())
-		return (FALSE);
-	return (TRUE);
-}
-// should add error handling

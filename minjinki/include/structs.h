@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 12:26:40 by minjinki          #+#    #+#             */
-/*   Updated: 2023/03/28 14:21:55 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/05/02 13:13:02 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,22 +46,23 @@ typedef struct s_scmd
 	char	**av;
 }	t_scmd;
 
-typedef struct s_rdata
+typedef struct s_redi
 {
 	char	*redi;
 	char	*av;
 }	t_rdata;
 
-typedef struct s_redi
+typedef struct s_reditree
 {
-	t_rdata			*rdata;
-	struct t_redi	*redi;
-}	t_redi;
+	t_redi				*redi;
+	struct t_reditree	*reditree;
+}	t_reditree;
 
 typedef struct s_cmd
 {
-	t_scmd	*scmd;
-	t_redi	*redi;
+	t_redi		*redi
+	t_scmd		*scmd;
+	t_reditree	*reditree;
 }	t_cmd;
 
 typedef struct s_pipe
