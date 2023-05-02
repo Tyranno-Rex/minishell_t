@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 15:14:29 by minjinki          #+#    #+#             */
-/*   Updated: 2023/03/30 16:28:25 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/05/02 18:02:19 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ t_bool	split_by_pipe_n_redi(t_token **tmp, t_token *cur)
 		while (cur->data[start] && !ft_strchr("<|>", cur->data[start]))
 			start++;
 		if (!(cur->data[start]))
-			return (add_str(tmp, cur->data, ft_strlen(cur->data)));
+			return (add_str(tmp, pre, ft_strlen(pre)));
 		end = start;
 		printf("s[start]: %s\n", cur->data + start);
 		while (cur->data[++end])
@@ -78,7 +78,7 @@ t_bool	split_by_pipe_n_redi(t_token **tmp, t_token *cur)
 				break ;
 		}
 		printf("s[end]: %s, len: %d\n", cur->data + end, end - start);
-		if (!add_str(tmp, pre, pre - (cur->data + start)))
+		if (!add_str(tmp, pre, cur->data + start - pre))
 			return (FALSE);
 		if (!add_redi_pipe(tmp, cur->data + start, end - start))
 			return (FALSE);
