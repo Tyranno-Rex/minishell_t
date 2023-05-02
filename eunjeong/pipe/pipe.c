@@ -26,19 +26,21 @@ static t_data   *set_cmd_content(t_data *node, char **argv[2], int *i)
     // 명령어 인자 배열에서 아직 처리하지 않은 인자가 있는 경우
     if (argv[0][*i])
     {
-        // 출력 리다이렉션일 경우
-        if (argv[0][*i][0] == '>' && argv[0][*i + 1] && argv[0][*i + 1][0] == '>')
-            node = outfile_set2(node, argv[1], i);
         // 출력 리다이렉션(새 파일 생성)일 경우
-        else if (argv[0][*i][0] == '>') 
+        if (argv[0][*i][0] == '>') 
             node = outfile_set1(node, argv[1], i);
+        // 출력 리다이렉션일 경우 (덮어 쓰기)
+        else if (argv[0][*i][0] == '>' && argv[0][*i + 1] && argv[0][*i + 1][0] == '>')
+            node = outfile_set2(node, argv[1], i);
+        
+		// 입력 리다이렉션(파일에서 입력)일 경우
+        else if (argv[0][*i][0] == '<') 
+            node = infile_set1(node, argv[1], i);
         // 입력 리다이렉션(Here Document)일 경우
         else if (argv[0][*i][0] == '<' && argv[0][*i + 1] && argv[0][*i + 1][0] == '<') 
             node = infile_set2(node, argv[1], i);
-        // 입력 리다이렉션(파일에서 입력)일 경우
-        else if (argv[0][*i][0] == '<') 
-            node = infile_set1(node, argv[1], i);
-        // 입벽 리다이렉션(파이프)일 경우 
+        
+		// 입벽 리다이렉션(파이프)일 경우 
         else if (argv[0][*i][0] != '|') 
 			node->full_cmd = ft_extend_matrix(node->full_cmd, argv[1][*i]);
 		else

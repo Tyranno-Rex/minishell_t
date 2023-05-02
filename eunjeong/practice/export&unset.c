@@ -1,9 +1,5 @@
+#include "../inc/minishell.h"
 
-typedef struct s_data
-{
-    char *env;
-
-} t_data;
 
 void	unset(char **args)
 {
