@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 12:50:17 by minjinki          #+#    #+#             */
-/*   Updated: 2023/05/02 17:02:32 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/05/02 17:27:42 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ t_cmd	*add_cmd(t_token *token)
 	if (!(cmd->scmd))
 		return (FAlSE);
 	// CMD, OPT, ARGV 아닐 때까지 token 뒤로 옮기기
-	cmd->reditree = add_reditree(token);
+	cmd->reditree = add_reditree(token, cmd->scmd);
 	if (!(cmd->reditree))
 		return (FALSE);
 	return (cmd);
