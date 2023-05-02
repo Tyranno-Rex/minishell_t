@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 14:19:43 by MJKim             #+#    #+#             */
-/*   Updated: 2023/05/02 14:09:21 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/05/02 14:31:03 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,4 +32,5 @@ t_bool	init_tree(void)
 		if (!(g_glob.root->pipe))
 			return (FAlSE);
 	}
+	return (TRUE);
 }
