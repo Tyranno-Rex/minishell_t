@@ -53,6 +53,27 @@ t_bool	convert_env(t_token *cur)
 	return (convert_env(cur->next));
 }
 
+t_bool	remove_quotes(t_token *token)
+{
+	int		len;
+	char	*tmp;
+
+	while (token)
+	{
+		if (token->type == DOUBLE || token->type == SINGLE)
+		{
+			len = ft_strlen(token->data);
+			if (token->data[0] == token->type && token->data[len - 1] == token->type)	// 양 끝이 따옴표인 경우
+			{	// 따옴표 뗀 문자열로 업데이트
+				tmp = ft_strndup(token->data + 1, len - 2);
+				free(token->data);
+				token->data = tmp;
+			}
+		}
+		token = token->next;
+	}
+}
+
 t_bool	deal_env(t_token *token)
 {
 	if (!convert_env(token))
