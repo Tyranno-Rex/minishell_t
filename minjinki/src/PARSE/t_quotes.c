@@ -56,14 +56,10 @@ int	quotes(int type, char *cmd)
 {
 	int	len;
 
-	len = ft_strnlen(cmd + 1, type);
-	if (len == ERROR)
-	{
-		ft_lstclear(&(g_glob.tok));
-		print_error("syntax error: unclosed quotes\n");
-		return (ERROR);
-	}
-	ft_lstadd_back(&(g_glob.tok), add_node(type, len, cmd + 1));
+	len = ft_strnlen(cmd + 1, type);	// 따옴표 바로 뒤 문자부터 길이 재기 시작, 다음 따옴표가 나올 때까지의 길이 
+	if (cmd + len != '\0')
+		len += 1;	// 닫힌 따옴표인 경우
+	ft_lstadd_back(&(g_glob.tok), add_node(type, len + 1, cmd));
 	return (len);
 }
 
