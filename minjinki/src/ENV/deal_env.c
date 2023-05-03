@@ -124,8 +124,8 @@ void	remove_spaces(t_token *token)
 			token->next = next->next;
 			free(next->data);
 			free(next);
+			token = token->next;
 		}
-		token = token->next;
 	}
 }
 
