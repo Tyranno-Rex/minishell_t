@@ -34,7 +34,7 @@
 # define OPT 4
 # define ARGV 5
 # define TMP 6
-# define SPACE 7
+# define SPACES 7
 
 typedef int		t_bool;
 

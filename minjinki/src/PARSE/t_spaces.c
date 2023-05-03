@@ -27,7 +27,7 @@ t_bool	add_space(t_token **tmp)
 	s = ft_strdup(" ");
 	if (!s)
 		return (FALSE);
-	new = ft_lstnew(SPACE, s);
+	new = ft_lstnew(SPACES, s);
 	if (!new)
 		return (free_lst(tmp));
 	ft_lstadd_back(tmp, new);
@@ -59,7 +59,7 @@ t_bool	split_by_space(t_token **tmp, t_token *cur)
 			return (free_lst(tmp));
 		start += len;
 	}
-	if (ft_lstlast(*tmp)->type != SPACE && ft_is_space(cur->data[start - 1]))
+	if (ft_lstlast(*tmp)->type != SPACES && ft_is_space(cur->data[start - 1]))
 		add_space(tmp);
 	return (TRUE);
 }
