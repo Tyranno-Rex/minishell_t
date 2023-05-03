@@ -104,10 +104,19 @@ t_bool	join_n_split(t_token *token)
 void	remove_spaces(t_token *token)
 {
 	char	*tmp;
+	t_token	*pre;
 	t_token	*next;
 
+	pre = NULL;
 	while (token)
 	{
+		while (!pre && token->type == SPACES)
+		{
+			next = token;
+			token = token->next;
+			ft_lstdelone(next);
+			token = token->next;
+		}
 		next = token->next;
 		if (token->next && token->type != SPACES && token->next->type != SPACES)
 		{
@@ -115,15 +124,14 @@ void	remove_spaces(t_token *token)
 			free(token->data);
 			token->data = tmp;
 			token->next = next->next;
-			free(next->data);
-			free(next);
+			ft_lstdelone(next);
 		}
 		else if (token->next && token->type != SPACES && token->next->type == SPACES)
 		{
 			next = token->next;
 			token->next = next->next;
-			free(next->data);
-			free(next);
+			ft_lstdelone(next);
+			pre = token;
 			token = token->next;
 		}
 	}
