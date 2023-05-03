@@ -1,6 +1,6 @@
 #include "../inc/minishell.h"
 
-// heredoc로 입력된 문자열을 저장하는 함수
+	// heredoc로 입력된 문자열을 저장하는 함수
 char *get_here_str(char *str[2], size_t len, char *limit, char *warn)
 {
     char *temp;
