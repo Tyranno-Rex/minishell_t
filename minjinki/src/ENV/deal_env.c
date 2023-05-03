@@ -32,7 +32,7 @@ t_bool	convert_env(t_token *cur)
 			tmp = ft_strndup(cur->data, i); // $ 앞까지의 문자열 저장
 			if (!tmp)
 				reutrn (FALSE);
-			len = ft_strchr(" $", cur->data[++i]) - &(cur->data[i]); // 환경변수 뒤에서 가장 먼저 나오는 공백이나 $까지의 길이, 없으면 \0까지의 길이
+			len = ft_strchr(" $.", cur->data[++i]) - &(cur->data[i]); // 환경변수 뒤에서 가장 먼저 나오는 sep 까지의 길이, 없으면 \0까지의 길이
 			key = ft_strdup(cur->data + i, len); // 공백이나 다음 $ 이전까지의 문자열 저장
 			if (!key)
 				return (FALSE);
@@ -57,8 +57,8 @@ t_bool	deal_env(t_token *token)
 {
 	if (!convert_env(token))
 		return (FALSE);
-	if (!remove_quotes(token))
+	if (!remove_quotes(token))	// 가장 바깥에 있는 따옴표 제거 -> 만약 한쪽에만 있으면 제거 x
 		return (FALSE);
-	if (!join_n_split(token))
+	if (!join_n_split(token))	// 토큰 내부 문자열 스페이스 기준으로 나누기 && 토큰 양 옆 토큰과 공백으로 구분되지 않으면 합치기
 		return (FALSE);
 }
