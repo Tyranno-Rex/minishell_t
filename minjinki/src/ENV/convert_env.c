@@ -52,5 +52,3 @@ t_bool	convert_env(t_token *cur)
 	}
 	return (convert_env(cur->next));
 }
-
-// test
