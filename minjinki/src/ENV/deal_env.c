@@ -66,12 +66,15 @@ t_bool	remove_quotes(t_token *token)
 			if (token->data[0] == token->type && token->data[len - 1] == token->type)	// 양 끝이 따옴표인 경우
 			{	// 따옴표 뗀 문자열로 업데이트
 				tmp = ft_strndup(token->data + 1, len - 2);
+				if (!tmp)
+					return (FALSE);
 				free(token->data);
 				token->data = tmp;
 			}
 		}
 		token = token->next;
 	}
+	return (TRUE);
 }
 
 t_bool	deal_env(t_token *token)
