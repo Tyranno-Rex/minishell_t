@@ -110,7 +110,7 @@ void	remove_spaces(t_token *token)
 	pre = NULL;
 	while (token)
 	{
-		while (!pre && token->type == SPACES)
+		while (!pre && token->type == SPACES)	// 맨 앞에 나온 SPACES node 삭제
 		{
 			next = token;
 			token = token->next;
@@ -118,8 +118,8 @@ void	remove_spaces(t_token *token)
 			token = token->next;
 		}
 		next = token->next;
-		if (token->next && token->type != SPACES && token->next->type != SPACES)
-		{
+		if (token->next && token->type != SPACES && token->next->type != SPACES)	// 노드가 공백으로 구분되지 않았을 때 두 data 합치고 노드 하나 삭제
+		{	// 아 이거 STR이랑 TMP? 로 구분해야 할 듯
 			tmp = ft_strjoin(token->data, next->data);
 			free(token->data);
 			token->data = tmp;
