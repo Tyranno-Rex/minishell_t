@@ -25,3 +25,22 @@ t_env	*env_search_key(char *key)
 	}
 	return (NULL);
 }
+
+void	env_free_one(t_env *env)
+{
+	if (env)
+	{
+		if (env->key)
+		{
+			free(env->key);
+			env->key = NULL;
+		}
+		if (env->val)
+		{
+			free(env->val);
+			env->val = NULL;
+		}
+		free(env);
+		env = NULL;
+	}
+}

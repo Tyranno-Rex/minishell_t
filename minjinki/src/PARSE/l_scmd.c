@@ -12,7 +12,7 @@
 
 #include "../../include/minishell.h"
 
-char	*join_ori(char *s1, char *s2)
+char	*do_join(char *s1, char *s2)
 {
 	char	*res;
 
@@ -38,7 +38,7 @@ t_bool	join_argv(t_token *token, char *ori, char **av)
 	i = -1;
 	while (++i < cnt - 1)
 	{
-		ori = join_ori(ori, token->data);
+		ori = do_join(ori, token->data);
 		av[i] = ft_strdup(token->data);
 		if (!ori || !(av[i]))
 			return (FALSE);
@@ -63,7 +63,7 @@ t_scmd	add_scmd(t_token *token)
 			return (NULL);
 		token = token->next;
 		scmd->opt = ft_strdup(token->data);		// options
-		scmd->ori = join_ori(scmd->ori, token->data);
+		scmd->ori = do_join(scmd->ori, token->data);
 		if (!(scmd->opt) || !(scmd->ori))
 			return (NULL);
 		token = token->next;
