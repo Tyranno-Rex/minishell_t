@@ -86,14 +86,14 @@ int	split_quote(int len, const char *cmd, char *quote)
 	if (cmd != quote)
 	{
 		new = add_node(STR, len, cmd);
+		if (!new)
+			return (ERROR);
 		ft_lstadd_back(&(g_glob.tok), new);
 	}
 	if (*quote == SINGLE)
 		end = quotes(SINGLE, quote);
 	else if (*quote == DOUBLE)
 		end = quotes(DOUBLE, quote);
-	if (end == ERROR)
-		return (ERROR);
 	return (end);
 }
 
@@ -110,7 +110,7 @@ t_bool	deal_quotes(char *cmd, int i)
 		{
 			gap = split_quote(i - last, start, cmd + i);
 			if (gap == ERROR)
-				return (print_error("Fail to tokenize\n"));
+				return (FALSE);
 			i += (gap + 1);
 			start = cmd + i + 1;
 			last = i + 1;
