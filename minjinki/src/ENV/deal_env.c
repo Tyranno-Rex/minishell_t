@@ -77,6 +77,58 @@ t_bool	remove_quotes(t_token *token)
 	return (TRUE);
 }
 
+t_bool	join_n_split(t_token *token)
+{
+	int		i;		// index of matrixs
+	char	**matrix;
+	t_token	*tmp;	// update
+
+	tmp = NULL;
+	while (token)
+	{
+		matrix = ft_split(token->data);
+		if (!matrix)
+			return (FALSE);
+		while (matrix[i])
+		{
+			// matrix[i] 추가 후 SPACES 노드 하나 추가 만약 matrix[i+1]이 없으면 추가 안하기
+			// lst_addback(&tmp);
+			//if (matrix[i+1])
+			//	spaces node 추가
+		}
+		free_matrix(matrix);
+		token = token->next;
+	}
+}
+
+void	remove_spaces(t_token *token)
+{
+	char	*tmp;
+	t_token	*next;
+
+	while (token)
+	{
+		next = token->next;
+		if (token->next && token->type != SPACES && token->next->type != SPACES)
+		{
+			tmp = ft_strjoin(token->data, next->data);
+			free(token->data);
+			token->data = tmp;
+			token->next = next->next;
+			free(next->data);
+			free(next);
+		}
+		else if (token->next && token->type != SPACES && token->next->type == SPACES)
+		{
+			next = token->next;
+			token->next = next->next;
+			free(next->data);
+			free(next);
+		}
+		token = token->next;
+	}
+}
+
 t_bool	deal_env(t_token *token)
 {
 	if (!convert_env(token))
@@ -85,4 +137,5 @@ t_bool	deal_env(t_token *token)
 		return (FALSE);
 	if (!join_n_split(token))	// 토큰 내부 문자열 스페이스 기준으로 나누기 && 토큰 양 옆 토큰과 공백으로 구분되지 않으면 합치기
 		return (FALSE);
+	remove_spaces(token);	// SPACES 노드 없애기: tmp에다 SPACES 저장하고 pre->next = tmp->next 후 free(tmp)
 }
