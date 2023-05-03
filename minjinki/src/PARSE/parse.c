@@ -35,7 +35,7 @@ t_bool	parse(char *cmd)
 		return (FALSE);
 	if (!set_pipe_n_redi())
 		return (FALSE);
-	// convert_env(&(g_glob.tok));
+	// deal_env(g_glob.tok);
 	ft_lstprint(&(g_glob.tok));
 	//if (!chk_cmd_is_valid()) // syntax error
 	//	return (print_syntax_error()); // return TRUE

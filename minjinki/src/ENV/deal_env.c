@@ -22,7 +22,7 @@ t_bool	convert_env(t_token *cur)
 
 	if (!cur)
 		return (TRUE);
-	if ((cur->type == STR || cur->type == TMP))
+	if ((cur->type == STR || cur->type == DOUBLE || cur->type == TMP))
 	{
 		i = -1;
 		while (cur->data[++i])
@@ -51,4 +51,14 @@ t_bool	convert_env(t_token *cur)
 		}
 	}
 	return (convert_env(cur->next));
+}
+
+t_bool	deal_env(t_token *token)
+{
+	if (!convert_env(token))
+		return (FALSE);
+	if (!remove_quotes(token))
+		return (FALSE);
+	if (!join_n_split(token))
+		return (FALSE);
 }
