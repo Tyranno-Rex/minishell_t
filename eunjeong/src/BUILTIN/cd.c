@@ -1,93 +1,85 @@
-#include "../inc/minishell.h"
-char	*ft_strcpy(char *dest, char *src)
-{
-	int	i;
+#include "../../include/minishell.h"
 
-	i = 0;
-	while (src[i] != '\0')
-	{
-		dest[i] = src[i];
-		i++;
-	}
-	dest[i] = '\0';
-	return (dest);
-}
-
-static char	*check_dots(char **args)
+static char	*check_dots()
 {
-	size_t		i;
-	char		*dir_param;
+	t_glob		tmp;
+	char		*dir_param = NULL;
+	char		*dot;
+	size_t		count = 0;
 	static char	pwd[1024];
 
-	dir_param = NULL;
-	i = ft_strlen(args[1 + 1]);
-	if (i == 1 && ft_strncmp(".", args[1 + 1], 1) == 0)
+	tmp = g_glob;
+	
+	while(count < 2)
+	{
+		if (tmp.tok->type == 1 || tmp.tok->type == 34)
+			count++;
+		if (count > 1)
+			dot = tmp.tok->data;
+		tmp.tok = tmp.tok->next;
+	}
+	if (!strcmp(dot, "."))
 	{
 		getcwd(pwd, 1024);
 		return (pwd);
 	}
-	else if (i == 2 && ft_strncmp("..", args[1 + 1], 2) == 0)
+	else if (!strcmp(dot, ".."))
 		dir_param = "..";
+	else
+		dir_param = dot;
 	return (dir_param);
 }
 
 // cd 명령어가 몇개 있는 지 확인함.
 int	ft_cd_len()
 {
-	int row;
+	int 	row;
+	t_glob	tmp;
 
 	row = 0;
-	while (g_glob.tok)
+	tmp = g_glob;
+	while (tmp.tok)
 	{
 		// 해당 부분 str이라고 정의함.
-		if (g_glob.tok->type == 1)
+		if (tmp.tok->type == 1 || tmp.tok->type == 34)
 			row++;
-		g_glob.tok = g_glob.tok->next;
+		tmp.tok = tmp.tok->next;
 	}
 	return (row);
 }
-static char	*validate_args(char **data)
+
+char	*validate_args()
 {
-	size_t	size;
-	char	*dir_param;
-	char	*tmp;
+	int		size;
+	char	*tmp = NULL;
 
-	size = ft_cd_len(data);
-	// 인자가 2개만 진행되게 함
-	if (size > 2)
-		return (NULL);
+	
+	// printf("test size : %d\n", size);
 
+	size = ft_cd_len();
 	// 인자가 1개 -> cd 만 입력됐는 지 확인 (-> 이렇다면 홈 디렉으로 이동함) 
 	// -> 이건 환경 변수 이야기 듣고 구현할 거임
-	// else if (size == 1)
-	// 	return (get_env_path("HOME", data));
-
+	if (size == 1)
+		return (NULL);
+		// return (get_env_path("HOME", data));
+	
 	// . 이나 ..을 반환하는 결과
-	tmp = check_dots();
+	// 인자가 2개만 진행되게 함.
+	else if (size == 2)
+		tmp = check_dots();
 	if (tmp)
-	{
-		dir_param = ft_calloc(ft_strlen(tmp) + 1, sizeof(char));
-		ft_strcpy(dir_param, tmp);
-	}
+		return (tmp);
 	else
-		dir_param = tmp;
-	// 만약에 cd와 cd .와 cd ..는 아닌 경우 ["절대 경로"]로 실행함.
-	if (dir_param == NULL)
-	{
-		dir_param = ft_calloc(ft_strlen(data[2]) + 1, sizeof(char));
-		ft_strcpy(dir_param, data[2]);
-	}
-	return (dir_param);
+		return (NULL);
 }
 
 void	ft_cd()
 {
 	char	*new_directory;
-	char	*oldpwd;
-	char	pwd[5096];
+	// char	*oldpwd;
 
-	new_directory = validate_args(g_glob.cmd);
-	printf("%s", new_directory);
+	new_directory = validate_args();
+	printf("new_directory: %s\n", new_directory);
 	if (new_directory == NULL)
 	{
 		printf("minishell: cd: too many arguments");

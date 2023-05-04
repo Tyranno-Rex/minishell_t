@@ -34,7 +34,6 @@ void	minishell(void)
 	
 	while (TRUE)
 	{
-		// 
 		g_glob.cmd = readline(" minishell_$ ");
 		add_history(g_glob.cmd);
 		if (!parse(g_glob.cmd))
@@ -53,7 +52,6 @@ int	main(int ac, char **av, char **env)
 	(void)av;
 	if (ac != 1)
 		exit_with_code("usage: ./minishell\n", 126);
-
 	init_env(&env);
 	minishell();
 	free_all();

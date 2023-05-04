@@ -1,8 +1,12 @@
-#include "../inc/minishell.h"
+#include "../../include/minishell.h"
 
-void	ft_env(char **env)
+void	ft_env(void)
 {
-    int i = -1;
-    while (env[++i])
-        printf("%s\n", env[i]);
+	t_env *tmp_env;
+	tmp_env = g_glob.env;
+	while (tmp_env)
+	{
+		printf("%s=%s\n", tmp_env->key, tmp_env->val);
+		tmp_env = tmp_env->next;
+	}
 }

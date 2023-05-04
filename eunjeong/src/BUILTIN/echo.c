@@ -6,7 +6,7 @@ void ft_print_export()
 }
 
 // cd 명령어가 몇개 있는 지 확인함.
-int	count_declar()
+int	count_type_1()
 {
 	int row;
 	t_glob tmp; // 해당 부분 free 해야함
@@ -20,8 +20,6 @@ int	count_declar()
 			row++;
 		tmp.tok = tmp.tok->next;
 	}
-	// free(tmp);
-
 	return (row);
 }
 
@@ -33,7 +31,7 @@ int	ft_exec_echo(void)
 	int		i;
 
 	n_line = true;
-	i = count_declar();
+	i = count_type_1();
 	tmp = g_glob;
 	if (i > 1)
 	{
@@ -53,7 +51,13 @@ int	ft_exec_echo(void)
 		if (!strncmp(&dallor, "$", 1))
 			ft_print_export();
 		else
-			printf("%s", tmp.tok->data);	
+		{
+			while (tmp.tok)
+			{
+				printf("%s", tmp.tok->data);	
+				tmp.tok = tmp.tok->next;
+			}
+		}
 	}
 	if (n_line == true)
 		printf("\n");
