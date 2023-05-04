@@ -19,8 +19,8 @@ int	handler_builtins()
 	if (ft_strncmp(g_glob.cmd, "env", 3) == 0)
 		printf("pwd command is runnig\n");
 		// ft_exec_env(data, env);
-	if (ft_strncmp(g_glob.cmd, "clear", 5))
-		execue(g_glob.cmd);
+	// if (ft_strncmp(g_glob.cmd, "clear", 5))
+	// 	execue(g_glob.cmd);
 	return (1);
 	// if (ft_strncmp(g_glob.cmd, "export", 6) == 0)
 		// ft_exec_export(data);
