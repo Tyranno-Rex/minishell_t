@@ -19,10 +19,8 @@ void	handler_builtins(void)
 		ft_exec_env();
 	if (ft_strncmp(g_glob.cmd, "cd", 2) == 0)
 		ft_exec_cd();
-		// printf("cd command is runnig\n");
-		
-	// if (ft_strncmp(g_glob.cmd, "export", 6) == 0)
-		// ft_exec_export(data);
+	if (ft_strncmp(g_glob.cmd, "export", 6) == 0)
+		ft_exec_export();
 	// if (ft_strncmp(g_glob.cmd, "unset", 5) == 0)
 		// ft_exec_unset(data);
 }

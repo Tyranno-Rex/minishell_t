@@ -44,7 +44,7 @@ void	ft_exec_env(void)
 	}
 }
 
-int	ft_exec_cd(void)
+void	ft_exec_cd(void)
 {
 	// 이 부분 파싱 부분 받아서 수정해야함
 	int check_free_to_process = 0;
@@ -57,10 +57,28 @@ int	ft_exec_cd(void)
 		// if (create_child_process() == 0)
 		// {
 			// ft_cd(data);
+			// free_children_main(data, NULL);
 			// exit(EXIT_SUCCESS);
 		// }
 		ft_cd();
 	}
-	return (0);
 }
 
+int	ft_exec_export(void)
+{
+	int check_free_to_process = 0;
+
+	if (check_free_to_process != 1)
+		ft_export();
+	else
+	{
+		// if (create_child_process() == 0)
+		// {
+		// 	ft_export(data->builtin_vars, data->pipeline);
+		// 	free_children_main(data, NULL);
+		// 	exit(EXIT_SUCCESS);
+		// }
+		ft_export();
+	}
+	return (0);
+}

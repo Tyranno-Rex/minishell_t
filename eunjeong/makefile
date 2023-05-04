@@ -55,7 +55,8 @@ BUILTIN_SRC	=   builtin\
 				exit\
 				env\
 				cd\
-				# export\
+				export\
+				#unset
 
 SRCS		=	$(addprefix $(ENV_DIR), $(addsuffix .c, $(ENV_SRC)))
 SRCS		+=	$(addprefix $(MAIN_DIR), $(addsuffix .c, $(MAIN_SRC)))

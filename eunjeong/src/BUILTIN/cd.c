@@ -52,10 +52,7 @@ char	*validate_args()
 {
 	int		size;
 	char	*tmp = NULL;
-
 	
-	// printf("test size : %d\n", size);
-
 	size = ft_cd_len();
 	// 인자가 1개 -> cd 만 입력됐는 지 확인 (-> 이렇다면 홈 디렉으로 이동함) 
 	// -> 이건 환경 변수 이야기 듣고 구현할 거임
@@ -79,7 +76,6 @@ void	ft_cd()
 	// char	*oldpwd;
 
 	new_directory = validate_args();
-	printf("new_directory: %s\n", new_directory);
 	if (new_directory == NULL)
 	{
 		printf("minishell: cd: too many arguments");
