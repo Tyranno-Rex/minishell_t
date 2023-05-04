@@ -6,7 +6,7 @@
 #    By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/16 14:12:28 by minjinki          #+#    #+#              #
-#    Updated: 2023/03/30 13:29:27 by minjinki         ###   ########.fr        #
+#    Updated: 2023/05/04 14:38:25 by minjinki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,7 @@ RL_INC		=	-I${HOME}/.brew/opt/readline/include
 ENV_DIR		=	src/ENV/
 ENV_SRC		=	env_utils\
 				env_utils2\
+				deal_env\
 				init_env\
 				parse_env
 

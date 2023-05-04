@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   convert_env.c                                      :+:      :+:    :+:   */
+/*   deal_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: MJKim <zinnnn37@gmail.com>                 +#+  +:+       +#+        */
+/*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 16:09:03 by MJKim             #+#    #+#             */
-/*   Updated: 2023/03/29 16:09:03 by MJKim            ###   ########.fr       */
+/*   Updated: 2023/05/04 14:49:24 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,11 @@ t_bool	convert_env(t_token *cur)
 		{
 			while (cur->data[i] && cur->data[i] != '$')
 				i++; // $ 나올 때까지 뒤로
-			tmp = ft_strndup(cur->data, i); // $ 앞까지의 문자열 저장
+			tmp = ft_strndup(cur->data, i++); // $ 앞까지의 문자열 저장
 			if (!tmp)
-				reutrn (FALSE);
-			len = ft_strchr(" $.", cur->data[++i]) - &(cur->data[i]); // 환경변수 뒤에서 가장 먼저 나오는 sep 까지의 길이, 없으면 \0까지의 길이
-			key = ft_strdup(cur->data + i, len); // 공백이나 다음 $ 이전까지의 문자열 저장
+				return (FALSE);
+			len = ft_strchr(" $.", cur->data[i]) - &(cur->data[i]); // 환경변수 뒤에서 가장 먼저 나오는 sep 까지의 길이, 없으면 \0까지의 길이
+			key = ft_strndup(cur->data + i, len); // 공백이나 다음 $ 이전까지의 문자열 저장
 			if (!key)
 				return (FALSE);
 			env = env_search_key(key);
@@ -43,7 +43,7 @@ t_bool	convert_env(t_token *cur)
 				if (!tmp)
 					return (FALSE);
 			}
-			tmp = do_join(tmp, cur->data[i + len], ft_strlen(&(cur->data[i + len]))); // 공백 뒤부터 붙이기
+			tmp = do_join(tmp, &(cur->data[i + len])); // 공백 뒤부터 붙이기
 			free(cur->data);
 			cur->data = tmp;
 			free(key);
@@ -80,25 +80,43 @@ t_bool	remove_quotes(t_token *token)
 t_bool	join_n_split(t_token *token)
 {
 	int		i;		// index of matrixs
+	char	*data;
 	char	**matrix;
-	t_token	*tmp;	// update
+	t_token	*tmp;
+	t_token	*new;	// update
 
-	tmp = NULL;
+	new = NULL;
 	while (token)
 	{
-		matrix = ft_split(token->data);
+		matrix = ft_split(token->data, ' ');
 		if (!matrix)
 			return (FALSE);
-		while (matrix[i])
+		i = -1;
+		while (matrix[++i])
 		{
+			data = ft_strdup(matrix[i]);
+			if (!data)
+				return (FALSE);
+			tmp = ft_lstnew(STR, data);
+			if (!tmp)
+				return (FALSE);
+			ft_lstadd_back(&(new), tmp);
 			// matrix[i] 추가 후 SPACES 노드 하나 추가 만약 matrix[i+1]이 없으면 추가 안하기
-			// lst_addback(&tmp);
-			//if (matrix[i+1])
-			//	spaces node 추가
+			if (matrix[i+1])
+			{
+				tmp = ft_lstnew(SPACES, NULL);
+				if (!tmp)
+					return (FALSE);
+				ft_lstadd_back(&(new), tmp);
+			}
 		}
+		ft_lstclear(&(g_glob.tok));
+		g_glob.tok = new;
 		free_matrix(matrix);
 		token = token->next;
 	}
+
+	return (TRUE);
 }
 
 void	remove_spaces(t_token *token)
@@ -146,4 +164,5 @@ t_bool	deal_env(t_token *token)
 	if (!join_n_split(token))	// 토큰 내부 문자열 스페이스 기준으로 나누기 && 토큰 양 옆 토큰과 공백으로 구분되지 않으면 합치기
 		return (FALSE);
 	remove_spaces(token);	// SPACES 노드 없애기: tmp에다 SPACES 저장하고 pre->next = tmp->next 후 free(tmp)
+	return (TRUE);
 }

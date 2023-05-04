@@ -6,7 +6,7 @@
 #    By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/13 17:47:48 by minjinki          #+#    #+#              #
-#    Updated: 2023/03/23 17:51:01 by minjinki         ###   ########.fr        #
+#    Updated: 2023/05/04 14:40:38 by minjinki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,6 +14,7 @@ SRCS		=\
 			ft_atoi.c\
 			ft_bzero.c\
 			ft_calloc.c\
+			ft_do_join.c\
 			ft_isalnum.c\
 			ft_isalpha.c\
 			ft_isascii.c\

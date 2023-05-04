@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 15:25:24 by minjinki          #+#    #+#             */
-/*   Updated: 2023/03/28 16:57:55 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/05/04 14:41:03 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <stdlib.h>
 # include "../../include/structs.h"
 
+char	*do_join(char *s1, char *s2);
 char	*ft_itoa(int n);
 char	**ft_split(char const *s, char c);
 char	*ft_strchr(const char *s, int c);

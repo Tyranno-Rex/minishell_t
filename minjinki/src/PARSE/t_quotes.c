@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:24:44 by minjinki          #+#    #+#             */
-/*   Updated: 2023/05/01 16:38:27 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/05/04 15:27:46 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ t_token	*add_node(int type, int len, const char *start)
 	t_token	*new;
 
 	new = malloc_node();
+	if (!new)
+		return (NULL);
 	new->type = type;
 	new->data = ft_strndup(start, len);
 	if (!(new->data))
@@ -57,9 +59,11 @@ int	quotes(int type, char *cmd)
 	int	len;
 
 	len = ft_strnlen(cmd + 1, type);	// 따옴표 바로 뒤 문자부터 길이 재기 시작, 다음 따옴표가 나올 때까지의 길이 
-	if (cmd + len != '\0')
+	if (*(cmd + len + 1) != '\0' && *(cmd + len + 1) == type)
 		len += 1;	// 닫힌 따옴표인 경우
 	ft_lstadd_back(&(g_glob.tok), add_node(type, len + 1, cmd));
+	if (*(cmd + len + 1) && *(cmd + len + 1) == ' ')
+		ft_lstadd_back(&(g_glob.tok), add_node(SPACES, 1, " "));
 	return (len);
 }
 
@@ -94,7 +98,7 @@ int	split_quote(int len, const char *cmd, char *quote)
 		end = quotes(SINGLE, quote);
 	else if (*quote == DOUBLE)
 		end = quotes(DOUBLE, quote);
-	return (end);
+	return (end + 1);
 }
 
 t_bool	deal_quotes(char *cmd, int i)
@@ -111,7 +115,7 @@ t_bool	deal_quotes(char *cmd, int i)
 			gap = split_quote(i - last, start, cmd + i);
 			if (gap == ERROR)
 				return (FALSE);
-			i += (gap + 1);
+			i += gap - 1;
 			start = cmd + i + 1;
 			last = i + 1;
 		}
