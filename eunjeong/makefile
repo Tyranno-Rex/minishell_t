@@ -1,6 +1,6 @@
 NAME = minishell
 
-SRCDIR = ./src/
+SRCDIR = ./main/
 SRCS = $(addprefix $(SRCDIR), builtin_exec.c builtin.c pwd.c exit.c echo.c cd.c env.c main.c)
 
 OBJS = $(SRCS:.c=.o)
@@ -12,20 +12,20 @@ CFLAGS =
 all: extern $(NAME)
 
 extern:
-	make -C libft/
+	make -C lib/
 
 $(NAME): $(OBJS)
-	$(COMPILER) -o $(NAME) $(OBJS) libft/libft.a
+	$(COMPILER) -o $(NAME) $(OBJS) lib/libft.a
 
 $(SRCDIR)%.o: $(SRCDIR)%.c ./inc/minishell.h
 	$(COMPILER) $(CFLAGS) -c $< -o $@
 
 clean:
-	make clean -C libft/
+	make clean -C lib/
 	rm -rf $(OBJS)
 
 fclean: clean
-	make fclean -C libft/
+	make fclean -C lib/
 	rm -rf $(NAME)
 
 re: fclean all

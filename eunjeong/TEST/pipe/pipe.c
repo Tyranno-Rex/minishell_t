@@ -84,7 +84,7 @@ static char	**get_trimmed(char **args)
 
 int pipex(char **argv)
 {
-    t_list	*cmds[2];
+    t_list	*cmds[2]; // libft 라이브러리 struct의 연결리스트
 	char	**contents[2];
 
 	cmds[0] = NULL; // 초기화

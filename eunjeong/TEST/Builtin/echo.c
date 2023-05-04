@@ -32,7 +32,7 @@ int	ft_exec_echo(char **argv)
 		}
 		while (argv[i])
 		{
-			if (argv[i] == '$')
+			if (argv[i] == "$")
 				ft_print_export(argv);
 			ft_putstr_fd(argv[i], 1);
 			if (argv[i][0] != '\0' && argv[i + 1])
