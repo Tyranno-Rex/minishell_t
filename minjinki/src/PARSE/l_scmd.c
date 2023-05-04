@@ -12,17 +12,7 @@
 
 #include "../../include/minishell.h"
 
-char	*do_join(char *s1, char *s2)
-{
-	char	*res;
 
-	res = ft_strjoin(s1, s2);
-	if (!res)
-		return (NULL);
-	free(s1);
-	s1 = NULL;
-	return (res);
-}
 
 t_bool	join_argv(t_token *token, char *ori, char **av)
 {

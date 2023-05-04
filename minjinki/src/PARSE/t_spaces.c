@@ -20,7 +20,7 @@ t_bool	free_lst(t_token **tmp)
 }
 
 t_bool	add_space(t_token **tmp)
-{
+{	// 공백 노드 추가
 	char	*s;
 	t_token	*new;
 
@@ -107,7 +107,7 @@ t_bool	deal_spaces(void)
 		}
 		cur = cur->next;
 	}
-	ft_lstclear(&(g_glob.tok));
-	g_glob.tok = tmp;
+	ft_lstclear(&(g_glob.tok));	// 기존 tok 지우고
+	g_glob.tok = tmp;			// 지금 만든 리스트로 업데이트
 	return (TRUE);
 }

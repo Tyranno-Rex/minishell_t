@@ -27,7 +27,7 @@ t_bool	add_oldpath(t_env *env)
 }
 
 void	print_env(char ***env)
-{
+{	// 환경변수 출력 -> 이제 안 씀, 나중에 삭제
 	int	i;
 
 	i = -1;
@@ -37,7 +37,7 @@ void	print_env(char ***env)
 }
 
 t_bool	copy_env(char ***env)
-{
+{	// 환경변수 복사 -> env_ori에 저장
 	int	matrix;
 	int	len;
 	int	i;

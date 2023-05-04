@@ -43,7 +43,7 @@ void	free_cmd(char *cmd)
 }
 
 t_bool	free_all(void)
-{
+{	// 전역변수에 메모리 할당하는 변수 있으면 여기 추가
 	if (g_glob.cmd)
 		free_cmd(g_glob.cmd);
 	if (g_glob.env_ori)
