@@ -52,9 +52,9 @@ BUILTIN_SRC	=   builtin\
 				builtin_exec\
 				pwd\
 				echo\
+				exit\
 				# cd\
 				# env\
-				# exit\
 				# export\
 
 SRCS		=	$(addprefix $(ENV_DIR), $(addsuffix .c, $(ENV_SRC)))

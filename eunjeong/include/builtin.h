@@ -13,4 +13,7 @@ void	ft_pwd(void);
 // echo.c
 int	    ft_exec_echo(void);
 
+// exit.c
+void	ft_exec_exit(void);
+
 #endif

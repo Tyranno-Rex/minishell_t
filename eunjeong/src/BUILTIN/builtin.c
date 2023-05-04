@@ -15,8 +15,8 @@ void	handler_builtins(void)
 		ft_exec_pwd();
 		// printf("pwd command is runnig\n");
 	if (ft_strncmp(g_glob.cmd, "exit", 4) == 0)
-		printf("exit command is runnig\n");
-		// ft_exec_exit(data);
+		ft_exec_exit();
+		// printf("exit command is runnig\n");
 	if (ft_strncmp(g_glob.cmd, "echo", 4) == 0)
 		ft_exec_echo();
 	if (ft_strncmp(g_glob.cmd, "cd", 2) == 0)

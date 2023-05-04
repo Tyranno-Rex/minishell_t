@@ -1,15 +1,12 @@
-#include "../inc/minishell.h"
+#include "../../include/minishell.h"
 
-void	ft_exec_exit(char **data)
+void	ft_exec_exit(void)
 {
-	if (data[2] != NULL)
-	{
-		printf("exit sucess!\n");
-		exit(ft_atoi(data[2]));
-	}
-	else
-	{
-		printf("exit sucess!\n");
-		exit(EXIT_SUCCESS);
-	}
+	bool check;
+
+	// free_all()에러 발생
+	check = free_all();
+	if (check)
+		exit(SUCCESS);
+	exit(SUCCESS);
 }
