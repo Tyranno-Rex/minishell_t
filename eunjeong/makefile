@@ -1,33 +1,77 @@
-NAME = minishell
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2023/03/16 14:12:28 by minjinki          #+#    #+#              #
+#    Updated: 2023/05/04 14:38:25 by minjinki         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 
-SRCDIR = ./main/
-SRCS = $(addprefix $(SRCDIR), builtin_exec.c builtin.c pwd.c exit.c echo.c cd.c env.c main.c)
+CC			=	cc
+CFLAGS		=	-g -Wall -Wextra -Werror
+RM			=	rm -f
+AR			=	ar
+ARFLAGS		=	src
 
-OBJS = $(SRCS:.c=.o)
+NAME		=	minishell
 
-COMPILER = cc
-# CFLAGS = -Wall -Werror -Wextra
-CFLAGS =
+INCLUDE		=	include
 
-all: extern $(NAME)
+RL_LIB		=	-lreadline -L${HOME}/.brew/opt/readline/lib
+RL_INC		=	-I${HOME}/.brew/opt/readline/include
 
-extern:
-	make -C lib/
+ENV_DIR		=	src/ENV/
+ENV_SRC		=	env_utils\
+				env_utils2\
+				deal_env\
+				init_env\
+				parse_env
 
-$(NAME): $(OBJS)
-	$(COMPILER) -o $(NAME) $(OBJS) lib/libft.a
+MAIN_DIR	=	src/MAIN/
+MAIN_SRC	=	main
 
-$(SRCDIR)%.o: $(SRCDIR)%.c ./inc/minishell.h
-	$(COMPILER) $(CFLAGS) -c $< -o $@
+PARSE_DIR	=	src/PARSE/
+PARSE_SRC	=	parse\
+				t_quotes\
+				t_spaces\
+				t_pipe_n_redi\
+				t_set_pipe_n_redi
 
-clean:
-	make clean -C lib/
-	rm -rf $(OBJS)
+UTILS_DIR	=	src/UTILS/
+UTILS_SRC	=	error\
+				free
 
-fclean: clean
-	make fclean -C lib/
-	rm -rf $(NAME)
+SRCS		=	$(addprefix $(ENV_DIR), $(addsuffix .c, $(ENV_SRC)))
+SRCS		+=	$(addprefix $(MAIN_DIR), $(addsuffix .c, $(MAIN_SRC)))
+SRCS		+=	$(addprefix $(PARSE_DIR), $(addsuffix .c, $(PARSE_SRC)))
+SRCS		+=	$(addprefix $(UTILS_DIR), $(addsuffix .c, $(UTILS_SRC)))
+OBJS		=	$(SRCS:%.c=%.o)
 
-re: fclean all
+LIBFT		=	src/LIBFT/
+LIBFT_LIB	=	$(LIBFT)libft.a
 
-.PHONY: all extern clean fclean re
+all			:	$(NAME)
+
+$(NAME)		:	$(OBJS)
+	$(MAKE) -C $(LIBFT)
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(RL_LIB) $(LIBFT_LIB)
+
+%.o			:	%c
+	$(CC) $(CFLAGS) -I$(INCLUDE) $(RL_INC) -c $< -o $@
+
+clean		:
+	$(MAKE) -C $(LIBFT) clean
+	$(RM) $(OBJS)
+
+fclean		:	clean
+	$(MAKE) -C $(LIBFT) fclean
+	$(RM) $(NAME)
+
+re			:
+	$(MAKE) fclean
+	$(MAKE) all
+
+.PHONY		:	all clean fclean re
