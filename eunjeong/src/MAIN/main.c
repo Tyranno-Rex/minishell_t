@@ -22,11 +22,19 @@ void	print_pwd(void)
 	free(pwd);
 }
 
+void Check_leak()
+{
+	system("leaks --list minishell");
+}
+
 void	minishell(void)
 {
+	setting_signal();
+	init_rl_catch_signals();
+	
 	while (TRUE)
 	{
-		print_pwd();
+		// 
 		g_glob.cmd = readline(" minishell_$ ");
 		add_history(g_glob.cmd);
 		if (!parse(g_glob.cmd))
@@ -34,15 +42,18 @@ void	minishell(void)
 			free_all();
 			continue ;
 		}
+		handler_builtins();
 		free_cmd(g_glob.cmd);
 	}
 }
 
 int	main(int ac, char **av, char **env)
 {
+	atexit(Check_leak);
 	(void)av;
 	if (ac != 1)
 		exit_with_code("usage: ./minishell\n", 126);
+
 	init_env(&env);
 	minishell();
 	free_all();

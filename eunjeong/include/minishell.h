@@ -13,6 +13,8 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+
+// minjinki
 # include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>
@@ -22,6 +24,15 @@
 # include "structs.h"
 # include "utils.h"
 # include "../src/LIBFT/libft.h"
+
+// eunjeong
+# include <signal.h>
+# include <sys/types.h>
+# include <string.h>
+# include <stdbool.h>
+# include <termios.h>
+# include "signal.h"
+# include "builtin.h"
 
 t_glob	g_glob;
 

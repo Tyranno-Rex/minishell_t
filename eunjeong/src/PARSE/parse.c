@@ -27,6 +27,8 @@ t_bool	is_space_only(char *cmd)
 
 t_bool	parse(char *cmd)
 {
+	if (!cmd)
+		exit(SUCCESS);
 	if (ft_strlen(cmd) == 0 || is_space_only(cmd))
 		return (TRUE);
 	if (!deal_quotes(cmd, -1) || !deal_spaces())

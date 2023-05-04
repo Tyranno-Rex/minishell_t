@@ -44,10 +44,26 @@ UTILS_DIR	=	src/UTILS/
 UTILS_SRC	=	error\
 				free
 
+SIGNAL_DIR	=	src/SIGNAL/
+SIGNAL_SRC	=	signal
+
+BUILTIN_DIR =	src/BUILTIN/
+BUILTIN_SRC	=   builtin\
+				# builitin_exec\
+				# cd\
+				# echo\
+				# env\
+				# exit\
+				# export\
+				# pwd
+
 SRCS		=	$(addprefix $(ENV_DIR), $(addsuffix .c, $(ENV_SRC)))
 SRCS		+=	$(addprefix $(MAIN_DIR), $(addsuffix .c, $(MAIN_SRC)))
 SRCS		+=	$(addprefix $(PARSE_DIR), $(addsuffix .c, $(PARSE_SRC)))
 SRCS		+=	$(addprefix $(UTILS_DIR), $(addsuffix .c, $(UTILS_SRC)))
+SRCS		+=  $(addprefix $(SIGNAL_DIR), $(addsuffix .c, $(SIGNAL_SRC)))
+SRCS		+=  $(addprefix $(BUILTIN_DIR), $(addsuffix .c, $(BUILTIN_SRC)))
+
 OBJS		=	$(SRCS:%.c=%.o)
 
 LIBFT		=	src/LIBFT/
