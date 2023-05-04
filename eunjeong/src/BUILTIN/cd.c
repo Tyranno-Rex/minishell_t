@@ -31,24 +31,28 @@ static char	*check_dots(char **args)
 	return (dir_param);
 }
 
-
-int	ft_cd_len(char **tab)
+// cd 명령어가 몇개 있는 지 확인함.
+int	ft_cd_len()
 {
-	int	rows;
+	int row;
 
-	rows = 0;
-	while (tab[rows])
-		rows++;
-	return (rows);
+	row = 0;
+	while (g_glob.tok)
+	{
+		// 해당 부분 str이라고 정의함.
+		if (g_glob.tok->type == 1)
+			row++;
+		g_glob.tok = g_glob.tok->next;
+	}
+	return (row);
 }
-
 static char	*validate_args(char **data)
 {
 	size_t	size;
 	char	*dir_param;
 	char	*tmp;
 
-	size = ft_cd_len(data) - 1;
+	size = ft_cd_len(data);
 	// 인자가 2개만 진행되게 함
 	if (size > 2)
 		return (NULL);
@@ -58,9 +62,8 @@ static char	*validate_args(char **data)
 	// else if (size == 1)
 	// 	return (get_env_path("HOME", data));
 
-
 	// . 이나 ..을 반환하는 결과
-	tmp = check_dots(data);
+	tmp = check_dots();
 	if (tmp)
 	{
 		dir_param = ft_calloc(ft_strlen(tmp) + 1, sizeof(char));
@@ -77,13 +80,13 @@ static char	*validate_args(char **data)
 	return (dir_param);
 }
 
-void	ft_cd(char **command)
+void	ft_cd()
 {
 	char	*new_directory;
 	char	*oldpwd;
 	char	pwd[5096];
 
-	new_directory = validate_args(command);
+	new_directory = validate_args(g_glob.cmd);
 	printf("%s", new_directory);
 	if (new_directory == NULL)
 	{

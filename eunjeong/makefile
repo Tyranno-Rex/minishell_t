@@ -49,13 +49,13 @@ SIGNAL_SRC	=	signal
 
 BUILTIN_DIR =	src/BUILTIN/
 BUILTIN_SRC	=   builtin\
-				# builitin_exec\
+				builtin_exec\
+				pwd\
 				# cd\
 				# echo\
 				# env\
 				# exit\
 				# export\
-				# pwd
 
 SRCS		=	$(addprefix $(ENV_DIR), $(addsuffix .c, $(ENV_SRC)))
 SRCS		+=	$(addprefix $(MAIN_DIR), $(addsuffix .c, $(MAIN_SRC)))
