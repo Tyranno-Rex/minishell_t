@@ -30,6 +30,7 @@ typedef struct s_data
 
 
 /*fd_return.c*/
+t_data			*infile_set1(t_data *node, char **args, int *i);
 t_data			*infile_set2(t_data *node, char **args, int *i);
 int				get_fd(int oldfd, char *path, int flags[2]);
 
