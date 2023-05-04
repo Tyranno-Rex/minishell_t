@@ -51,8 +51,8 @@ BUILTIN_DIR =	src/BUILTIN/
 BUILTIN_SRC	=   builtin\
 				builtin_exec\
 				pwd\
+				echo\
 				# cd\
-				# echo\
 				# env\
 				# exit\
 				# export\

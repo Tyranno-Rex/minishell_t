@@ -3,11 +3,11 @@
 // int	handler_builtins(char **data, char **env)
 void	handler_builtins(void)
 {
-	while (g_glob.tok)
-	{
-		printf("glob data : %s\n", g_glob.tok->data);
-		g_glob.tok = g_glob.tok->next;
-	}
+	// while (g_glob.tok)
+	// {
+	// 	printf("glob data : %s\n", g_glob.tok->data);
+	// 	g_glob.tok = g_glob.tok->next;
+	// }
 	
 	
 	
@@ -18,8 +18,7 @@ void	handler_builtins(void)
 		printf("exit command is runnig\n");
 		// ft_exec_exit(data);
 	if (ft_strncmp(g_glob.cmd, "echo", 4) == 0)
-		printf("echo command is runnig\n");
-		// ft_exec_echo(data);
+		ft_exec_echo();
 	if (ft_strncmp(g_glob.cmd, "cd", 2) == 0)
 		printf("cd command is runnig\n");
 		// ft_exec_cd(data);

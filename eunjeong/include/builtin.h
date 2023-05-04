@@ -10,4 +10,7 @@ int	    ft_exec_pwd(void);
 // pwd.c
 void	ft_pwd(void);
 
+// echo.c
+int	    ft_exec_echo(void);
+
 #endif
