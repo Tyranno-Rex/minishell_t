@@ -6,18 +6,44 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 16:09:03 by MJKim             #+#    #+#             */
-/*   Updated: 2023/05/04 14:49:24 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/05/04 16:30:39 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+int	get_env(char *s, t_env **env)
+{
+	int		i;
+	int		len;
+	char	*key;
+	char	*target;
+
+	i = -1;
+	while (s[++i])
+	{
+		target = ft_strchr("\" $.", s[i]);
+		if (target)
+			break;
+	}
+	if (!target)
+		len = ft_strlen(s);
+	else
+		len = ft_strchr(s, target[0]) - s;
+	key = ft_strndup(s, len + 1);
+	if (!key)
+		return (ERROR);
+	printf("%s\n", key);
+	*env = env_search_key(key);
+	free(key);
+	return (len);
+}
 
 t_bool	convert_env(t_token *cur)
 {
 	int		i;
 	int		len;
 	char	*tmp;
-	char	*key;
 	t_env	*env;
 
 	if (!cur)
@@ -29,28 +55,28 @@ t_bool	convert_env(t_token *cur)
 		{
 			while (cur->data[i] && cur->data[i] != '$')
 				i++; // $ 나올 때까지 뒤로
+			if (!(cur->data[i]))
+				break ;
 			tmp = ft_strndup(cur->data, i++); // $ 앞까지의 문자열 저장
 			if (!tmp)
 				return (FALSE);
-			len = ft_strchr(" $.", cur->data[i]) - &(cur->data[i]); // 환경변수 뒤에서 가장 먼저 나오는 sep 까지의 길이, 없으면 \0까지의 길이
-			key = ft_strndup(cur->data + i, len); // 공백이나 다음 $ 이전까지의 문자열 저장
-			if (!key)
+			// good
+			len = get_env(cur->data + i, &env);
+			if (len == ERROR)
 				return (FALSE);
-			env = env_search_key(key);
 			if (env)
 			{ // 변수 value값 tmp에 이어 붙이기, env free하면 큰일남!! 복제한 거 아님
 				tmp = do_join(tmp, env->val); // 헤더에 넣어야 함, l_scmd.c에 있음
 				if (!tmp)
 					return (FALSE);
 			}
-			tmp = do_join(tmp, &(cur->data[i + len])); // 공백 뒤부터 붙이기
+			tmp = do_join(tmp, &(cur->data[i + len])); // 공백 뒤부터 붙이기 -> 이거 따옴표 있으면 없애고 해야함
 			free(cur->data);
 			cur->data = tmp;
-			free(key);
 			i += len - 1; // 조건문 ++i 때문에 공백 없이 바로 다음에 $ 다시 붙는 경우 $ 넘어감 그래서 -1
 		}
 	}
-	return (convert_env(cur->next));
+	return (TRUE);
 }
 
 t_bool	remove_quotes(t_token *token)
@@ -155,14 +181,22 @@ void	remove_spaces(t_token *token)
 	}
 }
 
-t_bool	deal_env(t_token *token)
+t_bool	deal_env(t_token **token)
 {
-	if (!convert_env(token))
-		return (FALSE);
-	if (!remove_quotes(token))	// 가장 바깥에 있는 따옴표 제거 -> 만약 한쪽에만 있으면 제거 x
-		return (FALSE);
-	if (!join_n_split(token))	// 토큰 내부 문자열 스페이스 기준으로 나누기 && 토큰 양 옆 토큰과 공백으로 구분되지 않으면 합치기
-		return (FALSE);
-	remove_spaces(token);	// SPACES 노드 없애기: tmp에다 SPACES 저장하고 pre->next = tmp->next 후 free(tmp)
+	t_token	*cur;
+
+	cur = *token;
+	while (cur)
+	{
+		if (!convert_env(cur))
+			return (FALSE);
+		ft_lstprint(&(g_glob.tok));
+		cur = cur->next;
+	}
+	// if (!remove_quotes(token))	// 가장 바깥에 있는 따옴표 제거 -> 만약 한쪽에만 있으면 제거 x
+	// 	return (FALSE);
+	// if (!join_n_split(token))	// 토큰 내부 문자열 스페이스 기준으로 나누기 && 토큰 양 옆 토큰과 공백으로 구분되지 않으면 합치기
+	// 	return (FALSE);
+	// remove_spaces(token);	// SPACES 노드 없애기: tmp에다 SPACES 저장하고 pre->next = tmp->next 후 free(tmp)
 	return (TRUE);
 }

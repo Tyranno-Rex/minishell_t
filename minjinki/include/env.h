@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 14:11:08 by minjinki          #+#    #+#             */
-/*   Updated: 2023/05/04 14:38:07 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/05/04 15:31:46 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ t_bool	parse_env(char ***env);
 /*
 ** deal_env.c
 */
-t_bool	deal_env(t_token *token);
+t_bool	deal_env(t_token **token);
 
 /*
 ** env_utils.c

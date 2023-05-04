@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 16:16:58 by minjinki          #+#    #+#             */
-/*   Updated: 2023/05/01 16:50:02 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/05/04 15:48:01 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ t_bool	env_lstclear(t_env **lst)
 		tmp = (*lst)->next;
 		free((*lst)->key);
 		free((*lst)->val);
+		*lst = tmp;
 	}
 	return (FALSE);
 }

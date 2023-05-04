@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:24:44 by minjinki          #+#    #+#             */
-/*   Updated: 2023/05/04 15:27:46 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/05/04 16:44:14 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,12 +59,16 @@ int	quotes(int type, char *cmd)
 	int	len;
 
 	len = ft_strnlen(cmd + 1, type);	// 따옴표 바로 뒤 문자부터 길이 재기 시작, 다음 따옴표가 나올 때까지의 길이 
-	if (*(cmd + len + 1) != '\0' && *(cmd + len + 1) == type)
-		len += 1;	// 닫힌 따옴표인 경우
-	ft_lstadd_back(&(g_glob.tok), add_node(type, len + 1, cmd));
+	if (*(cmd + len + 1) == '\0') // 닫히지 않은 따옴표
+	{
+		type = STR;	// 처리하지 않기 위해 STR으로 설정
+		ft_lstadd_back(&(g_glob.tok), add_node(type, len + 1, cmd));
+	}
+	else
+		ft_lstadd_back(&(g_glob.tok), add_node(type, len, cmd + 1));
 	if (*(cmd + len + 1) && *(cmd + len + 1) == ' ')
 		ft_lstadd_back(&(g_glob.tok), add_node(SPACES, 1, " "));
-	return (len);
+	return (len + 1);
 }
 
 /*
