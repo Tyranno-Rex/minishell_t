@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 16:09:03 by MJKim             #+#    #+#             */
-/*   Updated: 2023/05/04 16:47:09 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/05/04 16:48:35 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,30 +76,6 @@ t_bool	convert_env(t_token *cur)
 			cur->data = tmp;
 			i += len - 1; // 조건문 ++i 때문에 공백 없이 바로 다음에 $ 다시 붙는 경우 $ 넘어감 그래서 -1
 		}
-	}
-	return (TRUE);
-}
-
-t_bool	remove_quotes(t_token *token)
-{
-	int		len;
-	char	*tmp;
-
-	while (token)
-	{
-		if (token->type == DOUBLE || token->type == SINGLE)
-		{
-			len = ft_strlen(token->data);
-			if (token->data[0] == token->type && token->data[len - 1] == token->type)	// 양 끝이 따옴표인 경우
-			{	// 따옴표 뗀 문자열로 업데이트
-				tmp = ft_strndup(token->data + 1, len - 2);
-				if (!tmp)
-					return (FALSE);
-				free(token->data);
-				token->data = tmp;
-			}
-		}
-		token = token->next;
 	}
 	return (TRUE);
 }
@@ -193,8 +169,6 @@ t_bool	deal_env(t_token **token)
 			return (FALSE);
 		cur = cur->next;
 	}
-	// if (!remove_quotes(token))	// 가장 바깥에 있는 따옴표 제거 -> 만약 한쪽에만 있으면 제거 x
-	// 	return (FALSE);
 	// if (!join_n_split(token))	// 토큰 내부 문자열 스페이스 기준으로 나누기 && 토큰 양 옆 토큰과 공백으로 구분되지 않으면 합치기
 	// 	return (FALSE);
 	// remove_spaces(token);	// SPACES 노드 없애기: tmp에다 SPACES 저장하고 pre->next = tmp->next 후 free(tmp)
