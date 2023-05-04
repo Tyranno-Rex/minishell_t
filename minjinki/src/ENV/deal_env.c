@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 16:09:03 by MJKim             #+#    #+#             */
-/*   Updated: 2023/05/04 16:30:39 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/05/04 16:47:09 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	get_env(char *s, t_env **env)
 	i = -1;
 	while (s[++i])
 	{
-		target = ft_strchr("\" $.", s[i]);
+		target = ft_strchr(" $.", s[i]);
 		if (target)
 			break;
 	}
@@ -30,10 +30,11 @@ int	get_env(char *s, t_env **env)
 		len = ft_strlen(s);
 	else
 		len = ft_strchr(s, target[0]) - s;
-	key = ft_strndup(s, len + 1);
+	printf("%d\n", len);
+	key = ft_strndup(s, len);
 	if (!key)
 		return (ERROR);
-	printf("%s\n", key);
+	printf("%s|\n", key);
 	*env = env_search_key(key);
 	free(key);
 	return (len);
@@ -190,7 +191,6 @@ t_bool	deal_env(t_token **token)
 	{
 		if (!convert_env(cur))
 			return (FALSE);
-		ft_lstprint(&(g_glob.tok));
 		cur = cur->next;
 	}
 	// if (!remove_quotes(token))	// 가장 바깥에 있는 따옴표 제거 -> 만약 한쪽에만 있으면 제거 x
