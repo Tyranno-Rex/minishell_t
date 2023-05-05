@@ -48,6 +48,21 @@ int	ft_cd_len()
 	return (row);
 }
 
+char	*get_env_path(char* target)
+{
+	t_glob tmp;
+	
+	tmp = g_glob;
+	while (tmp.env)
+	{
+		if (!strncmp(tmp.env->key,target,4))
+			return (tmp.env->val);
+		tmp.env = tmp.env->next;
+	}
+	return (NULL);
+}
+
+
 char	*validate_args()
 {
 	int		size;
@@ -57,8 +72,8 @@ char	*validate_args()
 	// 인자가 1개 -> cd 만 입력됐는 지 확인 (-> 이렇다면 홈 디렉으로 이동함) 
 	// -> 이건 환경 변수 이야기 듣고 구현할 거임
 	if (size == 1)
-		return (NULL);
-		// return (get_env_path("HOME", data));
+		return (get_env_path("HOME"));
+		// return (NULL);
 	
 	// . 이나 ..을 반환하는 결과
 	// 인자가 2개만 진행되게 함.

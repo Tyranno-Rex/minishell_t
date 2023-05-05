@@ -1,27 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   ft_lstinsert.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/16 12:22:06 by minjinki          #+#    #+#             */
-/*   Updated: 2023/05/04 19:34:29 by minjinki         ###   ########.fr       */
+/*   Created: 2023/05/05 11:46:35 by minjinki          #+#    #+#             */
+/*   Updated: 2023/05/05 11:53:34 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "libft.h"
+#include <stdio.h>
 
-void	exit_with_code(char *s, int errno)
+void	ft_lstinsert(t_token *pre, t_token *new)
 {
-	ft_putstr_fd("minishell: ", 2);
-	ft_putstr_fd(s, 2);
-	exit(errno);
-}
+	t_token	*next;
 
-t_bool	print_error(char *s)
-{
-	ft_putstr_fd("minishell: ", 2);
-	ft_putstr_fd(s, 2);
-	return (FALSE);
+	next = pre->next;
+	pre->next = new;
+	new->next = next;
 }

@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 14:00:15 by minjinki          #+#    #+#             */
-/*   Updated: 2023/05/01 17:06:28 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/05/04 19:35:28 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_bool	ft_free(void *av)
 }
 
 void	free_matrix(char **matrix)
-{
+{	// 2차원 배열 해제
 	int	i;
 
 	i = -1;
@@ -39,11 +39,11 @@ void	free_cmd(char *cmd)
 		free(cmd);
 	if (&(g_glob.tok))
 		ft_lstclear(&(g_glob.tok));
-	// tree free
+	// tree free(만든다면..)
 }
 
 t_bool	free_all(void)
-{
+{	// 전역변수에 메모리 할당하는 변수 있으면 여기 추가
 	if (g_glob.cmd)
 		free_cmd(g_glob.cmd);
 	if (g_glob.env_ori)
@@ -51,6 +51,6 @@ t_bool	free_all(void)
 	if (g_glob.path)
 		free_matrix(g_glob.path);
 	if (g_glob.env)
-		env_lstclear(&(g_glob.env)); // 여기서 별안간 에러 발생?!
+		env_lstclear(&(g_glob.env));
 	return (FALSE);
 }

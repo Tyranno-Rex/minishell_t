@@ -1,10 +1,5 @@
 #include "../../include/minishell.h"
 
-void ft_print_export()
-{
-	printf("echo the export");
-}
-
 // cd 명령어가 몇개 있는 지 확인함.
 int	count_type_1()
 {
@@ -26,7 +21,6 @@ int	count_type_1()
 int	ft_exec_echo(void)
 {
 	bool	n_line;
-	char	dallor;
 	t_glob  tmp;
 	int		i;
 
@@ -47,16 +41,10 @@ int	ft_exec_echo(void)
 		// 해당 내용 수정 해야함 echo 뒤의 값이 1이 맞는지 확인해야함
 		while (tmp.tok->type != 1)
 			tmp.tok = tmp.tok->next;
-		dallor = tmp.tok->data[0];
-		if (!strncmp(&dallor, "$", 1))
-			ft_print_export();
-		else
+		while (tmp.tok)
 		{
-			while (tmp.tok)
-			{
-				printf("%s", tmp.tok->data);	
-				tmp.tok = tmp.tok->next;
-			}
+			printf("%s", tmp.tok->data);	
+			tmp.tok = tmp.tok->next;
 		}
 	}
 	if (n_line == true)
