@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 12:20:02 by minjinki          #+#    #+#             */
-/*   Updated: 2023/05/05 13:11:21 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/05/05 14:33:02 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void	minishell(void)
 			continue ;
 		}
 		free_cmd(g_glob.cmd);	// 이전 명령어 관련 변수 메모리 해제
+		//exit(0);
 	}
 }
 

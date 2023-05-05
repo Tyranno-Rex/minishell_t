@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:24:44 by minjinki          #+#    #+#             */
-/*   Updated: 2023/05/05 14:11:27 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/05/05 14:26:43 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,8 +116,9 @@ t_bool	deal_quotes(char *cmd, int i)
 	if (start == cmd)	// 따옴표가 없는 경우 STR으로 전체 저장
 		if (!ft_lstadd_back(&(g_glob.tok), add_node(STR, i, cmd)))
 			return (print_error("Fail to tokenize\n"));
-	ft_lstprint(&g_glob.tok);
-	if (*start)		// 따옴표는 처리 다 했는데 따옴표 뒤에 문자가 있는 경우
+	// ft_lstprint(&g_glob.tok);
+	// printf("start: %s\n", start);
+	if (start != cmd && *start)		// 따옴표는 처리 다 했는데 따옴표 뒤에 문자가 있는 경우
 		if (split_quote(i + 1, start, NULL) == ERROR)
 			return (print_error("Fail to tokenize: quotes\n"));
 	return (TRUE);

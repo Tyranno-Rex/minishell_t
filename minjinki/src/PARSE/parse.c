@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 12:20:56 by minjinki          #+#    #+#             */
-/*   Updated: 2023/05/05 14:09:49 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/05/05 14:30:26 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ t_bool	parse(char *cmd)
 		return (TRUE);
 	if (!chk_cmd_is_valid()) // syntax error
 		return (TRUE); // return TRUE
-	//ft_lstprint(&(g_glob.tok));
+	ft_lstprint(&(g_glob.tok));
 	// if (!init_tree())
 	// 	return (FALSE);
 	return (TRUE);
