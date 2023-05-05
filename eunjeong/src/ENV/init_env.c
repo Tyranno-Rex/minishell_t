@@ -15,10 +15,14 @@
 t_bool	add_oldpath(t_env *env)
 {	// oldpath 저장 -> cd하면서 업데이트 해줘야함 !!
 	char	*pwd;
+	char	*key;
 	t_env	*new;
 
 	pwd = NULL;
-	new = env_lstnew("OLDPWD", NULL);
+	key = strdup("OLDPWD");
+	if (!key)
+		return (FALSE);
+	new = env_lstnew(key, NULL);
 	if (!new)
 		return (FALSE);
 	new->val = getcwd(pwd, 0);

@@ -43,5 +43,8 @@ void	env_lstprint(void);
 ** env_utils2.c
 */
 t_env	*env_search_key(char *key);
+void	env_remove(t_env *pre, t_env *del);
+
+
 
 #endif

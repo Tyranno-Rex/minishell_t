@@ -44,3 +44,18 @@ void	env_free_one(t_env *env)
 		env = NULL;
 	}
 }
+
+void	env_remove(t_env *pre, t_env *del)
+{
+	t_env	*tmp;
+
+	tmp = del;
+	if (pre)
+		printf("pre: %s\n", pre->key);
+	printf("del: %s\n", del->key);
+	if (!pre)
+		g_glob.env = tmp->next;
+	else
+		pre->next = del->next;
+	env_free_one(tmp);
+}
