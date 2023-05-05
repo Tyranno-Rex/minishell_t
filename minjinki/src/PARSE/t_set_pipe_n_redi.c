@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 14:56:11 by MJKim             #+#    #+#             */
-/*   Updated: 2023/05/05 12:03:48 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/05/05 12:34:34 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,15 +75,12 @@ t_bool	split_pipe_n_redi(t_token *cur, int type, char *redi)
 // |< |<<는 동작해야하므로 띄워 놓는다: 진행 중
 t_bool	check_error(t_token *cur)
 {
-	char	*tmp;
-
-	tmp = cur->data;
-	if (!ft_strcmp(cur->data, "|<") && !ft_strchr("<|>", cur->data[2]))
+	if (ft_strcmp(cur->data, "|<") == 0)
 	{
 		if (!split_pipe_n_redi(cur, LREDI, "<"))
 			return (FALSE);
 	}
-	else if (ft_strcmp(cur->data, "|<<") && !ft_strchr("<|>", cur->data[3]))
+	else if (!ft_strcmp(cur->data, "|<<"))
 	{
 		if (!split_pipe_n_redi(cur, HEREDOC, "<<"))
 			return (FALSE);
@@ -101,7 +98,7 @@ t_bool	set_pipe_n_redi(void)
 		if (cur->type == TMP)
 			check_type(cur);
 		else if (cur->type == ERROR)
-			if (!check_error(cur))	// 진행 중
+			if (!check_error(cur))
 				return (FALSE);
 		cur = cur->next;
 	}
