@@ -69,6 +69,8 @@ typedef struct s_pipe
 {
 	t_cmd			*cmd;
 	int				fd[2];
+	int 			infile;
+	int				outfile;
 	struct s_pipe	*pipe;
 }	t_pipe;
 

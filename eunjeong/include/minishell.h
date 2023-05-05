@@ -31,6 +31,7 @@
 # include <string.h>
 # include <stdbool.h>
 # include <termios.h>
+# include <fcntl.h>
 # include "signal.h"
 # include "builtin.h"
 # include "pipe.h"

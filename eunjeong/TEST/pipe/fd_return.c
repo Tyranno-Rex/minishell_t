@@ -1,5 +1,10 @@
 #include "../inc/minishell.h"
 
+
+
+// 해당 내용 builtin redir_fd에 바꾸어서 구현하긴했는데 아직 좀 문제가 있음 하지만 죽을 것 같아서 집에 가게되어서 에러가 잇는 상태임ㄴ  
+// makefile은 됨
+
 // 파일 디스크립터를 반환해서 해당 파일에서 작업을 진행
 int get_fd(int oldfd, char *path, int flags[2])
 {

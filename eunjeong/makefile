@@ -60,10 +60,13 @@ BUILTIN_SRC	=   builtin\
 				cd\
 				export\
 				exec\
-				unset
+				unset\
+				redir_fd
 
-# PIPE_DIR	=	src/PIPE
-# PIPE_SCR	=	exec
+
+# 이거 왜 안되지..?
+# PIPE_DIR	=	src/PIPE/
+# PIPE_SCR	=	redir_fd
 
 
 SRCS		=	$(addprefix $(ENV_DIR), $(addsuffix .c, $(ENV_SRC)))

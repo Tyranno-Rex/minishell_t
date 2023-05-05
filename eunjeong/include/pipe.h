@@ -1,6 +1,6 @@
 #ifndef PIPE_H
 # define PIPE_H
 
-void    ft_execve(void);
+void	redir_fd(void);
 
 #endif

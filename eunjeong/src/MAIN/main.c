@@ -42,6 +42,7 @@ void	minishell(void)
 			free_all();
 			continue ;
 		}
+		redir_fd();
 		handler_builtins();
 		free_cmd(g_glob.cmd);
 	}
