@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 12:20:02 by minjinki          #+#    #+#             */
-/*   Updated: 2023/05/04 14:52:22 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/05/05 17:09:22 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ void	minishell(void)
 			free_all();
 			continue ;
 		}
-		handler_builtins();
 		free_cmd(g_glob.cmd);
 	}
 }

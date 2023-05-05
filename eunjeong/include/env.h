@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 14:11:08 by minjinki          #+#    #+#             */
-/*   Updated: 2023/05/04 15:31:46 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/05/05 16:57:30 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,6 @@ void	env_lstprint(void);
 ** env_utils2.c
 */
 t_env	*env_search_key(char *key);
+void	env_remove(t_env *pre, t_env *del);
 
 #endif

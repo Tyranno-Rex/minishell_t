@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:40:46 by MJKim             #+#    #+#             */
-/*   Updated: 2023/05/04 18:08:51 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/05/05 16:59:01 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,4 +43,19 @@ void	env_free_one(t_env *env)
 		free(env);
 		env = NULL;
 	}
+}
+
+void	env_remove(t_env *pre, t_env *del)
+{
+	t_env	*tmp;
+
+	tmp = del;
+	if (pre)
+		printf("pre: %s\n", pre->key);
+	printf("del: %s\n", del->key);
+	if (!pre)
+		g_glob.env = tmp->next;
+	else
+		pre->next = del->next;
+	env_free_one(tmp);
 }
