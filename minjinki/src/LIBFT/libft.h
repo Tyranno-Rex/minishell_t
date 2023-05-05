@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 15:25:24 by minjinki          #+#    #+#             */
-/*   Updated: 2023/05/04 14:41:03 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/05/05 11:48:04 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ void	ft_lstadd_front(t_token **lst, t_token *new);
 void	ft_lstclear(t_token **lst);
 void	ft_lstdelone(t_token *lst);
 void	ft_lstiter(t_token *lst, void (*f)(void *));
+void	ft_lstinsert(t_token *pre, t_token *new);
 void	ft_lstprint(t_token **lst);
 void	*ft_memchr(const void *s, int c, size_t n);
 void	*ft_memcpy(void *dst, const void *src, size_t n);
