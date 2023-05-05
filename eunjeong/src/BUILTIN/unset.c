@@ -1,4 +1,4 @@
-// #include "../../include/minishell.h"
+#include "../../include/minishell.h"
 
 // void	env_select_clear(char *env_value)
 // {

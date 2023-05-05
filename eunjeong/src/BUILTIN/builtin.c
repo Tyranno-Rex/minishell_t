@@ -43,8 +43,8 @@ void	handler_builtins(void)
 		ft_exec_cd();
 	if (ft_strncmp(g_glob.cmd, "export", 6) == 0)
 		ft_exec_export();
-	// if (ft_strncmp(g_glob.cmd, "unset", 5) == 0)
-	// 	ft_exec_unset();
+	if (ft_strncmp(g_glob.cmd, "unset", 5) == 0)
+		ft_exec_unset();
 	if (!is_builtin())
 		ft_exec_execve();
 }
