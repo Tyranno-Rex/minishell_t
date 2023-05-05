@@ -29,7 +29,12 @@ void	ft_exec_export(void);
 void    ft_export(void);
 
 // exec.c
+void	ft_exec_execve(void);
 void    ft_execve(void);
 
+
+// unset.c
+void	ft_exec_unset(void);
+void    ft_unset(void);
 
 #endif

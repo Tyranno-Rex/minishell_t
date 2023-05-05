@@ -57,7 +57,7 @@ BUILTIN_SRC	=   builtin\
 				cd\
 				export\
 				exec\
-				#unset
+				unset
 
 # PIPE_DIR	=	src/PIPE
 # PIPE_SCR	=	exec
