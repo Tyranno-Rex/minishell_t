@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 14:56:11 by MJKim             #+#    #+#             */
-/*   Updated: 2023/05/05 11:53:41 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/05/05 12:03:48 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,25 @@ t_bool	deal_lredis(char *redi)
 	return (TRUE);
 }
 
+t_bool	split_pipe_n_redi(t_token *cur, int type, char *redi)
+{
+	char	*data;
+	t_token	*new;
+
+	cur->type = PIPE;
+	cur->data = ft_strdup("|");
+	if (!(cur->data))
+		return (FALSE);
+	data = ft_strdup(redi);
+	if (!data)
+		return (FALSE);
+	new = ft_lstnew(type, data);
+	if (!new)
+		return (ft_free(data));
+	ft_lstinsert(cur, new);
+	return (TRUE);
+}
+
 /*
 ** check if type ERROR is |< or |<< -> should be splited as | < and | <<
 */
@@ -57,29 +76,17 @@ t_bool	deal_lredis(char *redi)
 t_bool	check_error(t_token *cur)
 {
 	char	*tmp;
-	char	*type;
-	t_token	*new;
 
 	tmp = cur->data;
-	if (!ft_strcmp(cur->data, "|<"))
+	if (!ft_strcmp(cur->data, "|<") && !ft_strchr("<|>", cur->data[2]))
 	{
-		cur->type = PIPE;
-		cur->data = ft_strdup("|");
-		if (!(cur->data))
+		if (!split_pipe_n_redi(cur, LREDI, "<"))
 			return (FALSE);
-		type = ft_strdup("<");
-		if (!type)
-			return (FALSE);
-		new = ft_lstnew(LREDI, type);
-		if (!new)
-			return (ft_free(type));
-		ft_lstinsert(cur, new);
 	}
-	else if (ft_strcmp(cur->data, "|<<"))
+	else if (ft_strcmp(cur->data, "|<<") && !ft_strchr("<|>", cur->data[3]))
 	{
-		// same as upper condition
-		// 함수로 빼서 s로 "<"나 "<<" 넘겨주기
-		// 한 함수로 두 개 다 커버하기
+		if (!split_pipe_n_redi(cur, HEREDOC, "<<"))
+			return (FALSE);
 	}
 	return (TRUE);
 }
