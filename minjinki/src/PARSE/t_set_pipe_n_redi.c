@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 14:56:11 by MJKim             #+#    #+#             */
-/*   Updated: 2023/05/04 19:28:06 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/05/05 11:53:41 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ t_bool	check_error(t_token *cur)
 	tmp = cur->data;
 	if (!ft_strcmp(cur->data, "|<"))
 	{
-		printf("entered to check error: |<\n\n");
 		cur->type = PIPE;
 		cur->data = ft_strdup("|");
 		if (!(cur->data))
@@ -74,7 +73,7 @@ t_bool	check_error(t_token *cur)
 		new = ft_lstnew(LREDI, type);
 		if (!new)
 			return (ft_free(type));
-		// ft_lstinsert(); 생성
+		ft_lstinsert(cur, new);
 	}
 	else if (ft_strcmp(cur->data, "|<<"))
 	{
