@@ -29,6 +29,8 @@ t_bool	parse(char *cmd)
 {
 	bool check;
 
+
+	// 뭐지 왜 이거 작성한거지?
 	if (!cmd)
 	{
 		check = free_all();
@@ -38,6 +40,9 @@ t_bool	parse(char *cmd)
 			printf("free all isn't done error!\n");
 		exit(FAILURE);
 	}
+
+
+
 	if (ft_strlen(cmd) == 0 || is_space_only(cmd))
 		return (TRUE);
 	if (!deal_quotes(cmd, -1) || !deal_spaces())

@@ -33,6 +33,7 @@
 # include <termios.h>
 # include "signal.h"
 # include "builtin.h"
+# include "pipe.h"
 
 t_glob	g_glob;
 

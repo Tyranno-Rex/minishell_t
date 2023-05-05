@@ -64,7 +64,7 @@ void	ft_exec_cd(void)
 	}
 }
 
-int	ft_exec_export(void)
+void	ft_exec_export(void)
 {
 	int check_free_to_process = 0;
 
@@ -80,5 +80,7 @@ int	ft_exec_export(void)
 		// }
 		ft_export();
 	}
-	return (0);
 }
+
+
+
