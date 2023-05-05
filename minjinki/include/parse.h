@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:25:20 by minjinki          #+#    #+#             */
-/*   Updated: 2023/05/02 16:00:48 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/05/05 12:46:40 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,9 @@ t_bool	deal_pipe_n_redi(void);
 ** t_set_pipe_n_redi.c
 */
 t_bool	set_pipe_n_redi(void);
+
+t_bool	chk_cmd_is_valid(void);
+t_bool	syntax_error(t_token *cur);
 
 /*
 ** l_init_tree.c

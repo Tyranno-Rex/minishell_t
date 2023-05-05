@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 12:20:56 by minjinki          #+#    #+#             */
-/*   Updated: 2023/05/05 11:45:21 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/05/05 12:46:11 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ t_bool	parse(char *cmd)
 	if (!deal_env(&(g_glob.tok)))	// 환경변수 치환
 		return (FALSE);
 	ft_lstprint(&(g_glob.tok));
-	//if (!chk_cmd_is_valid()) // syntax error
-	//	return (print_syntax_error()); // return TRUE
+	if (!chk_cmd_is_valid()) // syntax error
+		return (TRUE); // return TRUE
 	// if (!init_tree())
 	// 	return (FALSE);
 	return (TRUE);

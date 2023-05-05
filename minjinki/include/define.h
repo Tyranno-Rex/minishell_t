@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 12:30:38 by minjinki          #+#    #+#             */
-/*   Updated: 2023/05/01 15:28:59 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/05/05 12:49:10 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@
 # define ARGV 5
 # define TMP 6
 # define SPACES 7
+
+# define ERR_UNEXPEC 258
 
 typedef int		t_bool;
 

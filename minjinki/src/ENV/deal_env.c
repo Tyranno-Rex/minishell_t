@@ -6,11 +6,21 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 16:09:03 by MJKim             #+#    #+#             */
-/*   Updated: 2023/05/04 18:07:16 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/05/05 13:11:00 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+void	deal_exit_stat(char **pre, char *next)
+{
+	char	*stat;
+
+	stat = ft_itoa(g_glob.exit_stat);
+	*pre = do_join(*pre, stat);
+	*pre = do_join(*pre, next);
+	free(stat);
+}
 
 /*
 ** 구분자 찾아서 그 까지의 부문자열 저장(key)
@@ -50,6 +60,7 @@ t_bool	convert_env(t_token *cur)
 	int		i;
 	int		len;
 	char	*tmp;
+	//char	*stat;
 	t_env	*env;
 
 	if (!cur)
@@ -66,14 +77,27 @@ t_bool	convert_env(t_token *cur)
 			tmp = ft_strndup(cur->data, i++); // $ 앞까지의 문자열 저장
 			if (!tmp)
 				return (FALSE);
-			len = get_env(cur->data + i, &env);	// 환경변수 정보 && key 길이 얻기
-			if (len == ERROR)	// null guard
-				return (FALSE);
-			if (env)
-			{	// key가 있다면 대응되는 value tmp에 이어붙이기
-				tmp = do_join(tmp, env->val);
-				if (!tmp)
+			if (cur->data[i] == '?')
+			{
+				char	*stat;
+
+				stat = ft_itoa(g_glob.exit_stat);
+				tmp = do_join(tmp, stat);
+				tmp = do_join(tmp, cur->data + i + 1);
+				len = ft_strlen(stat);
+				free(stat);
+			}
+			else
+			{
+				len = get_env(cur->data + i, &env);	// 환경변수 정보 && key 길이 얻기
+				if (len == ERROR)	// null guard
 					return (FALSE);
+				if (env)
+				{	// key가 있다면 대응되는 value tmp에 이어붙이기
+					tmp = do_join(tmp, env->val);
+					if (!tmp)
+						return (FALSE);
+				}
 			}
 			tmp = do_join(tmp, &(cur->data[i + len])); // 환경변수 뒤쪽 문자열 붙이기
 			free(cur->data);	// 기존 data free
@@ -173,6 +197,7 @@ t_bool	deal_env(t_token **token)
 			return (FALSE);
 		cur = cur->next;
 	}
+	
 	// if (!join_n_split(token))	// 토큰 내부 문자열 스페이스 기준으로 나누기 && 토큰 양 옆 토큰과 공백으로 구분되지 않으면 합치기
 	// 	return (FALSE);
 	// remove_spaces(token);	// SPACES 노드 없애기: tmp에다 SPACES 저장하고 pre->next = tmp->next 후 free(tmp)
