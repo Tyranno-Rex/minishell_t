@@ -6,7 +6,7 @@
 #    By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/16 14:12:28 by minjinki          #+#    #+#              #
-#    Updated: 2023/05/05 12:47:01 by minjinki         ###   ########.fr        #
+#    Updated: 2023/05/05 13:22:53 by minjinki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,7 +40,8 @@ PARSE_SRC	=	parse\
 				t_pipe_n_redi\
 				t_set_pipe_n_redi\
 				t_check_cmd\
-				t_syntax_error
+				t_syntax_error\
+				t_merge_n_split_nodes
 
 UTILS_DIR	=	src/UTILS/
 UTILS_SRC	=	error\

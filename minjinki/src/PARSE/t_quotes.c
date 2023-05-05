@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:24:44 by minjinki          #+#    #+#             */
-/*   Updated: 2023/05/04 19:23:26 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/05/05 14:11:27 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,9 +87,9 @@ int	split_quote(int len, const char *cmd, char *quote)
 			return (ERROR);
 		ft_lstadd_back(&(g_glob.tok), new);
 	}
-	if (*quote == SINGLE)	// 홑따옴표
+	if (quote && *quote == SINGLE)	// 홑따옴표
 		end = quotes(SINGLE, quote);
-	else if (*quote == DOUBLE)	// 겹따옴표
+	else if (quote && *quote == DOUBLE)	// 겹따옴표
 		end = quotes(DOUBLE, quote);
 	return (end + 1);	// 처리한 문자 바로 다음
 }
@@ -116,8 +116,9 @@ t_bool	deal_quotes(char *cmd, int i)
 	if (start == cmd)	// 따옴표가 없는 경우 STR으로 전체 저장
 		if (!ft_lstadd_back(&(g_glob.tok), add_node(STR, i, cmd)))
 			return (print_error("Fail to tokenize\n"));
+	ft_lstprint(&g_glob.tok);
 	if (*start)		// 따옴표는 처리 다 했는데 따옴표 뒤에 문자가 있는 경우
-		if (split_quote(i + 1, start, cmd) == ERROR)
+		if (split_quote(i + 1, start, NULL) == ERROR)
 			return (print_error("Fail to tokenize: quotes\n"));
 	return (TRUE);
 }
