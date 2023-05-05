@@ -6,7 +6,7 @@
 #    By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/13 17:47:48 by minjinki          #+#    #+#              #
-#    Updated: 2023/05/05 11:48:21 by minjinki         ###   ########.fr        #
+#    Updated: 2023/05/05 14:21:30 by minjinki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -60,6 +60,7 @@ SRCS		=\
 			ft_lstlast.c\
 			ft_lstmap.c\
 			ft_lstnew.c\
+			ft_lstremove.c\
 			ft_lstprint.c\
 			ft_lstsize.c
 
