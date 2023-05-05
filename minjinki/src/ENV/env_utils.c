@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 16:16:58 by minjinki          #+#    #+#             */
-/*   Updated: 2023/05/04 15:48:01 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/05/05 16:23:19 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,21 +54,29 @@ t_env	*env_lstnew(char *key, char *value)
 		return (NULL);
 	new->key = key;
 	new->val = value;
+	new->next = NULL;
 	return (new);
 }
 
 t_bool	env_lstclear(t_env **lst)
 {	// 환경변수 리스트 삭제
+	t_env	*cur;
 	t_env	*tmp;
 
 	if (!lst)
 		return (TRUE);
-	while (*lst)
+	cur = *lst;
+	if (!cur)
+		return (TRUE);
+	while (cur)
 	{
-		tmp = (*lst)->next;
-		free((*lst)->key);
-		free((*lst)->val);
-		*lst = tmp;
+		tmp = cur->next;
+		if (cur->key)
+			free(cur->key);
+		if (cur->val)
+			free(cur->val);
+		free(cur);
+		cur = tmp;
 	}
 	return (FALSE);
 }

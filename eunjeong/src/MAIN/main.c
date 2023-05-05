@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 12:20:02 by minjinki          #+#    #+#             */
-/*   Updated: 2023/05/04 14:52:22 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/05/05 16:02:04 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,12 @@ void	minishell(void)
 	setting_signal();
 	init_rl_catch_signals();
 	
+	ft_bzero(&g_glob, sizeof(g_glob));
 	while (TRUE)
 	{
 		g_glob.cmd = readline(" minishell_$ ");
-		add_history(g_glob.cmd);
+		if (!(g_glob.cmd))
+			break;
 		if (!parse(g_glob.cmd))
 		{
 			free_all();

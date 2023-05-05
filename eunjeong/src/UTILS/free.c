@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 14:00:15 by minjinki          #+#    #+#             */
-/*   Updated: 2023/05/04 19:35:28 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/05/05 16:28:52 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,18 @@ void	free_cmd(char *cmd)
 
 t_bool	free_all(void)
 {	// 전역변수에 메모리 할당하는 변수 있으면 여기 추가
+	printf("1\n");
 	if (g_glob.cmd)
 		free_cmd(g_glob.cmd);
+	printf("2\n");
 	if (g_glob.env_ori)
 		free_matrix(g_glob.env_ori);
+	printf("3\n");
 	if (g_glob.path)
 		free_matrix(g_glob.path);
+	printf("4\n");
 	if (g_glob.env)
 		env_lstclear(&(g_glob.env));
+	printf("5\n");
 	return (FALSE);
 }
