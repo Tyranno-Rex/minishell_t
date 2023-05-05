@@ -50,7 +50,7 @@ t_bool	free_all(void)
 		free_matrix(g_glob.env_ori);
 	if (g_glob.path)
 		free_matrix(g_glob.path);
-	if (g_glob.env)
-		env_lstclear(&(g_glob.env));
+	// if (g_glob.env)
+	// 	env_lstclear(&(g_glob.env));
 	return (FALSE);
 }

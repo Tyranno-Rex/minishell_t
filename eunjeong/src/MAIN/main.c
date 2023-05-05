@@ -35,7 +35,8 @@ void	minishell(void)
 	while (TRUE)
 	{
 		g_glob.cmd = readline(" minishell_$ ");
-		add_history(g_glob.cmd);
+		if (!(g_glob.cmd))
+			return ;
 		if (!parse(g_glob.cmd))
 		{
 			free_all();
