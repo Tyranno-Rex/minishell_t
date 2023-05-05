@@ -1,26 +1,27 @@
 #include "../../include/minishell.h"
 
-// void	env_select_clear(char *env_value)
-// {
-// 	char *new_env_key;
+void	env_select_clear(char *env_value)
+{
+	char *new_env_key;
 
-// 	while (g_glob.env)
-// 	{
-// 		if (g_glob.env->key == env_value)
-// 		{
-// 			if (g_glob.env->next)
-// 			{
-// 				new_env_key = g_glob.env->next->key;
-// 				free(g_glob.env);
-// 				g_glob = g_glob
+	while (g_glob.env)
+	{
+		if (g_glob.env->key == env_value)
+		{
+			if (g_glob.env->next)
+			{
+				new_env_key = g_glob.env->next->key;
+				
+                free(g_glob.env);
+				g_glob = g_glob;
 
-// 			}
-// 			else
-// 				free(g_glob.env);
-// 		}
-// 		g_glob.env = g_glob.env->next;
-// 	}
-// }
+			}
+			else
+				free(g_glob.env);
+		}
+		g_glob.env = g_glob.env->next;
+	}
+}
 
 void check_list_del(char *env_list)
 {

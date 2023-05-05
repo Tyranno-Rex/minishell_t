@@ -6,12 +6,26 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 16:09:03 by MJKim             #+#    #+#             */
-/*   Updated: 2023/05/04 16:47:09 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/05/05 13:11:00 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
+void	deal_exit_stat(char **pre, char *next)
+{
+	char	*stat;
+
+	stat = ft_itoa(g_glob.exit_stat);
+	*pre = do_join(*pre, stat);
+	*pre = do_join(*pre, next);
+	free(stat);
+}
+
+/*
+** 구분자 찾아서 그 까지의 부문자열 저장(key)
+** key에 해당하는 환경변수 있다면 env에 해당 노드 저장, 없다면 NULL 저장
+*/
 int	get_env(char *s, t_env **env)
 {
 	int		i;
@@ -22,84 +36,74 @@ int	get_env(char *s, t_env **env)
 	i = -1;
 	while (s[++i])
 	{
-		target = ft_strchr(" $.", s[i]);
-		if (target)
+		target = ft_strchr(" $.", s[i]);	// 구분자 찾기
+		if (target)	// 있으면 break
 			break;
 	}
-	if (!target)
+	if (!target)	// 없으면 문자열 끝까지 전부 환경변수
 		len = ft_strlen(s);
-	else
+	else	// 있으면 target[0](구분자) 위치 찾아서 길이 구하기 (구분자의 주소값 - 문자열 시작 주소값)
 		len = ft_strchr(s, target[0]) - s;
-	printf("%d\n", len);
-	key = ft_strndup(s, len);
-	if (!key)
+	key = ft_strndup(s, len);	// 구분자까지의 문자열 key에 저장
+	if (!key)	// null guard
 		return (ERROR);
-	printf("%s|\n", key);
-	*env = env_search_key(key);
-	free(key);
-	return (len);
+	*env = env_search_key(key);	// key로 value 찾기
+	free(key);	// ft_strdup()
+	return (len);	// key의 길이
 }
 
+/*
+** 환경변수 치환 함수
+*/
 t_bool	convert_env(t_token *cur)
 {
 	int		i;
 	int		len;
 	char	*tmp;
+	//char	*stat;
 	t_env	*env;
 
 	if (!cur)
 		return (TRUE);
 	if ((cur->type == STR || cur->type == DOUBLE || cur->type == TMP))
-	{
+	{	// 환경변수 치환해야 하는 노드 치환 
 		i = -1;
 		while (cur->data[++i])
 		{
 			while (cur->data[i] && cur->data[i] != '$')
 				i++; // $ 나올 때까지 뒤로
-			if (!(cur->data[i]))
+			if (!(cur->data[i]))	// 없으면 break
 				break ;
 			tmp = ft_strndup(cur->data, i++); // $ 앞까지의 문자열 저장
 			if (!tmp)
 				return (FALSE);
-			// good
-			len = get_env(cur->data + i, &env);
-			if (len == ERROR)
-				return (FALSE);
-			if (env)
-			{ // 변수 value값 tmp에 이어 붙이기, env free하면 큰일남!! 복제한 거 아님
-				tmp = do_join(tmp, env->val); // 헤더에 넣어야 함, l_scmd.c에 있음
-				if (!tmp)
-					return (FALSE);
+			if (cur->data[i] == '?')
+			{
+				char	*stat;
+
+				stat = ft_itoa(g_glob.exit_stat);
+				tmp = do_join(tmp, stat);
+				tmp = do_join(tmp, cur->data + i + 1);
+				len = ft_strlen(stat);
+				free(stat);
 			}
-			tmp = do_join(tmp, &(cur->data[i + len])); // 공백 뒤부터 붙이기 -> 이거 따옴표 있으면 없애고 해야함
-			free(cur->data);
-			cur->data = tmp;
+			else
+			{
+				len = get_env(cur->data + i, &env);	// 환경변수 정보 && key 길이 얻기
+				if (len == ERROR)	// null guard
+					return (FALSE);
+				if (env)
+				{	// key가 있다면 대응되는 value tmp에 이어붙이기
+					tmp = do_join(tmp, env->val);
+					if (!tmp)
+						return (FALSE);
+				}
+			}
+			tmp = do_join(tmp, &(cur->data[i + len])); // 환경변수 뒤쪽 문자열 붙이기
+			free(cur->data);	// 기존 data free
+			cur->data = tmp;	// 환경변수 치환한 문자열
 			i += len - 1; // 조건문 ++i 때문에 공백 없이 바로 다음에 $ 다시 붙는 경우 $ 넘어감 그래서 -1
 		}
-	}
-	return (TRUE);
-}
-
-t_bool	remove_quotes(t_token *token)
-{
-	int		len;
-	char	*tmp;
-
-	while (token)
-	{
-		if (token->type == DOUBLE || token->type == SINGLE)
-		{
-			len = ft_strlen(token->data);
-			if (token->data[0] == token->type && token->data[len - 1] == token->type)	// 양 끝이 따옴표인 경우
-			{	// 따옴표 뗀 문자열로 업데이트
-				tmp = ft_strndup(token->data + 1, len - 2);
-				if (!tmp)
-					return (FALSE);
-				free(token->data);
-				token->data = tmp;
-			}
-		}
-		token = token->next;
 	}
 	return (TRUE);
 }
@@ -188,13 +192,12 @@ t_bool	deal_env(t_token **token)
 
 	cur = *token;
 	while (cur)
-	{
+	{	// 환경변수 연결리스트 처음부터 확인하면서 치환
 		if (!convert_env(cur))
 			return (FALSE);
 		cur = cur->next;
 	}
-	// if (!remove_quotes(token))	// 가장 바깥에 있는 따옴표 제거 -> 만약 한쪽에만 있으면 제거 x
-	// 	return (FALSE);
+	
 	// if (!join_n_split(token))	// 토큰 내부 문자열 스페이스 기준으로 나누기 && 토큰 양 옆 토큰과 공백으로 구분되지 않으면 합치기
 	// 	return (FALSE);
 	// remove_spaces(token);	// SPACES 노드 없애기: tmp에다 SPACES 저장하고 pre->next = tmp->next 후 free(tmp)

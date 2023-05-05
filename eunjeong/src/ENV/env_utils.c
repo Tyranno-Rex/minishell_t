@@ -13,7 +13,7 @@
 #include "../../include/minishell.h"
 
 void	env_lstprint(void)
-{
+{	// 환경변수 연결리스트 출력
 	t_env	*cur;
 
 	cur = g_glob.env;
@@ -27,7 +27,7 @@ void	env_lstprint(void)
 }
 
 t_env	*env_lstlast(t_env *lst)
-{
+{	// 환경변수 맨 마지막 노드 찾기
 	if (!lst)
 		return (NULL);
 	while (lst->next)
@@ -36,7 +36,7 @@ t_env	*env_lstlast(t_env *lst)
 }
 
 void	env_lstadd_back(t_env **lst, t_env *new)
-{
+{	// 환경변수 리스트 마지막에 노드 추가
 	if (!lst || !new)
 		return ;
 	else if (!*lst)
@@ -46,7 +46,7 @@ void	env_lstadd_back(t_env **lst, t_env *new)
 }
 
 t_env	*env_lstnew(char *key, char *value)
-{
+{	// 환경변수 리스트의 노드 생성
 	t_env	*new;
 
 	new = ft_calloc(1, sizeof(t_env));
@@ -58,7 +58,7 @@ t_env	*env_lstnew(char *key, char *value)
 }
 
 t_bool	env_lstclear(t_env **lst)
-{
+{	// 환경변수 리스트 삭제
 	t_env	*tmp;
 
 	if (!lst)

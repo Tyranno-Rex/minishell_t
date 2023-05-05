@@ -38,7 +38,10 @@ PARSE_SRC	=	parse\
 				t_quotes\
 				t_spaces\
 				t_pipe_n_redi\
-				t_set_pipe_n_redi
+				t_set_pipe_n_redi\
+				t_check_cmd\
+				t_syntax_error\
+				t_merge_n_split_nodes
 
 UTILS_DIR	=	src/UTILS/
 UTILS_SRC	=	error\

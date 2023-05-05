@@ -1,27 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   ft_lstremove.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/16 12:22:06 by minjinki          #+#    #+#             */
-/*   Updated: 2023/05/04 19:34:29 by minjinki         ###   ########.fr       */
+/*   Created: 2023/05/05 14:19:04 by minjinki          #+#    #+#             */
+/*   Updated: 2023/05/05 14:20:08 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "libft.h"
 
-void	exit_with_code(char *s, int errno)
+void	ft_lstremove(t_token *pre, t_token *del)
 {
-	ft_putstr_fd("minishell: ", 2);
-	ft_putstr_fd(s, 2);
-	exit(errno);
-}
-
-t_bool	print_error(char *s)
-{
-	ft_putstr_fd("minishell: ", 2);
-	ft_putstr_fd(s, 2);
-	return (FALSE);
+	pre->next = del->next;
+	ft_lstdelone(del);
 }
