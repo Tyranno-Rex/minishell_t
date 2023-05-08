@@ -45,7 +45,7 @@ void	handler_builtins(char *cmd)
 		ft_exec_export();
 	if (ft_strncmp(cmd, "unset", 5) == 0)
 		ft_exec_unset();
-	// if (!is_builtin(cmd))
-	// 	ft_exec_execve();
+	if (!is_builtin(cmd))
+		ft_exec_execve();
 }
 
