@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 12:20:02 by minjinki          #+#    #+#             */
-/*   Updated: 2023/05/05 17:09:22 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/05/08 19:09:53 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	minishell(void)
 			return ;
 		if (!parse(g_glob.cmd))
 		{
-			free_all();
+			free_cmd(g_glob.cmd);
 			continue ;
 		}
 		free_cmd(g_glob.cmd);

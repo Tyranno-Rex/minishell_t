@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 13:15:48 by minjinki          #+#    #+#             */
-/*   Updated: 2023/05/05 14:29:41 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/05/08 18:42:03 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_bool	merge_nodes(t_token *cur)
 	{
 		if ((cur->type == STR || cur->type == DOUBLE || cur->type == SINGLE)
 			&& (cur->next->type == STR
-			|| cur->next->type == DOUBLE || cur->next->type == SINGLE))
+				|| cur->next->type == DOUBLE || cur->next->type == SINGLE))
 		{
 			cur->data = do_join(cur->data, cur->next->data);
 			if (!(cur->data))

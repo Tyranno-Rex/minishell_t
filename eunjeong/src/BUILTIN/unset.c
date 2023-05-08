@@ -80,4 +80,5 @@ void	ft_unset(void)
 		}
 		tok = tok->next;
 	}
+	g_glob.exit_stat = 0;
 }
