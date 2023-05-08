@@ -45,7 +45,7 @@ void	minishell(void)
 		}
 		env_2D();
 		// redir_fd();
-		handler_builtins(g_glob.cmd);
+		handler_builtins(g_glob.tok->data);
 		free_cmd(g_glob.cmd);
 	}
 }
