@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 17:04:38 by minjinki          #+#    #+#             */
-/*   Updated: 2023/05/08 19:19:54 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/05/08 19:30:43 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,18 +34,25 @@ t_bool	check_valid3(t_token *cur, t_token *nxt)
 {
 	char	*c;
 	char	*n;
+	t_token	*nnext;
 
 	c = cur->data;
 	n = nxt->data;
+	nnext = nxt->next;
+	while (nnext && nnext->type == SPACES)
+		nnext = nnext->next;
+	printf("1\n");
 	if (!nxt)
 		n = NULL;
-	if ((ft_strcmp(c, "|") == 0
-			&& (ft_strncmp(n, ">", 1) == 0 || ft_strncmp(n, "<", 1) == 0))
+	if ((ft_strcmp(c, "|") == 0 && ft_strncmp(n, ">", 1) == 0)
 		|| (ft_strcmp(c, "|") == 0 && ft_strcmp(n, "|") == 0)
 		|| (ft_strcmp(c, ">") == 0 && ft_strcmp(n, "|") == 0)
 		|| (ft_strcmp(c, ">>") == 0 && ft_strcmp(n, "|") == 0)
 		|| (ft_strcmp(c, "<") == 0 && ft_strcmp(n, "|") == 0)
 		|| (ft_strcmp(c, "<<") == 0 && ft_strcmp(n, "|") == 0))
+		return (print_syntax_error("|"));
+	else if (nnext && nnext->type != STR
+		&& (ft_strcmp(c, "|") == 0 && ft_strncmp(n, "<", 1) == 0))
 		return (print_syntax_error("|"));
 	return (TRUE);
 }
@@ -65,6 +72,11 @@ t_bool	check_valid2(t_token *pre, t_token *cur, t_token *nxt)
 	}
 	else if (!nxt)
 		return (check_valid4(cur));
+	else if (!pre)
+	{
+		if (ft_strcmp(s, "|") == 0)
+			return (print_syntax_error("|"));
+	}
 	else
 		return (check_valid3(cur, nxt));
 	return (TRUE);
