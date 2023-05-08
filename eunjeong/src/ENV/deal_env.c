@@ -36,7 +36,7 @@ int	get_env(char *s, t_env **env)
 	i = -1;
 	while (s[++i])
 	{
-		target = ft_strchr(" $.", s[i]);	// 구분자 찾기
+		target = ft_strchr(" $.:", s[i]);	// 구분자 찾기
 		if (target)	// 있으면 break
 			break;
 	}

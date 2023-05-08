@@ -65,7 +65,8 @@ BUILTIN_SRC	=   builtin\
 # 이거 왜 안되지..?
 PIPE_DIR	=	src/PIPE/
 PIPE_SRC	=	make_env2D\
-				redir_fd
+				redir_fd\
+				create_child
 
 
 SRCS		=	$(addprefix $(ENV_DIR), $(addsuffix .c, $(ENV_SRC)))

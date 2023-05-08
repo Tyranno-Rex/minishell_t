@@ -64,7 +64,6 @@ void	outfile_set2(t_glob tmp)
 	}
 }
 
-
 void	redir_fd(void)
 {
 	t_glob	tmp;
@@ -74,24 +73,28 @@ void	redir_fd(void)
 	{
 		if (!strncmp(tmp.tok->data, "|", 1))
 		{
-			printf("test | : %s", tmp.tok->data);
-			// exec_fork();
+			printf("test | : %s\n", tmp.tok->data);
+			exec_fork();
 		}
+        // 출력 리다이렉션일 경우 (덮어 쓰기)
 		if (!strncmp(tmp.tok->data, ">>", 2))
 		{
 			printf("test >> : %s\n", tmp.tok->data);
-			outfile_set2(tmp); 
+			// outfile_set2(tmp); 
 		}
+        // 출력 리다이렉션(새 파일 생성)일 경우
 		else if (!strncmp(tmp.tok->data, ">", 1))
 		{
 			printf("test > : %s\n", tmp.tok->data);
 			// outfile_set1(); 
 		}
+        // 입력 리다이렉션(Here Document)일 경우
 		else if (!strncmp(tmp.tok->data, "<<", 2))
 		{
 			printf("test << : %s\n", tmp.tok->data);
 			// infile_set2();
 		}
+		// 입력 리다이렉션(파일에서 입력)일 경우
 		else if (!strncmp(tmp.tok->data, "<", 1))
 		{
 			printf("test < : %s\n", tmp.tok->data);

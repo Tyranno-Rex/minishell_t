@@ -94,6 +94,7 @@ typedef struct s_glob
 	t_env	*env;
 	char	**path;
 	int		exit_stat;
+	t_token	*tmp; // 실제 데이터 흐름;
 }	t_glob;
 
 #endif

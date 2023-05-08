@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 14:56:11 by MJKim             #+#    #+#             */
-/*   Updated: 2023/05/05 12:34:34 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/05/08 19:10:42 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,13 @@ void	check_type(t_token *cur)
 }
 
 // 구문 에러 처리 -> 해야함
-t_bool	deal_lredis(char *redi)
-{
-	(void)redi;
-	// check_error if문 내에 있는 내용 여기로 빼기
-	// length에 따라서 60할 지 6060할 지 조건으로 넣기
-	return (TRUE);
-}
+// t_bool	deal_lredis(char *redi)
+// {
+// 	(void)redi;
+// 	// check_error if문 내에 있는 내용 여기로 빼기
+// 	// length에 따라서 60할 지 6060할 지 조건으로 넣기
+// 	return (TRUE);
+// }
 
 t_bool	split_pipe_n_redi(t_token *cur, int type, char *redi)
 {

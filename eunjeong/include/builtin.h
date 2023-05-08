@@ -2,7 +2,9 @@
 # define BUILTIN_H
 
 // builtin.c
-void	handler_builtins(void);
+void	handler_builtins(char *cmd);
+int	    is_builtin(char *cmd);
+char    **check_argv(void);
 
 // builtin_exec.c
 int	    ft_exec_pwd(void);
