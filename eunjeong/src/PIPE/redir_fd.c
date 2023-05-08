@@ -74,7 +74,7 @@ void	redir_fd(void)
 		if (!strncmp(tmp.tok->data, "|", 1))
 		{
 			printf("test | : %s\n", tmp.tok->data);
-			exec_fork();
+			// exec_fork();
 		}
         // 출력 리다이렉션일 경우 (덮어 쓰기)
 		if (!strncmp(tmp.tok->data, ">>", 2))
