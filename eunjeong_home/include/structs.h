@@ -92,6 +92,7 @@ typedef struct s_glob
 	char	*cmd;
 	t_token	*tok;
 	t_env	*env;
+	char	**env_2D;
 	char	**path;
 	int		exit_stat;
 }	t_glob;

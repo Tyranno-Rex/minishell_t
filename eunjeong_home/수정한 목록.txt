@@ -1,0 +1,5 @@
+1. 파일디스크립터 열고 닫는 함수 추가함 : builtins 파일에 redir_fd.c 파일 추가함
+
+2. execve 함수에 env_2D 변수 필요해서 추가함 : Pipe 파일에 make_env2D.c 파일에 추가함. + sturct.h 파일에 t_glob 구조체에 char **env_2D 추가함. + pipe.h 파일에 해당 함수 추가함.
+
+3. 
