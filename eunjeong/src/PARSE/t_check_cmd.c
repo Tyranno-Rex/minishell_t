@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 17:04:38 by minjinki          #+#    #+#             */
-/*   Updated: 2023/05/08 19:08:06 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/05/08 19:19:54 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ t_bool	check_valid3(t_token *cur, t_token *nxt)
 	n = nxt->data;
 	if (!nxt)
 		n = NULL;
-	if ((ft_strcmp(c, "|") == 0 && ft_strncmp(n, ">", 1) == 0)
+	if ((ft_strcmp(c, "|") == 0
+			&& (ft_strncmp(n, ">", 1) == 0 || ft_strncmp(n, "<", 1) == 0))
 		|| (ft_strcmp(c, "|") == 0 && ft_strcmp(n, "|") == 0)
 		|| (ft_strcmp(c, ">") == 0 && ft_strcmp(n, "|") == 0)
 		|| (ft_strcmp(c, ">>") == 0 && ft_strcmp(n, "|") == 0)
