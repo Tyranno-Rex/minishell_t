@@ -56,6 +56,7 @@ t_bool	split_pipe_n_redi(t_token *cur, int type, char *redi)
 	t_token	*new;
 
 	cur->type = PIPE;
+	free(cur->data);
 	cur->data = ft_strdup("|");
 	if (!(cur->data))
 		return (FALSE);

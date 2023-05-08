@@ -22,6 +22,7 @@ void	print_pwd(void)
 	free(pwd);
 }
 
+
 void Check_leak()
 {
 	system("leaks --list minishell");
@@ -39,12 +40,15 @@ void	minishell(void)
 			return ;
 		if (!parse(g_glob.cmd))
 		{
-			free_all();
+			free_cmd(g_glob.cmd);
 			continue ;
 		}
-		redir_fd();
+		env_2D();
+		// redir_fd();
 		handler_builtins();
 		free_cmd(g_glob.cmd);
+		
+		
 	}
 }
 

@@ -6,7 +6,15 @@ char **ft_split_equal(char *s)
     int         num = 1; 
     int         i = 1;
     
+
+    if (!ft_strchr(s, '='))
+    {
+        g_glob.exit_stat = 0;
+        return (NULL);
+    }    
+
     result = ft_split(s, '=');
+        
     while (result[++num])
     {
         result[1] = do_join(result[1], "=");
@@ -52,6 +60,8 @@ void    ft_export(void)
         {
             // 들어온 데이터의 값중 키값을 str[0] val값을 str[1]
             str = ft_split_equal(tmp.tok->data);
+            if (!str)
+                return ;
             // 키값과 같은 환경 변수 노드 찾기
             check = env_search_key(str[0]);
             if (!check)

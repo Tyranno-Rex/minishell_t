@@ -60,13 +60,12 @@ BUILTIN_SRC	=   builtin\
 				cd\
 				export\
 				exec\
-				unset\
-				redir_fd
-
+				unset
 
 # 이거 왜 안되지..?
-# PIPE_DIR	=	src/PIPE/
-# PIPE_SCR	=	redir_fd
+PIPE_DIR	=	src/PIPE/
+PIPE_SRC	=	make_env2D\
+				redir_fd
 
 
 SRCS		=	$(addprefix $(ENV_DIR), $(addsuffix .c, $(ENV_SRC)))
@@ -75,7 +74,7 @@ SRCS		+=	$(addprefix $(PARSE_DIR), $(addsuffix .c, $(PARSE_SRC)))
 SRCS		+=	$(addprefix $(UTILS_DIR), $(addsuffix .c, $(UTILS_SRC)))
 SRCS		+=  $(addprefix $(SIGNAL_DIR), $(addsuffix .c, $(SIGNAL_SRC)))
 SRCS		+=  $(addprefix $(BUILTIN_DIR), $(addsuffix .c, $(BUILTIN_SRC)))
-# SRCS		+=  $(addprefix $(PIPE_DIR), $(addsuffix .c, $(PIPE_SRC)))
+SRCS		+=  $(addprefix $(PIPE_DIR), $(addsuffix .c, $(PIPE_SRC)))
 
 OBJS		=	$(SRCS:%.c=%.o)
 
@@ -88,7 +87,7 @@ $(NAME)		:	$(OBJS)
 	$(MAKE) -C $(LIBFT)
 	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(RL_LIB) $(LIBFT_LIB)
 
-%.o			:	%c
+%.o			:	%.c
 	$(CC) $(CFLAGS) -I$(INCLUDE) $(RL_INC) -c $< -o $@
 
 clean		:
