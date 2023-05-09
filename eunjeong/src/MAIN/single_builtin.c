@@ -221,9 +221,7 @@ int	check_single_builtin()
 		if (do_redirect(proc_data))
 			g_glob.exit_stat = 1;
 		else
-		{
 			g_glob.exit_stat = handler_builtins_2(cmd_argv[0], builtin_num);
-		}
 		restore_origin_io(origin_io);
 		// 해당 부분 개별 요소 free를 안해줌
 		free(cmd_argv);

@@ -17,12 +17,65 @@
 ///////////////////////머리아파서 파일 나누는거 포기 main에서만 작업한다///////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////
 
+// define pipe end
+# define READ_END	0
+# define WRITE_END	1
 
+// define pipe
+# define NOW	0
+# define PREV	1
 
-
-void 	execute_child(t_token *proc, int pip[2][2], int )
+int	is_last_cmd(t_data *data, t_proc_data *proc_data)
 {
+	t_node	*node;
 
+	node = list_peek_last_node(&data->proc_data_list);
+	return (node->content == proc_data);
+}
+
+int	is_first_cmd(t_data *data, t_proc_data *proc_data)
+{
+	t_node	*node;
+
+	node = list_peek_first_node(&data->proc_data_list);
+	return (node->content == proc_data);
+}
+
+
+pid_t	ft_fork(void)
+{
+	pid_t	ret;
+
+	ret = fork();
+	if (ret == -1)
+	{
+		perror("fork error occurred");
+		exit(EXIT_FAILURE);
+	}
+	return (ret);
+}
+
+void	fl_redirect(t_ *proc, int pip[2][2], int *origin)
+{
+	if (is_first_cmd(data, proc))
+		ft_dup2(origin[READ_END], pip[PREV][READ_END]);
+	if (is_last_cmd(data, proc))
+		ft_dup2(origin[WRITE_END], pip[NOW][WRITE_END]);
+}
+
+
+
+void 	execute_child(t_token *proc, int pip[2][2], int *ofd)
+{
+	char **cmd_argv;
+
+	close(pip[NOW][READ_END]);
+	fl_redirect(proc, pip, ofd);
+	cmd_argv = make_tok2D();
+	if (is_builtin(cmd_argv[0]))
+		execute_builtin(cmd_argv[0]);
+	else
+		execute_execve(cmd_argv);
 }
 
 int	ft_pipe(int fildes[2])
@@ -38,6 +91,29 @@ int	ft_pipe(int fildes[2])
 	return (ret);
 }
 
+void	child_sig_handler(int signo)
+{
+	if (signo == SIGINT)
+		ft_putendl_fd("", STDERR_FILENO);
+	else if (signo == SIGQUIT)
+		ft_putendl_fd("Quit: 3", STDOUT_FILENO);
+	exit(128 + signo);
+}
+
+void	reset_signal(pid_t pid, int here_flag)
+{
+	if (pid == 0)
+	{
+		signal(SIGINT, child_sig_handler);
+		if (here_flag)
+			signal(SIGQUIT, SIG_IGN);
+		else
+			signal(SIGQUIT, child_sig_handler);
+	}
+	else
+		signal(SIGINT, SIG_IGN);
+}
+
 void	make_child()
 {
 	t_token	*proc_node;
@@ -46,23 +122,24 @@ void	make_child()
 	pid_t	pid;
 
 	save_origin_io(origin_io);
-	(ft_pipe(pipe[0]), close(pipe[0][1]));
+	(ft_pipe(pipe[PREV]), close(pipe[PREV][WRITE_END]));
 	proc_node = g_glob.tok;
 	while (proc_node->next != NULL)
 	{
-		ft_pipe(pipe[1]);
+		ft_pipe(pipe[NOW]);
 		pid = ft_fork();
 		reset_signal(pid, 0);
 		if (pid == 0)
+			return ;
 			execute_child(proc_node, pipe, origin_io);
-		close(pipe[0][0]);
-		close(pipe[1][1]);
-		pipe[0][0] = pipe[1][0];
+		close(pipe[PREV][READ_END]);
+		close(pipe[NOW][WRITE_END]);
+		pipe[PREV][READ_END] = pipe[NOW][READ_END];
 		proc_node = proc_node->next;
 	}
-	close(pipe[1][1]);
-	close(origin_io[0]);
-	close(origin_io[1]);
+	close(pipe[NOW][READ_END]);
+	close(origin_io[READ_END]);
+	close(origin_io[READ_END]);
 }
 
 void executor()
