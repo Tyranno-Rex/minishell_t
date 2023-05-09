@@ -37,5 +37,10 @@
 # include "pipe.h"
 
 t_glob	g_glob;
+int	    check_single_builtin();
+char    **make_tok2D(void);
+void	save_origin_io(int origin_io[2]);
+void	restore_origin_io(int origin_io[2]);
+int	    do_redirect(t_token *proc_data);
 
 #endif

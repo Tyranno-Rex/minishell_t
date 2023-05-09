@@ -67,7 +67,8 @@ char	*validate_args()
 {
 	int		size;
 	char	*tmp = NULL;
-	
+
+	// printf("hello this is the cd test\n");
 	size = ft_cd_len();
 	// 인자가 1개 -> cd 만 입력됐는 지 확인 (-> 이렇다면 홈 디렉으로 이동함) 
 	// -> 이건 환경 변수 이야기 듣고 구현할 거임

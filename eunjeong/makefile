@@ -31,7 +31,8 @@ ENV_SRC		=	env_utils\
 				parse_env
 
 MAIN_DIR	=	src/MAIN/
-MAIN_SRC	=	main
+MAIN_SRC	=	main\
+				single_builtin # main문 추가된거 여기에 작성함
 
 PARSE_DIR	=	src/PARSE/
 PARSE_SRC	=	parse\
@@ -66,7 +67,7 @@ BUILTIN_SRC	=   builtin\
 PIPE_DIR	=	src/PIPE/
 PIPE_SRC	=	make_env2D\
 				redir_fd\
-				create_child
+				create_child\
 
 
 SRCS		=	$(addprefix $(ENV_DIR), $(addsuffix .c, $(ENV_SRC)))
