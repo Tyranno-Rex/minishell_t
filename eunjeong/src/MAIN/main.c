@@ -18,35 +18,51 @@
 ////////////////////////////////////////////////////////////////////////////////////////
 
 
-int check_single_redirect()
-{
-	t_token *proc_data;
-	char	**cmd_argv;
-	int		origin_io[2];
-	int		cmd_count;
 
-	cmd_argv = make_tok2D();
-	cmd_count = ft_matrixlen(cmd_argv);
-	cmd_argv = make_tok2D();
-	proc_data = g_glob.tok;
-	// 해당 들어온 값이 1개이여야하고
-	if (cmd_count == 1)
+
+void 	execute_child(t_token *proc, int pip[2][2], int )
+{
+
+}
+
+int	ft_pipe(int fildes[2])
+{
+	int	ret;
+
+	ret = pipe(fildes);
+	if (ret == -1)
 	{
-		// builtin 값이 0이어야 한다.
-		if (!is_builtin(cmd_argv[0]))
-		{
-			save_origin_io(origin_io);
-			if (do_redirect(proc_data))
-				g_glob.exit_stat = 1;
-			restore_origin_io(origin_io);
-			// 해당 부분 개별 요소 free를 안해줌
-			free(cmd_argv);
-			return (1);
-		}
+		perror("pipe error occurred");
+		exit(EXIT_FAILURE);
 	}
-	// 해당 부분 개별 요소 free를 안해줌
-	free(cmd_argv);
-	return (0);
+	return (ret);
+}
+
+void	make_child()
+{
+	t_token	*proc_node;
+	int		origin_io[2];
+	int		pipe[2][2];
+	pid_t	pid;
+
+	save_origin_io(origin_io);
+	(ft_pipe(pipe[0]), close(pipe[0][1]));
+	proc_node = g_glob.tok;
+	while (proc_node->next != NULL)
+	{
+		ft_pipe(pipe[1]);
+		pid = ft_fork();
+		reset_signal(pid, 0);
+		if (pid == 0)
+			execute_child(proc_node, pipe, origin_io);
+		close(pipe[0][0]);
+		close(pipe[1][1]);
+		pipe[0][0] = pipe[1][0];
+		proc_node = proc_node->next;
+	}
+	close(pipe[1][1]);
+	close(origin_io[0]);
+	close(origin_io[1]);
 }
 
 void executor()
@@ -55,7 +71,7 @@ void executor()
 		return ;
 	if (check_single_redirect())
 		return ;
-	// make_child();
+	make_child();
 	// wait_child();
 }
 

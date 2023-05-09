@@ -32,7 +32,8 @@ ENV_SRC		=	env_utils\
 
 MAIN_DIR	=	src/MAIN/
 MAIN_SRC	=	main\
-				single_builtin # main문 추가된거 여기에 작성함
+				single_builtin\
+				single_redirect
 
 PARSE_DIR	=	src/PARSE/
 PARSE_SRC	=	parse\
