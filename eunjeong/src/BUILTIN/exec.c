@@ -1,6 +1,6 @@
 #include "../../include/minishell.h"
 
-char    **check_argv(void)
+char    **make_tok2D(void)
 {
     t_glob  tmp;
     int     cnt;
@@ -46,7 +46,7 @@ void    ft_execve(void)
 
 	env_2D();
     command = g_glob.tok->data;
-    command_all = check_argv();
+    command_all = make_tok2D();
     pipe(fd);
     pid = fork();
     path = ft_strdup(g_glob.path[path_n]);
