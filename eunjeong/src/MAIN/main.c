@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 12:20:02 by minjinki          #+#    #+#             */
-/*   Updated: 2023/05/04 14:52:22 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/05/11 13:55:28 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,18 +49,18 @@ int	is_first_cmd(t_token *proc_data)
 }
 
 
-int	ft_dup2(int fildes, int fildes2)
-{
-	int	ret;
+// int	ft_dup2(int fildes, int fildes2)
+// {
+// 	int	ret;
 
-	ret = dup2(fildes, fildes2);
-	if (ret == -1)
-	{
-		perror("dup2 error occurred");
-		exit(EXIT_FAILURE);
-	}
-	return (ret);
-}
+// 	ret = dup2(fildes, fildes2);
+// 	if (ret == -1)
+// 	{
+// 		perror("dup2 error occurred");
+// 		exit(EXIT_FAILURE);
+// 	}
+// 	return (ret);
+// }
 
 
 pid_t	ft_fork(void)
@@ -98,6 +98,7 @@ void	pip_redirect(t_token *proc_data, int write_end, int read_end)
 
 void	execute_execve(char **cmd_argv)
 {
+	(void)cmd_argv;
 	// 기존 함수
 
 	// struct stat	sb;
@@ -131,7 +132,7 @@ void 	execute_child(t_token *proc, int pip[2][2], int *ofd)
 	pip_redirect(proc, pip[NOW][WRITE_END], pip[PREV][READ_END]);
 	cmd_argv = make_tok2D();
 	if (is_builtin(cmd_argv[0]))
-		execute_builtin(cmd_argv);
+		handler_builtins(cmd_argv[0]);
 	else
 		execute_execve(cmd_argv);
 }
@@ -252,7 +253,7 @@ pid_t	ft_waitpid(pid_t pid, int *stat_loc, int options)
 	return (ret);
 }
 
-void wait_child(t_data *data)
+void wait_child(void)
 {
 	t_token 	*tmp;
 	int			status;
@@ -265,7 +266,7 @@ void wait_child(t_data *data)
 		// 이거 뭘 전달해야할까요? 원본 코드
 		// ft_waitpid(*((pid_t *)node->content), &status, 0);
 		// ft_waitpid(&status, 0)
-		status _tmp = status;
+		status_tmp = status;
 		if (wifsignaled(status))
 			status = 128 + wtermsig(status);
 		else
@@ -286,13 +287,13 @@ void executor()
 {
 	if (check_single_builtin())
 		return ;
-	if (check_single_redirect())
-		return ;
-	// 여기 까지는 실행은 됨 하지만 메모리 릭 존재(메모리 릭 존재하는 이유 알고 있음) 표시 해뒀음
+	// if (check_single_redirect())
+	// 	return ;
+	// // 여기 까지는 실행은 됨 하지만 메모리 릭 존재(메모리 릭 존재하는 이유 알고 있음) 표시 해뒀음
 
-	// 불안한건 2개에요.
-	make_child();
-	wait_child();
+	// // 불안한건 2개에요.
+	// make_child();
+	// wait_child();
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////

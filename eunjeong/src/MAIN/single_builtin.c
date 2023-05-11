@@ -3,33 +3,33 @@
 # define READ_END	0
 # define WRITE_END	1
 
-char    **make_tok2D(void)
-{
-    t_glob  tmp;
-    int     cnt;
-    char    **av_argv;
+// char    **make_tok2D(void)
+// {
+//     t_glob  tmp;
+//     int     cnt;
+//     char    **av_argv;
 
-    tmp = g_glob;
-    cnt = 0;
-    while (tmp.tok)
-    {
-        tmp.tok = tmp.tok->next;
-        cnt++;
-    }
+//     tmp = g_glob;
+//     cnt = 0;
+//     while (tmp.tok)
+//     {
+//         tmp.tok = tmp.tok->next;
+//         cnt++;
+//     }
     
-    av_argv = calloc(cnt, sizeof(char *));
+//     av_argv = calloc(cnt, sizeof(char *));
     
-    tmp.tok = g_glob.tok;
-    if (!tmp.tok)
-        return (NULL);
-    cnt = -1;
-    while (tmp.tok)
-    {
-        av_argv[++cnt] = ft_strdup(tmp.tok->data);
-        tmp.tok = tmp.tok->next;
-    }
-    return (av_argv);
-}
+//     tmp.tok = g_glob.tok;
+//     if (!tmp.tok)
+//         return (NULL);
+//     cnt = -1;
+//     while (tmp.tok)
+//     {
+//         av_argv[++cnt] = ft_strdup(tmp.tok->data);
+//         tmp.tok = tmp.tok->next;
+//     }
+//     return (av_argv);
+// }
 
 int	ft_dup(int fildes)
 {
@@ -234,16 +234,16 @@ int	check_single_builtin()
 		// 이건 똑같음
 		save_origin_io(origin_io);
 		
-		if (do_redirect(proc_data))
-			g_glob.exit_stat = 1;
-		else
-			g_glob.exit_stat = handler_builtins_2(cmd_argv[0], builtin_num);
+		// if (do_redirect(proc_data))
+		// 	g_glob.exit_stat = 1;
+		// else
+		g_glob.exit_stat = handler_builtins_2(cmd_argv[0], builtin_num);
 		restore_origin_io(origin_io);
 		// 해당 부분 개별 요소 free를 안해줌
-		free(cmd_argv);
+		free_matrix(cmd_argv);
 		return (1);
 	}
 	// 해당 부분 개별 요소 free를 안해줌
-	free(cmd_argv);
+	free_matrix(cmd_argv);
 	return (0);
 }

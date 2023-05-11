@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 12:20:32 by minjinki          #+#    #+#             */
-/*   Updated: 2023/03/16 17:02:17 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/05/11 13:45:15 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,7 @@ void	save_origin_io(int origin_io[2]);
 void	restore_origin_io(int origin_io[2]);
 int	    do_redirect(t_token *proc_data);
 int     check_single_redirect();
+
+int		ft_dup2(int fildes, int fildes2);
 
 #endif
