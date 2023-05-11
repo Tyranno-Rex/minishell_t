@@ -1,6 +1,8 @@
 {
     "files.associations": {
         "minishell.h": "c",
-        "xutility": "c"
+        "xutility": "c",
+        "vector": "c",
+        "xstring": "c"
     }
 }
