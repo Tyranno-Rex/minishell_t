@@ -14,7 +14,7 @@
 
 
 ////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////머리아파서 파일 나누는거 포기 main에서만 작업한다///////////////////////////
+///////////////////////머리아파서 파일 나누는거 포기 main에서만 작업한다////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////
 
 // define pipe end
@@ -174,29 +174,20 @@ pid_t	ft_waitpid(pid_t pid, int *stat_loc, int options)
 	return (ret);
 }
 
-void wait_child(t_data *data)
-{
-	t_glob 	*tmp;
-	int		status;
-	int		status_tmp;
+// void wait_child(t_data *data)
+// {
+// 	t_glob 	*tmp;
+// 	int		status;
+// 	int		status_tmp;
 
-	status_tmp = 0;
-	tmp = g_glob;
-	while (tmp->next != NULL)
-	{
-		// 
-		ft_waitpid(&status, 0)
-	}
-	
-
-}
-
-
-
-
-
-
-
+// 	status_tmp = 0;
+// 	tmp = g_glob;
+// 	while (tmp->next != NULL)
+// 	{
+// 		// 
+// 		ft_waitpid(&status, 0)
+// 	}
+// }
 
 void executor()
 {
@@ -204,8 +195,8 @@ void executor()
 		return ;
 	if (check_single_redirect())
 		return ;
-	make_child();
-	wait_child();
+	// make_child();
+	// wait_child();
 }
 
 
