@@ -1,11 +1,9 @@
 #include "../../include/minishell.h"
-
 // cd 명령어가 몇개 있는 지 확인함.
-int	count_type_1()
+int   count_type_1()
 {
 	int row;
 	t_glob tmp; // 해당 부분 free 해야함
-
 	tmp = g_glob;
 	row = 0;
 	while (tmp.tok)
@@ -17,13 +15,24 @@ int	count_type_1()
 	}
 	return (row);
 }
-
-int	ft_exec_echo(void)
+int n_Test(char *msg)
 {
-	bool	n_line;
+	int i;
+	i = 1;
+	if (msg[0] != '-' && msg[1] != 'n')
+		return (0);
+	while (msg[++i])
+	{
+		if (msg[i] != 'n' || msg[i] != 'N')
+			return (0);
+	}
+	return (1);
+}
+int   ft_exec_echo(void)
+{
+	bool   n_line;
 	t_glob  tmp;
-	int		i;
-
+	int      i;
 	n_line = true;
 	i = count_type_1();
 	tmp = g_glob;
@@ -33,7 +42,8 @@ int	ft_exec_echo(void)
 		tmp.tok = tmp.tok->next;
 		while (tmp.tok->type != 1)
 			tmp.tok = tmp.tok->next;
-		if (tmp.tok->data && ft_strncmp(tmp.tok->data, "-n", 2) == 0)
+		if (tmp.tok->data && ft_strncmp(tmp.tok->data, "-n", 2) == 0
+			&& n_Test(tmp.tok->data))
 		{
 			n_line = false;
 			tmp.tok = tmp.tok->next;
@@ -43,7 +53,7 @@ int	ft_exec_echo(void)
 			tmp.tok = tmp.tok->next;
 		while (tmp.tok)
 		{
-			printf("%s", tmp.tok->data);	
+			printf("%s", tmp.tok->data);
 			tmp.tok = tmp.tok->next;
 		}
 	}

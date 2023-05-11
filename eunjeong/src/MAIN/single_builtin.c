@@ -221,12 +221,9 @@ int	check_single_builtin()
 	// 해당 문제는 전역 변수로 선언이 가능하기 때문에 아래로 대체
 	proc_data = g_glob.tok; 
 	// proc_data = list_peek_first_content(&data->proc_data_list);
-	
-	
 	if (cmd_argv[0])
 		// 실행해야하는 함수 찾기
 		builtin_num = is_builtin_num(cmd_argv[0]);
-	
 	// 빌트인 함수의 갯수를 세는 것이 필요함
 	// if (builtin_num && ft_matrixlenB(cmd_argv))
 	if (builtin_num)

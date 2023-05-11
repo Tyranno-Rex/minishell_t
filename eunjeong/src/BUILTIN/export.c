@@ -1,5 +1,22 @@
 #include "../../include/minishell.h"
 
+
+int can_split(char *s)
+{
+    int i;
+
+    i = -1;
+    while (s[++i])
+    {
+        if (s[i] == '=')
+        {
+            if (s[i-1] && s[i+1])
+                return (0);
+        }
+    }
+    return (1);
+}
+
 char **ft_split_equal(char *s)
 {
     char        **result;
@@ -7,14 +24,13 @@ char **ft_split_equal(char *s)
     int         i = 1;
     
 
-    if (!ft_strchr(s, '='))
+    if (!ft_strchr(s, '=') || can_split(s))
     {
+        printf("export: \'%s\': not a valid identifier", s);
         g_glob.exit_stat = 0;
         return (NULL);
     }    
-
     result = ft_split(s, '=');
-        
     while (result[++num])
     {
         result[1] = do_join(result[1], "=");
@@ -54,6 +70,11 @@ void    ft_export(void)
 
     tmp = g_glob;
     tmp.tok = tmp.tok->next;
+    if (tmp.tok == NULL)
+    {
+        printf("declare -x HOME=\"/Users/minjinki\"");
+        return (NULL);
+    }
     while (tmp.tok)
     {
 		if (tmp.tok->type == 1)

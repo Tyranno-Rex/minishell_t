@@ -138,7 +138,7 @@ void 	execute_child(t_token *proc, int pip[2][2], int *ofd)
 	cmd_argv = make_tok2D();
 	num_built = is_builtin_num(cmd_argv[0]);
 	if (is_builtin(cmd_argv[0]))
-		execute_builtin(cmd_argv);
+		handler_builtins(cmd_argv[0]);
 	else
 		execute_execve(cmd_argv);
 }
@@ -289,17 +289,49 @@ void wait_child(t_data *data)
 	}
 }
 
+t_token  send_PIPE_TOKEN(t_token *real_flow)
+{
+	t_token real_return;
+	t_token tmp;
+
+	tmp = real_flow;
+
+	ft_calloc()
+	while (real_flow->type != PIPE)
+	{
+		real_return.data = real_flow->data;
+		real_flow = real_flow->next;
+		real_return = real_return.next;
+	}
+	return (real_return);
+}
+
+
 void executor()
 {
-	if (check_single_builtin())
-		return ;
-	if (check_single_redirect())
-		return ;
-	// 여기 까지는 실행은 됨 하지만 메모리 릭 존재(메모리 릭 존재하는 이유 알고 있음) 표시 해뒀음
+	t_token 	real_flow;
+	t_token		pass_token;
 
-	// 불안한건 2개에요.
-	make_child();
-	wait_child();
+	real_flow = g_glob.tok;
+	while (real_flow)
+	{
+		pass_token = send_PIPE_TOKEN(&real_flow);
+		if (check_single_builtin(pass_token))
+			return ;
+
+		// if (check_single_builtin(pass_token))
+		// 	return ;
+		// if (check_single_redirect())
+		// 	return ;
+		// // 여기 까지는 실행은 됨 하지만 메모리 릭 존재(메모리 릭 존재하는 이유 알고 있음) 표시 해뒀음
+
+		// // 불안한건 2개에요.
+		// make_child();
+		// wait_child();	
+		/* code */
+		real_flow = real_flow.next;
+	}
+	
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////
