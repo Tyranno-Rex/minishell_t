@@ -7,11 +7,13 @@ int can_split(char *s)
     int i;
 
     i = -1;
+    if (*s == '\0')
+        return (0);
     while (s[++i])
     {
         if (s[i] == '=')
         {
-            if (s[i-1] && s[i+1])
+            if ((i > 1 && s[i-1]) && s[i+1])
                 return (0);
         }
     }
@@ -78,7 +80,7 @@ void    ft_export(void)
     }
     while (tmp.tok)
     {
-      if (tmp.tok->type == 1)
+      if (tmp.tok->type != SPACES)
         {
             // 들어온 데이터의 값중 키값을 str[0] val값을 str[1]
             str = ft_split_equal(tmp.tok->data);
