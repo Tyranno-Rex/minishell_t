@@ -1,6 +1,16 @@
 #include "../../include/minishell.h"
 
+void    print_export_only()
+{
+    t_env *env;
 
+    env = g_glob.env;
+    while (env)
+	{
+		printf("declare -x %s=%s\n", env->key, env->val);
+		env = env->next;
+	}
+}
 
 int can_split(char *s)
 {
@@ -74,10 +84,7 @@ void    ft_export(void)
     tmp = g_glob;
     tmp.tok = tmp.tok->next;
     if (tmp.tok == NULL)
-    {
-        printf("declare -x HOME=\"/Users/minjinki\"");
-        return ;
-    }
+        return print_export_only();
     while (tmp.tok)
     {
       if (tmp.tok->type != SPACES)
