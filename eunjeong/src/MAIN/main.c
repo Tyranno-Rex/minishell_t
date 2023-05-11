@@ -84,7 +84,7 @@ void	fl_redirect(t_token *proc, int pip[2][2], int *origin)
 		ft_dup2(origin[WRITE_END], pip[NOW][WRITE_END]);
 }
 
-void	pip_redirect(t_proc_data *proc_data, int write_end, int read_end)
+void	pip_redirect(t_token *proc_data, int write_end, int read_end)
 {
 	ft_dup2(read_end, STDIN_FILENO);
 	close(read_end);
