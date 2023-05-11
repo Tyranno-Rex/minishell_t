@@ -1,12 +1,12 @@
 #include "../../include/minishell.h"
 
-void	ft_unset()
+void	ft_unset(t_token *block)
 {
 	t_env	*node;
 	t_env	*pre;
 	t_token	*tok;
 
-	tok = g_glob.tok->next;
+	tok = block->next;
 	while (tok)
 	{
 		pre = NULL;

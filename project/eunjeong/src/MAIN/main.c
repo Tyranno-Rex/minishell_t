@@ -11,117 +11,176 @@
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+# define READ_END	0
+# define WRITE_END	1
 
 
-// 1개 만들때 오류 발생 왜 그런지 모르겠음
-char **make_cmd_pipe(int pipe_num)
-{
-    int i = pipe_num;
-    int cnt = -1;
-    char *tmp;
-    char **ret;
-    char **ret_2;
-
-	if (pipe_num == 1)
-	{
-    	ret = (char **)malloc(sizeof(char *) * (pipe_num + 1));
-		ret[0] = ft_strdup(g_glob.cmd);
-		return (ret);
-	}
-    ret = (char **)malloc(sizeof(char *) * (pipe_num + 1));
-    ret_2 = ft_split(g_glob.cmd, '|');
-    tmp = g_glob.cmd;
-
-    while (++cnt < i)
-    {
-        ret[cnt] = ret_2[0];
-        tmp += strlen(ret[cnt]) + 1;
-        ret_2 = ft_split(tmp, '|');
-    }
-
-    ret[cnt] = ret_2[0];
-
-    return ret;
-}
-
-
-// t_token *t_cmd_pipe(t_token **flow)
+// int	ft_dup(int fildes)
 // {
-//     t_token *ret_token = NULL;
-//     t_token *flow_cp = *flow;
-//     int token_len = 0;
+// 	int	ret;
 
-//     while (flow_cp)
-//     {
-//         if (flow_cp->type == PIPE)
-//             break;
-//         token_len++;
-//         flow_cp = flow_cp->next;
-//     }
-//     ret_token = (t_token *)calloc(token_len + 1, sizeof(t_token));
-
-//     for (int i = 0; i < token_len; i++)
-//     {
-//         ret_token[i].data = ft_strdup((*flow)->data);
-//         ret_token[i].type = (*flow)->type;
-//         (*flow) = (*flow)->next;
-//     }
-// 	if (*flow)
-//         *flow = (*flow)->next;
-//     return ret_token;
+// 	ret = dup(fildes);
+// 	if (ret == -1)
+// 	{
+// 		perror("dup error occurred");
+// 		exit(EXIT_FAILURE);
+// 	}
+// 	return (ret);
 // }
-t_token *t_cmd_pipe(t_token **flow)
+
+
+// void	save_origin_io(int origin_io[2])
+// {
+// 	origin_io[READ_END] = ft_dup(STDIN_FILENO);
+// 	origin_io[WRITE_END] = ft_dup(STDOUT_FILENO);
+// }
+
+// // c0 p0 c1 p1 c2 p2 ... ck pk ck+1 pk+1 ... pn cn+1
+// // p0 : 0, 1
+// // p1 : 2, 3
+// // pk : 2k, 2k + 1
+
+int	ft_unlink(const char *path)
 {
-    t_token *ret_token = NULL;
-    t_token *ret_current = NULL;
-    t_token *flow_cp = *flow;
+	int	ret;
 
-    while (flow_cp && flow_cp->type != PIPE)
-    {
-        t_token *new_token = (t_token *)malloc(sizeof(t_token));
-        new_token->data = ft_strdup(flow_cp->data);
-        new_token->type = flow_cp->type;
-        new_token->next = NULL;
-
-        if (ret_token == NULL)
-        {
-            ret_token = new_token;
-            ret_current = new_token;
-        }
-        else
-        {
-            ret_current->next = new_token;
-            ret_current = ret_current->next;
-        }
-
-        flow_cp = flow_cp->next;
-    }
-
-    if (flow_cp)
-        *flow = flow_cp->next;
-    else
-        *flow = NULL;
-
-    return ret_token;
-}
-
-int		pipe_len()
-{
-	t_glob tmp;
-	int pipe_len;
-
-	tmp = g_glob;
-	pipe_len = 0;
-
-
-	while (tmp.tok)
+	ret = unlink(path);
+	if (ret == -1)
 	{
-		if (tmp.tok->type == PIPE)
-			pipe_len++;
-		tmp.tok = tmp.tok->next;
+		perror("unlink error occurred");
+		exit(EXIT_FAILURE);
 	}
-	return (pipe_len);
+	return (ret);
 }
+
+pid_t	ft_fork(void)
+{
+	pid_t	ret;
+
+	ret = fork();
+	if (ret == -1)
+	{
+		perror("fork error occurred");
+		exit(EXIT_FAILURE);
+	}
+	return (ret);
+}
+
+int	ft_dup2(int fildes, int fildes2)
+{
+	int	ret;
+
+	ret = dup2(fildes, fildes2);
+	if (ret == -1)
+	{
+		perror("dup2 error occurred");
+		exit(EXIT_FAILURE);
+	}
+	return (ret);
+}
+
+int	get_heredoc_input(char *filename, char *limiter)
+{
+	int		fd;
+	int		wstatus;
+	pid_t	pid;
+	char	*input_line;
+
+	fd = open(filename, O_WRONLY);
+	pid = fork();
+	reset_signal(pid, 1);
+	if (pid == 0)
+	{
+		while (1)
+		{
+			input_line = readline("> ");
+			if (ft_strcmp(input_line, limiter) == 0)
+			{
+				free(input_line);
+				break ;
+			}
+			(ft_putendl_fd(input_line, fd), free(input_line));
+		}
+		exit(EXIT_SUCCESS);
+	}
+	(waitpid(pid, &wstatus, 0), close(fd));
+	return (wexitstatus(wstatus));
+}
+
+int open_fd(t_token *block_token)
+{
+	int		fd = 0;
+	char	*err_msg;
+	t_token *block;
+
+	
+	block = block_token;
+	err_msg = ft_strjoin("minishell: ", block->next->data);
+	// 문제는 filename에 대한 확신이 없음
+	// filename이 옆에 꺼라고 > 생각하니까 next의 data라고 정의함.
+	if (!ft_strcmp(block->data, "<") || !ft_strcmp(block->data, "<<"))
+	{
+		// 입력 리다이렉션(파일에서 입력)일 경우
+		fd = open(block->next->data, O_RDONLY, 0644);
+		if (fd == -1)
+			return (perror(err_msg), free(err_msg), -1);
+		// 입력 리다이렉션(Here Document)일 경우
+		if (!ft_strcmp(block->data, "<<"))
+		{
+			// filepath이것만 check하기
+			get_heredoc_input(block->data, block->next->data);
+			unlink(block->next->data);
+		}
+		(ft_dup2(fd, STDIN_FILENO), close(fd));
+	}
+	// 다음 파일
+
+
+
+	else if (!ft_strcmp(block->data, ">") || !ft_strcmp(block->data, ">>"))
+	{
+		// 출력 리다이렉션일 경우 (덮어 쓰기)
+		if (!ft_strcmp(block->data, ">>") )
+			fd = open(block->next->data, O_WRONLY | O_CREAT | O_APPEND, 0644);
+		// 출력 리다이렉션(새 파일 생성)일 경우
+		else if (!ft_strcmp(block->data, ">") || ft_strlen(block->data) == 1)
+			fd = open(block->next->data, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		else if (!ft_strcmp(block->data, "|") || ft_strlen(block->data) == 1)
+			fd = open(block->next->data, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		if (fd == -1)
+			return (perror(err_msg), free(err_msg), -1);
+		(ft_dup2(fd, STDOUT_FILENO), close(fd));
+	}
+	// 최종 파일에 적을 지 확인
+	// if ()
+
+	free(err_msg);
+	return (fd);
+}
+
+void close_pipe_app(int *pip, int i, int pipe_num)
+{
+	int	j;
+	int	save[2];
+
+	save[0] = -1;
+	save[1] = -1;
+	j = 0;
+	if (i)
+		save[0] = i - 1;
+	if (i != pipe_num + 1)
+		save[1] = i;
+	while (j < pipe_num)
+	{
+		if (j != save[0] && j != save[1])
+		{
+			close(pip[j * 2]);
+			close(pip[j * 2 + 1]); 
+		}
+		j++;
+	}
+}
+
 
 void executor()
 {
@@ -130,54 +189,58 @@ void executor()
 	t_token 	*flow = g_glob.tok;
 	t_token		*block_token;
 	int			*pip;
+	int			i = 0;
+	int 		status;
+	pid_t		pid;
+	int			fd;
 
 	pipe_num = pipe_len();
 	cmd = (char **)malloc(sizeof(char *) * pipe_num + 1);
-	// make_cmd(&cmd);
-
-	// cmd = make_cmd_pipe(pipe_num);
-
-	// int i = -1;
-	// while (cmd[++i])
-	// 	printf("pipe parsing test : %s\n", cmd[i]);
-
 	pip = ft_calloc(4, pipe_num);
-
 	while (pipe_num)
 	{
+		// 이거 문제 있음
 		pipe(pip + (pipe_num - 1) * 2);
+		// pipe(pip);
 		pipe_num--;
 	}
+
 	pipe_num = pipe_len() + 1;
+
+	// 여기 while문
 	block_token = t_cmd_pipe(&flow);
-	// printf("data : %s\n", block_token->data );
-	handler_builtins(block_token->data, block_token);
+	if (is_builtin(block_token->data) && (ft_strcmp(block_token->data, "exit") 
+		|| ft_strcmp(block_token->data, "export") || ft_strcmp(block_token->data, "unset")
+		|| ft_strcmp(block_token->data, "cd")))
+		handler_builtins(block_token->data, block_token);
 	
-	// int i = -1;
+	pid = ft_fork();
+	if (!pid)
+	{
+		//            파이프, 순서, 총 크기
+		close_pipe_app(pip, i, pipe_num);
+		
+		// open_fd(); << fd , pipe 0, 1 << dup2();
+		fd = open_fd(block_token);
+		
+		// exe();
+		// close_pipe();
+		// close_fd();
+		exit(0);
 	
+	}
+	waitpid(pid, &status, 0);
+	// 여기까지 while문
 
-	// while (pipe_num--)
-	// {	
-	// 	if (is_builtin(block_token->data) && (ft_strcmp(block_token->data, "exit") 
-	// 		|| ft_strcmp(block_token->data, "export") || ft_strcmp(block_token->data, "unset")
-	// 		|| ft_strcmp(block_token->data, "cd")))
 
-	// 	pid_t	pid = fork();
-	// 	// if (!pid){
-	// 	// 	close_pipe_app();
-	// 	// 	open_fd(); << fd , pipe 0, 1 << dup2();
-	// 	// 	exe();
-	// 	// 	close_pipe();
-	// 	// 	close_fd();
-	// 	// 	exit(0);
-	// 	// }
-	// 	// flow = flow->next;
-	// }
+	while (pipe_num--)
+	{	
 
+	}
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////머리아파서 파일 나누는거 포기 main에서만 작업한다////////////////////
+////////////////////////////////////////////추가되는 작업 main/////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////
 
 

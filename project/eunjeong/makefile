@@ -32,8 +32,9 @@ ENV_SRC		=	env_utils\
 
 MAIN_DIR	=	src/MAIN/
 MAIN_SRC	=	main\
-				single_builtin\
-				single_redirect
+				block
+				# single_builtin
+				# single_redirect
 
 PARSE_DIR	=	src/PARSE/
 PARSE_SRC	=	parse\
@@ -51,6 +52,7 @@ UTILS_SRC	=	error\
 
 SIGNAL_DIR	=	src/SIGNAL/
 SIGNAL_SRC	=	signal\
+				signal_2\
 				signal_utils
 
 BUILTIN_DIR =	src/BUILTIN/

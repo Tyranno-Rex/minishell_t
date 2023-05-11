@@ -74,29 +74,29 @@ void check_list_add(t_token *ex_list, char *env_list)
     free(tmp);
 }
 
-void    ft_export()
+void    ft_export(t_token *block)
 {
-    t_glob  tmp;
+    t_token  *tmp;
     t_env   *check;
-   t_token   ex_list;
+    t_token   ex_list;
     char    **str;
 
-    tmp = g_glob;
-    tmp.tok = tmp.tok->next;
-    if (tmp.tok == NULL)
+    tmp = block;
+    tmp = tmp->next;
+    if (tmp == NULL)
         return print_export_only();
-    while (tmp.tok)
+    while (tmp)
     {
-      if (tmp.tok->type != SPACES)
+      if (tmp->type != SPACES)
         {
             // 들어온 데이터의 값중 키값을 str[0] val값을 str[1]
-            str = ft_split_equal(tmp.tok->data);
+            str = ft_split_equal(tmp->data);
             if (!str)
                 return ;
             // 키값과 같은 환경 변수 노드 찾기
             check = env_search_key(str[0]);
             if (!check)
-             check_list_add(&ex_list, tmp.tok->data);
+             check_list_add(&ex_list, tmp->data);
             else
             {
                 free(check->val);
@@ -104,7 +104,7 @@ void    ft_export()
                 check->val = ft_strdup(str[1]);
             }
         }
-        tmp.tok = tmp.tok->next;
+        tmp = tmp->next;
     }
     free_matrix(str);
 }

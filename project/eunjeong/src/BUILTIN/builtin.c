@@ -33,17 +33,17 @@ void	handler_builtins(char *cmd, t_token *block)
 {
 	if (ft_strncmp(cmd, "pwd", 3) == 0)
 		ft_pwd();
-	else if (ft_strncmp(cmd, "exit", 4) == 0)
+	else if (ft_strncmp(cmd, "exit", 4) == 0) //
 		ft_exec_exit();
 	else if (ft_strncmp(cmd, "echo", 4) == 0)
 		ft_echo(block);
-	else if (ft_strncmp(cmd, "env", 3) == 0)
+	else if (ft_strncmp(cmd, "env", 3) == 0) 
 		ft_env();
-	else if (ft_strncmp(cmd, "cd", 2) == 0)
-		ft_cd();
-	else if (ft_strncmp(cmd, "export", 6) == 0)
-		ft_export();
-	else if (ft_strncmp(cmd, "unset", 5) == 0)
-		ft_unset();
+	else if (ft_strncmp(cmd, "cd", 2) == 0) //
+		ft_cd(block);
+	else if (ft_strncmp(cmd, "export", 6) == 0) //
+		ft_export(block);
+	else if (ft_strncmp(cmd, "unset", 5) == 0) //
+		ft_unset(block);
 }
 

@@ -7,5 +7,6 @@ void        setting_signal();
 int	        wtermsig(int status);
 int	        wexitstatus(int status);
 int	        wifsignaled(int status);
+void	    reset_signal(pid_t pid, int here_flag);
 
 #endif

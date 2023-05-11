@@ -239,7 +239,7 @@ int	check_single_builtin()
 		// 이건 똑같음
 		save_origin_io(origin_io);
 		
-		// if (do_redirect(proc_data))
+		if (do_redirect(proc_data))
 		// 	g_glob.exit_stat = 1;
 		// else
 		g_glob.exit_stat = handler_builtins_2(cmd_argv[0], builtin_num);

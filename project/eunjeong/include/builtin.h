@@ -24,11 +24,11 @@ void    ft_exec_env(void);
 
 // cd.c
 void    ft_exec_cd(void);
-void	ft_cd(void);
+void	ft_cd(t_token *block);
 
 // export.c
 void	ft_exec_export(void);
-void    ft_export(void);
+void    ft_export(t_token *block);
 
 // exec.c
 void	ft_exec_execve(void);
@@ -37,6 +37,6 @@ void    ft_execve(void);
 
 // unset.c
 void	ft_exec_unset(void);
-void    ft_unset(void);
+void    ft_unset(t_token *block);
 
 #endif
