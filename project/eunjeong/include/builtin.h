@@ -2,7 +2,7 @@
 # define BUILTIN_H
 
 // builtin.c
-void	handler_builtins(char *cmd);
+void	handler_builtins(char *cmd, t_token *block);
 int	    is_builtin(char *cmd);
 char    **check_argv(void);
 
@@ -13,7 +13,7 @@ int	    ft_exec_pwd(void);
 void	ft_pwd(void);
 
 // echo.c
-int	    ft_exec_echo(void);
+int	    ft_echo(t_token *block);
 
 // exit.c
 void	ft_exec_exit(void);

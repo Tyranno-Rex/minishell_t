@@ -1,7 +1,7 @@
 #include "../../include/minishell.h"
 
 // 현재 작업 디렉토리 경로를 가져와서 표준 출력에 출력하는 함수
-void	ft_pwd(void)
+void	ft_pwd()
 {
 	// 현재 작업 디렉토리 경로를 저장할 포인터
 	char		*current_path;

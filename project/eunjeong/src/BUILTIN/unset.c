@@ -1,6 +1,6 @@
 #include "../../include/minishell.h"
 
-void	ft_unset(void)
+void	ft_unset()
 {
 	t_env	*node;
 	t_env	*pre;

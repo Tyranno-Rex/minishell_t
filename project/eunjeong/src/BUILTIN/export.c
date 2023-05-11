@@ -74,7 +74,7 @@ void check_list_add(t_token *ex_list, char *env_list)
     free(tmp);
 }
 
-void    ft_export(void)
+void    ft_export()
 {
     t_glob  tmp;
     t_env   *check;

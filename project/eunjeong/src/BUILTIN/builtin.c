@@ -29,23 +29,21 @@ int	is_builtin(char *cmd)
 
 
 // int	handler_builtins(char **data, char **env)
-void	handler_builtins(char *cmd)
+void	handler_builtins(char *cmd, t_token *block)
 {
 	if (ft_strncmp(cmd, "pwd", 3) == 0)
-		ft_exec_pwd();
+		ft_pwd();
 	else if (ft_strncmp(cmd, "exit", 4) == 0)
 		ft_exec_exit();
 	else if (ft_strncmp(cmd, "echo", 4) == 0)
-		ft_exec_echo();
+		ft_echo(block);
 	else if (ft_strncmp(cmd, "env", 3) == 0)
-		ft_exec_env();
+		ft_env();
 	else if (ft_strncmp(cmd, "cd", 2) == 0)
-		ft_exec_cd();
+		ft_cd();
 	else if (ft_strncmp(cmd, "export", 6) == 0)
-		ft_exec_export();
+		ft_export();
 	else if (ft_strncmp(cmd, "unset", 5) == 0)
-		ft_exec_unset();
-	else if (!is_builtin(cmd))
-		ft_exec_execve();
+		ft_unset();
 }
 

@@ -46,41 +46,17 @@ void	ft_exec_env(void)
 
 void	ft_exec_cd(void)
 {
-	// 이 부분 파싱 부분 받아서 수정해야함
-	int check_free_to_process = 0;
-
-	printf("hello this is the cd test\n");
-	// 인자 없이 "cd" 명령어를 입력한 경우 현재 작업 디렉토리 경로 출력
-	if (check_free_to_process != 1)
-		ft_cd();
-	else
-	{
-		// if (create_child_process() == 0)
-		// {
-			// ft_cd(data);
-			// free_children_main(data, NULL);
-			// exit(EXIT_SUCCESS);
-		// }
-		ft_cd();
-	}
+	ft_cd();
 }
 
 void	ft_exec_export(void)
 {
-	int check_free_to_process = 0;
+	ft_export();
+}
 
-	if (check_free_to_process != 1)
-		ft_export();
-	else
-	{
-		// if (create_child_process() == 0)
-		// {
-		// 	ft_export(data->builtin_vars, data->pipeline);
-		// 	free_children_main(data, NULL);
-		// 	exit(EXIT_SUCCESS);
-		// }
-		ft_export();
-	}
+void	ft_exec_unset(void)
+{
+	ft_unset();
 }
 
 void	ft_exec_execve(void)
@@ -100,20 +76,3 @@ void	ft_exec_execve(void)
 	}
 }
 
-void	ft_exec_unset(void)
-{
-	int check_free_to_process = 0;
-
-	if (check_free_to_process != 1)
-		ft_unset();
-	else
-	{
-		// if (create_child_process() == 0)
-		// {
-		// 	ft_execve(data->builtin_vars, data->pipeline);
-		// 	free_children_main(data, NULL);
-		// 	exit(EXIT_SUCCESS);
-		// }
-		ft_unset();
-	}
-}

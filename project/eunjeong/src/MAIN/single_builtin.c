@@ -112,6 +112,11 @@ int	is_builtin_num(char *cmd)
 	return (0);
 }
 
+void ft_exec_echo()
+{
+	
+}
+
 int		handler_builtins_2(char *cmd, int num)
 {
 	if (ft_strncmp(cmd, "pwd", 3) == 0 && num == 1)
