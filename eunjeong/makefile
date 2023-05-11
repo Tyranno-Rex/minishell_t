@@ -50,7 +50,8 @@ UTILS_SRC	=	error\
 				free
 
 SIGNAL_DIR	=	src/SIGNAL/
-SIGNAL_SRC	=	signal
+SIGNAL_SRC	=	signal\
+				signal_utils
 
 BUILTIN_DIR =	src/BUILTIN/
 BUILTIN_SRC	=   builtin\
