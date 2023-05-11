@@ -96,6 +96,30 @@ void	pip_redirect(t_token *proc_data, int write_end, int read_end)
 }
 
 
+void	execute_execve(char **cmd_argv)
+{
+	// 기존 함수
+
+	// struct stat	sb;
+	// char		*cmd_path;
+
+	// if (cmd_argv[0][0] == 0)
+	// 	(error_msg(cmd_argv[0], EN_CNOT_FIND), exit(EX_CNOT_FIND));
+	// cmd_path = get_cmd_path(data, cmd_argv);
+	// if (cmd_path == NULL)
+	// 	(error_msg(cmd_argv[0], EN_CNOT_FIND), exit(EX_CNOT_FIND));
+	// ft_stat(cmd_path, &sb);
+	// if ((sb.st_mode & S_IFMT) == S_IFDIR)
+	// 	(error_msg(cmd_argv[0], EN_IS_DIR), exit(EX_CNOT_EXEC));
+	// else if (access(cmd_path, X_OK) == -1)
+	// 	(error_msg(cmd_argv[0], EN_PER_DENIED), exit(EX_CNOT_EXEC));
+	// ft_execve(cmd_path, cmd_argv, cmd_envp);
+	
+	
+	ft_execve();
+}
+
+
 void 	execute_child(t_token *proc, int pip[2][2], int *ofd)
 {
 	char **cmd_argv;
@@ -107,7 +131,7 @@ void 	execute_child(t_token *proc, int pip[2][2], int *ofd)
 	pip_redirect(proc, pip[NOW][WRITE_END], pip[PREV][READ_END]);
 	cmd_argv = make_tok2D();
 	if (is_builtin(cmd_argv[0]))
-		execute_builtin(cmd_argv[0]);
+		execute_builtin(cmd_argv);
 	else
 		execute_execve(cmd_argv);
 }
