@@ -43,5 +43,6 @@ void	save_origin_io(int origin_io[2]);
 void	restore_origin_io(int origin_io[2]);
 int	    do_redirect(t_token *proc_data);
 int     check_single_redirect();
+int	    is_builtin_num(char *cmd);
 
 #endif

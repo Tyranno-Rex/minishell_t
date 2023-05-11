@@ -123,13 +123,20 @@ void	execute_execve(char **cmd_argv)
 void 	execute_child(t_token *proc, int pip[2][2], int *ofd)
 {
 	char **cmd_argv;
-	
+	int		num_built;
 	close(pip[NOW][READ_END]);
 	// 첫번째 명령어인지 마지막 명령어인지 확인하고 pipe를 여는 작업을 진행함.
 	fl_redirect(proc, pip, ofd);
 	// dup 작업 및 리다이렉션 진행함.
 	pip_redirect(proc, pip[NOW][WRITE_END], pip[PREV][READ_END]);
+	
+	// 해당 구현은
+	// if (list_size(&proc->cmd_list) == 0)
+	// 	exit(EXIT_SUCCESS);
+	
+	
 	cmd_argv = make_tok2D();
+	num_built = is_builtin_num(cmd_argv[0]);
 	if (is_builtin(cmd_argv[0]))
 		execute_builtin(cmd_argv);
 	else
