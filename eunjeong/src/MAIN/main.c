@@ -149,6 +149,7 @@ void	make_child()
 		if (pid == 0)
 			return ;
 			execute_child(proc_node, pipe, origin_io);
+		// pid를 저장하는 함수를 만들어어 아마 waitpid에서 활용하는 것 같음
 		// pid_list_add(&data->pid_list, pid);
 		close(pipe[PREV][READ_END]);
 		close(pipe[NOW][WRITE_END]);
@@ -219,7 +220,8 @@ void wait_child(t_data *data)
 	tmp = g_glob.tok;
 	while (tmp->next != NULL)
 	{
-		// 이거 뭘 전달해야할까요?
+		// 이거 뭘 전달해야할까요? 원본 코드
+		// ft_waitpid(*((pid_t *)node->content), &status, 0);
 		// ft_waitpid(&status, 0)
 		status _tmp = status;
 		if (wifsignaled(status))
@@ -250,7 +252,6 @@ void executor()
 	make_child();
 	wait_child();
 }
-
 
 ////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////머리아파서 파일 나누는거 포기 main에서만 작업한다////////////////////
