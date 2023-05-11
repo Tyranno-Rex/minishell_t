@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:24:44 by minjinki          #+#    #+#             */
-/*   Updated: 2023/05/05 14:26:43 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/05/11 15:20:34 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ t_token	*add_node(int type, int len, const char *start)
 */
 int	quotes(int type, char *cmd)
 {	// 따옴표 처리
-	int	len;
+	int		len;
 
 	len = ft_strnlen(cmd + 1, type);	// 따옴표 바로 뒤 문자부터 길이 재기 시작, 다음 따옴표가 나올 때까지의 길이 
 	if (*(cmd + len + 1) == '\0') // 닫히지 않은 따옴표는 STR으로 따옴표 포함해서 끝까지 저장

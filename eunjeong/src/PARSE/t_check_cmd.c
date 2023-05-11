@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 17:04:38 by minjinki          #+#    #+#             */
-/*   Updated: 2023/05/08 19:30:43 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/05/11 14:54:14 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ t_bool	check_valid3(t_token *cur, t_token *nxt)
 	nnext = nxt->next;
 	while (nnext && nnext->type == SPACES)
 		nnext = nnext->next;
-	printf("1\n");
 	if (!nxt)
 		n = NULL;
 	if ((ft_strcmp(c, "|") == 0 && ft_strncmp(n, ">", 1) == 0)

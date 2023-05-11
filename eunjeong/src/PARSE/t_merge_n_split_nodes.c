@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 13:15:48 by minjinki          #+#    #+#             */
-/*   Updated: 2023/05/11 14:11:02 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/05/11 15:31:30 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,25 @@ t_bool	split_node(t_token **new_tok, t_token *cur)
 	return (TRUE);
 }
 
+void	rm_last_spaces(t_token **tok)
+{
+	t_token *cur;
+	t_token	*pre;
+
+	pre = NULL;
+	cur = *tok;
+	while (cur->next)
+	{
+		pre = cur;
+		cur = cur->next;
+	}
+	if (cur->type == SPACES)
+	{
+		pre->next = NULL;
+		ft_lstdelone(cur);
+	}
+}
+
 t_bool	merge_n_split_nodes(t_token **tok)
 {
 	t_token	*new;
@@ -70,5 +89,6 @@ t_bool	merge_n_split_nodes(t_token **tok)
 	// }
 	// ft_lstclear(&(g_glob.tok));
 	// g_glob.tok = new;
+	rm_last_spaces(&(g_glob.tok));
 	return (TRUE);
 }
