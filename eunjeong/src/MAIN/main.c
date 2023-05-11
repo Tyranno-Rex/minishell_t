@@ -25,6 +25,8 @@
 # define NOW	0
 # define PREV	1
 
+
+// 해당 내용 수정함
 int	is_last_cmd(t_token *proc_data)
 {
 	t_glob tmp;
@@ -39,6 +41,8 @@ int	is_last_cmd(t_token *proc_data)
 	return (proc_data->data == data);
 }
 
+
+// 해당 내용 수정함
 int	is_first_cmd(t_token *proc_data)
 {
 	return (proc_data->data == g_glob.tok->data);
@@ -80,6 +84,16 @@ void	fl_redirect(t_token *proc, int pip[2][2], int *origin)
 		ft_dup2(origin[WRITE_END], pip[NOW][WRITE_END]);
 }
 
+void	pip_redirect(t_proc_data *proc_data, int write_end, int read_end)
+{
+	ft_dup2(read_end, STDIN_FILENO);
+	close(read_end);
+	ft_dup2(write_end, STDOUT_FILENO);
+	close(write_end);
+	// 리다이렉션 다시 진행해서 파일 열게됨
+	if (do_redirect(proc_data))
+		exit (EXIT_FAILURE);
+}
 
 
 void 	execute_child(t_token *proc, int pip[2][2], int *ofd)
@@ -87,7 +101,10 @@ void 	execute_child(t_token *proc, int pip[2][2], int *ofd)
 	char **cmd_argv;
 	
 	close(pip[NOW][READ_END]);
+	// 첫번째 명령어인지 마지막 명령어인지 확인하고 pipe를 여는 작업을 진행함.
 	fl_redirect(proc, pip, ofd);
+	// dup 작업 및 리다이렉션 진행함.
+	pip_redirect(proc, pip[NOW][WRITE_END], pip[PREV][READ_END]);
 	cmd_argv = make_tok2D();
 	if (is_builtin(cmd_argv[0]))
 		execute_builtin(cmd_argv[0]);
@@ -148,6 +165,7 @@ void	make_child()
 		reset_signal(pid, 0);
 		if (pid == 0)
 			return ;
+			// 해당 부분 에러 존재함
 			execute_child(proc_node, pipe, origin_io);
 		// pid를 저장하는 함수를 만들어어 아마 waitpid에서 활용하는 것 같음
 		// pid_list_add(&data->pid_list, pid);
@@ -256,9 +274,6 @@ void executor()
 ////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////머리아파서 파일 나누는거 포기 main에서만 작업한다////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////
-
-
-
 
 
 void	print_pwd(void)

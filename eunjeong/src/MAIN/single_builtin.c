@@ -172,7 +172,6 @@ int	open_redirect(t_token *redir)
 
 int	do_redirect(t_token *proc_data)
 {
-	// filepath와 리다이렉션 정보 들어가면 좋을 듯
 	t_token	*node;
 
 	node = proc_data;
