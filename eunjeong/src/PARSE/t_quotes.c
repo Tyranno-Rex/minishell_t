@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:24:44 by minjinki          #+#    #+#             */
-/*   Updated: 2023/05/11 17:18:34 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/05/11 17:34:26 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ t_token	*add_node(int type, int len, const char *start)
 	new->data = ft_strndup(start, len);
 	if (!(new->data))
 		return (NULL);
-	ft_lstprint(&(g_glob.tok));
 	return (new);
 }
 

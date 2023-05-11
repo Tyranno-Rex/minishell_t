@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 16:09:03 by MJKim             #+#    #+#             */
-/*   Updated: 2023/05/11 14:53:59 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/05/11 17:35:51 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	get_env(char *s, t_env **env)
 	i = -1;
 	while (s[++i])
 	{
-		target = ft_strchr(" $.:", s[i]);	// 구분자 찾기
+		target = ft_strchr(" $.:\'", s[i]);	// 구분자 찾기
 		if (target)	// 있으면 break
 			break;
 	}

@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 12:20:56 by minjinki          #+#    #+#             */
-/*   Updated: 2023/05/11 14:52:48 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/05/11 17:34:42 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,15 @@ t_bool	parse(char *cmd)
 		return (FALSE);
 	if (!set_pipe_n_redi())	// 파이프, 리다이렉션 구문 에러 확인
 		return (FALSE);
+	ft_lstprint(& (g_glob.tok));
 	if (!deal_env(&(g_glob.tok)))	// 환경변수 치환
 		return (FALSE);
-	//ft_lstprint(& (g_glob.tok));
+	ft_lstprint(& (g_glob.tok));
 	if (!chk_cmd_is_valid()) // syntax error
 		return (FALSE); // return TRUE
 	if (!merge_n_split_nodes(&(g_glob.tok)))
 		return (FALSE);
-	ft_lstprint(&(g_glob.tok));
+	//ft_lstprint(&(g_glob.tok));
 	// if (!init_tree())
 	// 	return (FALSE);
 	return (TRUE);
