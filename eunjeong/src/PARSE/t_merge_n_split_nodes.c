@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 13:15:48 by minjinki          #+#    #+#             */
-/*   Updated: 2023/05/11 15:31:30 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/05/11 17:24:12 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,13 +54,19 @@ t_bool	split_node(t_token **new_tok, t_token *cur)
 	return (TRUE);
 }
 
-void	rm_last_spaces(t_token **tok)
+void	trim_spaces(t_token **tok)
 {
 	t_token *cur;
 	t_token	*pre;
 
 	pre = NULL;
 	cur = *tok;
+	if (cur->type == SPACES)
+	{
+		g_glob.tok = g_glob.tok->next;
+		ft_lstdelone(cur);
+		cur = g_glob.tok;
+	}
 	while (cur->next)
 	{
 		pre = cur;
@@ -89,6 +95,7 @@ t_bool	merge_n_split_nodes(t_token **tok)
 	// }
 	// ft_lstclear(&(g_glob.tok));
 	// g_glob.tok = new;
-	rm_last_spaces(&(g_glob.tok));
+	trim_spaces(&(g_glob.tok));
+	// 여기서 흐름 저장용 변수에다가 맨 첫 번째 노드 넣어두기
 	return (TRUE);
 }

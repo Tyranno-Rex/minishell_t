@@ -10,7 +10,7 @@ int check_single_redirect()
 
 	cmd_argv = make_tok2D();
 	cmd_count = ft_matrixlen(cmd_argv);
-	cmd_argv = make_tok2D();
+	//cmd_argv = make_tok2D();
 	proc_data = g_glob.tok;
 	// 해당 들어온 값이 1개이여야하고
 	if (cmd_count == 1)

@@ -17,7 +17,7 @@
 //         cnt++;
 //     }
     
-//     av_argv = calloc(cnt, sizeof(char *));
+//     av_argv = ft_calloc(cnt, sizeof(char *));
     
 //     tmp.tok = g_glob.tok;
 //     if (!tmp.tok)

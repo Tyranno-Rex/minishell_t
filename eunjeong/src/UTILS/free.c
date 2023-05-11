@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 14:00:15 by minjinki          #+#    #+#             */
-/*   Updated: 2023/05/04 19:35:28 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/05/11 16:41:37 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,16 @@ void	free_matrix(char **matrix)
 	int	i;
 
 	i = -1;
-	while (matrix[++i])
+	if (matrix)
 	{
-		free(matrix[i]);
-		matrix[i] = NULL;
+		while (matrix[++i])
+		{
+			free(matrix[i]);
+			matrix[i] = NULL;
+		}
+		free(matrix);
+		matrix = NULL;
 	}
-	free(matrix);
-	matrix = NULL;
 }
 
 void	free_cmd(char *cmd)
