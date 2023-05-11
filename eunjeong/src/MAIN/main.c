@@ -161,6 +161,41 @@ void	make_child()
 }
 
 
+// 시그널 처리 함수들
+
+static int	_wstatus(int status)
+{
+	int	return_val;
+
+	return_val = status & 0177;
+	return (return_val);
+}
+
+int	wifsignaled(int status)
+{
+	int	return_val;
+
+	return_val = ((_wstatus(status) != 0177) && (_wstatus(status) != 0));
+	return (return_val);
+}
+
+int	wtermsig(int status)
+{
+	int	return_val;
+
+	return_val = _wstatus(status);
+	return (return_val);
+}
+
+int	wexitstatus(int status)
+{
+	int	return_val;
+
+	return_val = ((unsigned)status >> 8) & 0xff;
+	return (return_val);
+}
+
+// 이거 뭐를 넘겨줘야 할지 모르겠음
 pid_t	ft_waitpid(pid_t pid, int *stat_loc, int options)
 {
 	pid_t	ret;
@@ -174,20 +209,34 @@ pid_t	ft_waitpid(pid_t pid, int *stat_loc, int options)
 	return (ret);
 }
 
-// void wait_child(t_data *data)
-// {
-// 	t_glob 	*tmp;
-// 	int		status;
-// 	int		status_tmp;
+void wait_child(t_data *data)
+{
+	t_token 	*tmp;
+	int			status;
+	int			status_tmp;
 
-// 	status_tmp = 0;
-// 	tmp = g_glob;
-// 	while (tmp->next != NULL)
-// 	{
-// 		// 
-// 		ft_waitpid(&status, 0)
-// 	}
-// }
+	status_tmp = 0;
+	tmp = g_glob.tok;
+	while (tmp->next != NULL)
+	{
+		// 이거 뭘 전달해야할까요?
+		// ft_waitpid(&status, 0)
+		status _tmp = status;
+		if (wifsignaled(status))
+			status = 128 + wtermsig(status);
+		else
+			status = wexitstatus(status);
+		g_glob.exit_stat = status;
+		tmp = tmp->next;
+	}
+	if (status_tmp == SIGINT || status_tmp == SIGQUIT)
+	{
+		if (status_tmp == SIGQUIT)
+			ft_putendl_fd("QUIT: 3", STDOUT_FILENO);
+		else
+			ft_putendl_fd("", STDOUT_FILENO);
+	}
+}
 
 void executor()
 {
@@ -195,7 +244,10 @@ void executor()
 		return ;
 	if (check_single_redirect())
 		return ;
-	// make_child();
+	// 여기 까지는 실행은 됨 하지만 메모리 릭 존재(메모리 릭 존재하는 이유 알고 있음)
+
+	make_child();
+	//
 	// wait_child();
 }
 
