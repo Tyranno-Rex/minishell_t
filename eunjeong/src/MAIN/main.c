@@ -244,11 +244,11 @@ void executor()
 		return ;
 	if (check_single_redirect())
 		return ;
-	// 여기 까지는 실행은 됨 하지만 메모리 릭 존재(메모리 릭 존재하는 이유 알고 있음)
+	// 여기 까지는 실행은 됨 하지만 메모리 릭 존재(메모리 릭 존재하는 이유 알고 있음) 표시 해뒀음
 
+	// 불안한건 2개에요.
 	make_child();
-	//
-	// wait_child();
+	wait_child();
 }
 
 

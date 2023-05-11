@@ -137,16 +137,18 @@ int	open_redirect(t_token *redir)
 	char	*err_msg;
 
 	err_msg = ft_strjoin("minishell: ", redir->data);
+	// 문제는 filename에 대한 확신이 없음
+	// filename이 옆에 꺼라고 > 생각하니까 next의 next라고 정의함.
 	if (!ft_strcmp(redir->next->data, ">") || !ft_strcmp(redir->next->data, ">>"))
 	{
 		// 출력 리다이렉션(새 파일 생성)일 경우
 		if (!ft_strcmp(redir->data, ">>") )
 			// fd = open(redir->filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
-			fd = open(redir->next->data, O_WRONLY | O_CREAT | O_APPEND, 0644);
+			fd = open(redir->next->next->data, O_WRONLY | O_CREAT | O_APPEND, 0644);
 		// 출력 리다이렉션일 경우 (덮어 쓰기)
 		else
 			// fd = open(redir->filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-			fd = open(redir->next->data, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+			fd = open(redir->next->next->data, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		if (fd == -1)
 			return (perror(err_msg), free(err_msg), -1);
 		(ft_dup2(fd, STDOUT_FILENO), close(fd));
