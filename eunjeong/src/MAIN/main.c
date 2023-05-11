@@ -160,21 +160,36 @@ void	make_child()
 	close(origin_io[READ_END]);
 }
 
-// void wait_child(t_data *data)
-// {
-// 	t_glob 	*tmp;
-// 	int		status;
-// 	int		status_tmp;
 
-// 	status_tmp = 0;
-// 	tmp = g_glob;
-// 	while (tmp->next != NULL)
-// 	{
-// 		ft_waitpid()
-// 	}
+pid_t	ft_waitpid(pid_t pid, int *stat_loc, int options)
+{
+	pid_t	ret;
+
+	ret = waitpid(pid, stat_loc, options);
+	if (ret == -1)
+	{
+		perror("waitpid error occurred");
+		exit(EXIT_FAILURE);
+	}
+	return (ret);
+}
+
+void wait_child(t_data *data)
+{
+	t_glob 	*tmp;
+	int		status;
+	int		status_tmp;
+
+	status_tmp = 0;
+	tmp = g_glob;
+	while (tmp->next != NULL)
+	{
+		// 
+		ft_waitpid(&status, 0)
+	}
 	
 
-// }
+}
 
 
 
@@ -190,7 +205,7 @@ void executor()
 	if (check_single_redirect())
 		return ;
 	make_child();
-	// wait_child();
+	wait_child();
 }
 
 
