@@ -25,20 +25,37 @@
 # define NOW	0
 # define PREV	1
 
-int	is_last_cmd(t_data *data, t_proc_data *proc_data)
+int	is_last_cmd(t_token *proc_data)
 {
-	t_node	*node;
+	t_glob tmp;
+	char	*data;
 
-	node = list_peek_last_node(&data->proc_data_list);
-	return (node->content == proc_data);
+	tmp = g_glob;
+	while (tmp.tok->next != NULL)
+	{
+		data = ft_strdup(tmp.tok->data);
+		tmp.tok = tmp.tok->next;
+	}	
+	return (proc_data->data == data);
 }
 
-int	is_first_cmd(t_data *data, t_proc_data *proc_data)
+int	is_first_cmd(t_token *proc_data)
 {
-	t_node	*node;
+	return (proc_data->data == g_glob.tok->data);
+}
 
-	node = list_peek_first_node(&data->proc_data_list);
-	return (node->content == proc_data);
+
+int	ft_dup2(int fildes, int fildes2)
+{
+	int	ret;
+
+	ret = dup2(fildes, fildes2);
+	if (ret == -1)
+	{
+		perror("dup2 error occurred");
+		exit(EXIT_FAILURE);
+	}
+	return (ret);
 }
 
 
@@ -55,11 +72,11 @@ pid_t	ft_fork(void)
 	return (ret);
 }
 
-void	fl_redirect(t_ *proc, int pip[2][2], int *origin)
+void	fl_redirect(t_token *proc, int pip[2][2], int *origin)
 {
-	if (is_first_cmd(data, proc))
+	if (is_first_cmd(proc))
 		ft_dup2(origin[READ_END], pip[PREV][READ_END]);
-	if (is_last_cmd(data, proc))
+	if (is_last_cmd(proc))
 		ft_dup2(origin[WRITE_END], pip[NOW][WRITE_END]);
 }
 
@@ -68,7 +85,7 @@ void	fl_redirect(t_ *proc, int pip[2][2], int *origin)
 void 	execute_child(t_token *proc, int pip[2][2], int *ofd)
 {
 	char **cmd_argv;
-
+	
 	close(pip[NOW][READ_END]);
 	fl_redirect(proc, pip, ofd);
 	cmd_argv = make_tok2D();
@@ -132,6 +149,7 @@ void	make_child()
 		if (pid == 0)
 			return ;
 			execute_child(proc_node, pipe, origin_io);
+		// pid_list_add(&data->pid_list, pid);
 		close(pipe[PREV][READ_END]);
 		close(pipe[NOW][WRITE_END]);
 		pipe[PREV][READ_END] = pipe[NOW][READ_END];
@@ -141,6 +159,29 @@ void	make_child()
 	close(origin_io[READ_END]);
 	close(origin_io[READ_END]);
 }
+
+// void wait_child(t_data *data)
+// {
+// 	t_glob 	*tmp;
+// 	int		status;
+// 	int		status_tmp;
+
+// 	status_tmp = 0;
+// 	tmp = g_glob;
+// 	while (tmp->next != NULL)
+// 	{
+// 		ft_waitpid()
+// 	}
+	
+
+// }
+
+
+
+
+
+
+
 
 void executor()
 {
@@ -154,7 +195,7 @@ void executor()
 
 
 ////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////머리아파서 파일 나누는거 포기 main에서만 작업한다///////////////////////////
+///////////////////////머리아파서 파일 나누는거 포기 main에서만 작업한다////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////
 
 
