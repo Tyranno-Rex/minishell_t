@@ -62,13 +62,13 @@ t_bool	merge_n_split_nodes(t_token **tok)
 	new = NULL;
 	cur = *tok;
 	merge_nodes(*tok);
-	while (cur)
-	{
-		if (!split_node(&new, cur))
-			return (FALSE);
-		cur = cur->next;
-	}
-	ft_lstclear(&(g_glob.tok));
-	g_glob.tok = new;
+	// while (cur)
+	// {
+	// 	if (!split_node(&new, cur))
+	// 		return (FALSE);
+	// 	cur = cur->next;
+	// }
+	// ft_lstclear(&(g_glob.tok));
+	// g_glob.tok = new;
 	return (TRUE);
 }
