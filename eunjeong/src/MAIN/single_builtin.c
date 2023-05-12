@@ -17,7 +17,7 @@ char    **make_tok2D(void)
         cnt++;
     }
     
-    av_argv = calloc(cnt, sizeof(char *));
+    av_argv = calloc(cnt + 1, sizeof(char *));
     
     tmp.tok = g_glob.tok;
     if (!tmp.tok)

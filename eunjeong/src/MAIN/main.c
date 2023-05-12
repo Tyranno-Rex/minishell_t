@@ -371,7 +371,12 @@ void	minishell(void)
 			continue ;
 		}
 		env_2D();
+<<<<<<< HEAD
 		executor();
+=======
+		// redir_fd();
+		handler_builtins(g_glob.cmd);
+>>>>>>> parent of 72050e5 (개포로 가자 하...)
 		free_cmd(g_glob.cmd);
 	}
 }

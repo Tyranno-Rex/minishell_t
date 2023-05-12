@@ -33,19 +33,19 @@ void	handler_builtins(char *cmd)
 {
 	if (ft_strncmp(cmd, "pwd", 3) == 0)
 		ft_exec_pwd();
-	else if (ft_strncmp(cmd, "exit", 4) == 0)
+	if (ft_strncmp(cmd, "exit", 4) == 0)
 		ft_exec_exit();
-	else if (ft_strncmp(cmd, "echo", 4) == 0)
+	if (ft_strncmp(cmd, "echo", 4) == 0)
 		ft_exec_echo();
-	else if (ft_strncmp(cmd, "env", 3) == 0)
+	if (ft_strncmp(cmd, "env", 3) == 0)
 		ft_exec_env();
-	else if (ft_strncmp(cmd, "cd", 2) == 0)
+	if (ft_strncmp(cmd, "cd", 2) == 0)
 		ft_exec_cd();
-	else if (ft_strncmp(cmd, "export", 6) == 0)
+	if (ft_strncmp(cmd, "export", 6) == 0)
 		ft_exec_export();
-	else if (ft_strncmp(cmd, "unset", 5) == 0)
+	if (ft_strncmp(cmd, "unset", 5) == 0)
 		ft_exec_unset();
-	else if (!is_builtin(cmd))
+	if (!is_builtin(cmd))
 		ft_exec_execve();
 }
 
