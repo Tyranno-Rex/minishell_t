@@ -43,8 +43,9 @@ t_glob	g_glob;
 int		pipe_len();
 t_token *t_cmd_pipe(t_token **flow);
 char    **make_cmd_pipe(int pipe_num);
-t_token   *get_till_redi(t_token **flow);
+t_token *get_till_redi(t_token **flow);
 t_token *get_till_redi_1(t_token **flow);
+int     open_fd(t_token *block_token);
 
 // int	    check_single_builtin();
 // char    **make_tok2D(void);

@@ -134,56 +134,55 @@ int open_fd(t_token *block_token)
 	// err_msg = ft_strjoin("minishell: ", path);
 	// 문제는 filename에 대한 확신이 없음
 	// filename이 옆에 꺼라고 > 생각하니까 next의 data라고 정의함.
-	while (block)
+	if (!ft_strcmp(block->data, "<") || !ft_strcmp(block->data, "<<"))
 	{
-		if (!ft_strcmp(block->data, "<") || !ft_strcmp(block->data, "<<"))
+		path = get_next_path(block->next);
+		if (path == NULL)
+			return (-1);
+		// 입력 리다이렉션(파일에서 입력)일 경우
+		// printf("test : %s %s\n", block->data, path);
+		fd = open(path, O_RDONLY, 0644);
+		if (fd == -1)
+			return (-1);
+			// return (perror(err_msg), free(err_msg), -1);
+		// 입력 리다이렉션(Here Document)일 경우
+		if (!ft_strcmp(block->data, "<<"))
 		{
-			path = get_next_path(block->next);
-			if (path == NULL)
-				return (-1);
-			// 입력 리다이렉션(파일에서 입력)일 경우
-			// printf("test : %s %s\n", block->data, path);
-			fd = open(path, O_RDONLY, 0644);
-			if (fd == -1)
-				return (-1);
-				// return (perror(err_msg), free(err_msg), -1);
-			// 입력 리다이렉션(Here Document)일 경우
-			if (!ft_strcmp(block->data, "<<"))
-			{
-				printf("<< is running\n");
-				// filepath이것만 check하기
-				get_heredoc_input(block->data, block->next->data);
-				unlink(block->next->data);
-			}
-			else
-				printf("< is running\n");
-			(ft_dup2(fd, STDIN_FILENO), close(fd));
-			return (fd);
+			printf("<< is running\n");
+			// filepath이것만 check하기
+			get_heredoc_input(block->data, block->next->data);
+			unlink(block->next->data);
 		}
-		
-		else if (!ft_strcmp(block->data, ">") || !ft_strcmp(block->data, ">>"))
-		{
-			path = get_next_path(block->next);
-			if (path == NULL)
-				return (-1);
-			// 출력 리다이렉션일 경우 (덮어 쓰기)
-			if (!ft_strcmp(block->data, ">>") )
-				fd = open(block->next->data, O_WRONLY | O_CREAT | O_APPEND, 0644);
+		else
+			printf("< is running\n");
+		(ft_dup2(fd, STDIN_FILENO), close(fd));
+		return (fd);
+	}
+	
+	else if (!ft_strcmp(block->data, ">") || !ft_strcmp(block->data, ">>"))
+	{
+		path = get_next_path(block->next);
+		if (path == NULL)
+			return (-1);
+		// 출력 리다이렉션일 경우 (덮어 쓰기)
+		if (!ft_strcmp(block->data, ">>") )
+			fd = open(block->next->data, O_WRONLY | O_CREAT | O_APPEND, 0644);
 
-			// 출력 리다이렉션(새 파일 생성)일 경우
-			else if (!ft_strcmp(block->data, ">") || ft_strlen(block->data) == 1)
-			{
-				printf("hello1\n");	
-				fd = open(block->next->data, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-				printf("hello2\n");	
-			}
-			if (fd == -1)
-				return (-1);
-				// return (perror(err_msg), free(err_msg), -1);
-			(ft_dup2(fd, STDOUT_FILENO), close(fd));
-			return (fd);
+		// 출력 리다이렉션(새 파일 생성)일 경우
+		else if (!ft_strcmp(block->data, ">") || ft_strlen(block->data) == 1)
+		{
+			printf("hello1\n");	
+			fd = open(block->next->data, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+			printf("hello2\n");	
 		}
-		block = block->next;
+		if (fd == -1)
+			return (-1);
+			// return (perror(err_msg), free(err_msg), -1);
+		printf("%s %d\n", block->next->data, fd);
+		ft_dup2(fd, STDOUT_FILENO);
+		printf("!!!!\n");
+		close(fd);
+		return (fd);
 	}
 	// free(err_msg);
 	return (fd);
@@ -225,20 +224,21 @@ void ft_exe(t_token *block)
 	t_token *in_pipe;
 
 	in_pipe = get_till_redi_1(&block);
-	remove_spaces(in_pipe);
+	// printf("block : %s\n", block->data);
 	while (in_pipe)
-	{	
-		while (in_pipe)
-		{
-			
-			if (is_builtin(in_pipe->data))
-				handler_builtins(in_pipe->data, in_pipe);
-			else
-				ft_execve(in_pipe);
-			in_pipe = in_pipe->next;
-		}
+	{
+		printf("%s\n", in_pipe->data);
+		// if (is_builtin(in_pipe->data))
+		// 	handler_builtins(in_pipe->data, in_pipe);
+		// else
+		// 	ft_execve(in_pipe);
+		in_pipe = in_pipe->next;
 		in_pipe = get_till_redi_1(&block);
 	}
+
+	// ft_dup2(fd, STDIN_FILENO);
+	// close(fd);
+	// remove_spaces(in_pipe);
 }
 
 void executor()
@@ -261,9 +261,10 @@ void executor()
 		pipe_num--;
 	}
 	pipe_num = pipe_len() + 1;
-	
-	
 	block_token = t_cmd_pipe(&flow);
+	ft_exe(block_token);
+
+	
 	// while (block_token)
 	// {
 	// 	printf("%s\n", block_token->data);
@@ -273,7 +274,6 @@ void executor()
 	// 	|| ft_strcmp(block_token->data, "export") || ft_strcmp(block_token->data, "unset")
 	// 	|| ft_strcmp(block_token->data, "cd")))
 	// 	handler_builtins(block_token->data, block_token);
-	ft_exe(block_token);
 
 
 

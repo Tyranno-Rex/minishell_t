@@ -25,7 +25,6 @@ char **make_cmd_pipe(int pipe_num)
         tmp += strlen(ret[cnt]) + 1;
         ret_2 = ft_split(tmp, '|');
     }
-
     ret[cnt] = ret_2[0];
 
     return ret;
@@ -58,7 +57,9 @@ t_token *get_till_redi_1(t_token **flow)
 
         flow_cp = flow_cp->next;
     }
-
+    // printf("flow redic: %s, %d\n", flow_cp->data, flow_cp->type);
+    remove_spaces(flow_cp);
+    open_fd(flow_cp);
     if (flow_cp)
         *flow = flow_cp->next;
     else
