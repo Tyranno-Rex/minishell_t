@@ -68,8 +68,6 @@ t_token *t_cmd_pipe(t_token **flow)
     return ret_token;
 }
 
-
-
 int		pipe_len()
 {
 	t_glob tmp;
@@ -87,31 +85,3 @@ int		pipe_len()
 	}
 	return (pipe_len);
 }
-
-
-
-// t_token *t_cmd_pipe(t_token **flow)
-// {
-//     t_token *ret_token = NULL;
-//     t_token *flow_cp = *flow;
-//     int token_len = 0;
-
-//     while (flow_cp)
-//     {
-//         if (flow_cp->type == PIPE)
-//             break;
-//         token_len++;
-//         flow_cp = flow_cp->next;
-//     }
-//     ret_token = (t_token *)calloc(token_len + 1, sizeof(t_token));
-
-//     for (int i = 0; i < token_len; i++)
-//     {
-//         ret_token[i].data = ft_strdup((*flow)->data);
-//         ret_token[i].type = (*flow)->type;
-//         (*flow) = (*flow)->next;
-//     }
-// 	if (*flow)
-//         *flow = (*flow)->next;
-//     return ret_token;
-// }

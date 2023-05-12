@@ -86,7 +86,7 @@ t_bool	merge_n_split_nodes(t_token **tok)
 
 	new = NULL;
 	cur = *tok;
-	merge_nodes(*tok);
+	// merge_nodes(*tok);
 	// while (cur)
 	// {
 	// 	if (!split_node(&new, cur))

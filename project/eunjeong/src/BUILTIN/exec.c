@@ -1,30 +1,34 @@
 #include "../../include/minishell.h"
-
-char    **make_tok2D(void)
+char    **make_tok2D(t_token *block)
 {
-    t_glob  tmp;
+    t_token *tmp;
     int     cnt;
     char    **av_argv;
 
-    tmp = g_glob;
+    tmp = block;
     cnt = 0;
-    while (tmp.tok)
+    while (tmp)
     {
-        tmp.tok = tmp.tok->next;
-        cnt++;
+        if (tmp->type == SPACES)
+            cnt += 0;
+        else
+            cnt += 1;
+        tmp = tmp->next;
     }
-    
     av_argv = ft_calloc(cnt + 1, sizeof(char *));
-    
-    tmp.tok = g_glob.tok;
-    if (!tmp.tok)
+    tmp = block;
+    if (!tmp)
         return (NULL);
     cnt = -1;
-    while (tmp.tok)
+    while (tmp)
     {
-        av_argv[++cnt] = ft_strdup(tmp.tok->data);
-        tmp.tok = tmp.tok->next;
+        if (tmp->type == SPACES)
+            cnt += 0;
+        else
+            av_argv[++cnt] = ft_strdup(tmp->data);
+        tmp = tmp->next;
     }
+    cnt = -1;
     return (av_argv);
 }
 
@@ -35,7 +39,7 @@ void printf_2d(char **s)
         printf("%s\n", s[i]);
 }
 
-void    ft_execve(void)
+void    ft_execve(t_token *block)
 {
     char    *command;
     char    **command_all;
@@ -45,8 +49,8 @@ void    ft_execve(void)
     int     path_n = 0;
 
 	env_2D();
-    command = g_glob.tok->data;
-    command_all = make_tok2D();
+    command = block->data;
+    command_all = make_tok2D(block);
     pipe(fd);
     pid = fork();
     path = ft_strdup(g_glob.path[path_n]);
@@ -58,10 +62,7 @@ void    ft_execve(void)
         while (path)
         {
             path = do_join(path, "/");
-            path = do_join(path, command_all[path_n]);
-            // path = do_join(path, command);
-            // printf_2d(command_all);
-            printf("%s\n", path);
+            path = do_join(path, command);
             if (!access(path, F_OK))
                 execve(path, command_all, g_glob.env_ori);
             path = ft_strdup(g_glob.path[path_n]);

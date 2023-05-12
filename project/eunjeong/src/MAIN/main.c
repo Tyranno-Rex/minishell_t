@@ -107,54 +107,78 @@ int	get_heredoc_input(char *filename, char *limiter)
 	return (wexitstatus(wstatus));
 }
 
+char *get_next_path(t_token *block)
+{
+	t_token *tmp;
+	char 	*str;
+
+	tmp = block;
+	while (tmp)
+	{
+		if (tmp->type != SPACES)
+			break;
+		tmp = tmp->next;
+	}
+	str = ft_strdup(tmp->data);
+	return (str);
+}
+
 int open_fd(t_token *block_token)
 {
-	int		fd = 0;
-	char	*err_msg;
 	t_token *block;
+	int		fd = 0;
+	char	*path;
+	// char	*err_msg;
 
-	
 	block = block_token;
-	err_msg = ft_strjoin("minishell: ", block->next->data);
+	// err_msg = ft_strjoin("minishell: ", path);
 	// 문제는 filename에 대한 확신이 없음
 	// filename이 옆에 꺼라고 > 생각하니까 next의 data라고 정의함.
-	if (!ft_strcmp(block->data, "<") || !ft_strcmp(block->data, "<<"))
+	while (block)
 	{
-		// 입력 리다이렉션(파일에서 입력)일 경우
-		fd = open(block->next->data, O_RDONLY, 0644);
-		if (fd == -1)
-			return (perror(err_msg), free(err_msg), -1);
-		// 입력 리다이렉션(Here Document)일 경우
-		if (!ft_strcmp(block->data, "<<"))
+		if (!ft_strcmp(block->data, "<") || !ft_strcmp(block->data, "<<"))
 		{
-			// filepath이것만 check하기
-			get_heredoc_input(block->data, block->next->data);
-			unlink(block->next->data);
+			path = get_next_path(block->next);
+			if (path == NULL)
+				return (-1);
+			// 입력 리다이렉션(파일에서 입력)일 경우
+			// printf("test : %s %s\n", block->data, path);
+			fd = open(path, O_RDONLY, 0644);
+			if (fd == -1)
+				return (-1);
+				// return (perror(err_msg), free(err_msg), -1);
+			// 입력 리다이렉션(Here Document)일 경우
+			if (!ft_strcmp(block->data, "<<"))
+			{
+				printf("<< is running\n");
+				// filepath이것만 check하기
+				get_heredoc_input(block->data, block->next->data);
+				unlink(block->next->data);
+			}
+			else
+				printf("< is running\n");
+			(ft_dup2(fd, STDIN_FILENO), close(fd));
 		}
-		(ft_dup2(fd, STDIN_FILENO), close(fd));
+		
+		else if (!ft_strcmp(block->data, ">") || !ft_strcmp(block->data, ">>"))
+		{
+			path = get_next_path(block->next);
+			if (path == NULL)
+				return (-1);
+			// 출력 리다이렉션일 경우 (덮어 쓰기)
+			if (!ft_strcmp(block->data, ">>") )
+				fd = open(block->next->data, O_WRONLY | O_CREAT | O_APPEND, 0644);
+			// 출력 리다이렉션(새 파일 생성)일 경우
+			else if (!ft_strcmp(block->data, ">") || ft_strlen(block->data) == 1)
+				fd = open(block->next->data, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+			if (fd == -1)
+				return (-1);
+				// return (perror(err_msg), free(err_msg), -1);
+			(ft_dup2(fd, STDOUT_FILENO), close(fd));
+		}
+		block = block->next;
 	}
-	// 다음 파일
-
-
-
-	else if (!ft_strcmp(block->data, ">") || !ft_strcmp(block->data, ">>"))
-	{
-		// 출력 리다이렉션일 경우 (덮어 쓰기)
-		if (!ft_strcmp(block->data, ">>") )
-			fd = open(block->next->data, O_WRONLY | O_CREAT | O_APPEND, 0644);
-		// 출력 리다이렉션(새 파일 생성)일 경우
-		else if (!ft_strcmp(block->data, ">") || ft_strlen(block->data) == 1)
-			fd = open(block->next->data, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-		else if (!ft_strcmp(block->data, "|") || ft_strlen(block->data) == 1)
-			fd = open(block->next->data, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-		if (fd == -1)
-			return (perror(err_msg), free(err_msg), -1);
-		(ft_dup2(fd, STDOUT_FILENO), close(fd));
-	}
-	// 최종 파일에 적을 지 확인
-	// if ()
-
-	free(err_msg);
+	// free(err_msg);
 	return (fd);
 }
 
@@ -181,62 +205,81 @@ void close_pipe_app(int *pip, int i, int pipe_num)
 	}
 }
 
+void close_pipe(int *pip, int pipe_num)
+{
+	close(pip[pipe_num]);
+	close(pip[pipe_num + 1]);
+}
+
+void ft_exe(t_token *block)
+{
+	if (is_builtin(block->data) && (ft_strcmp(block->data, "pwd")
+		|| ft_strcmp(block->data, "echo")))
+		handler_builtins(block->data, block);
+	else
+		ft_execve(block);
+	
+}
 
 void executor()
 {
-	int			pipe_num;
-	char 		**cmd;
 	t_token 	*flow = g_glob.tok;
 	t_token		*block_token;
+	int			pipe_num;
 	int			*pip;
-	int			i = 0;
-	int 		status;
-	pid_t		pid;
 	int			fd;
+	int			i = 0;
+	// pid_t		pid;
 
 	pipe_num = pipe_len();
-	cmd = (char **)malloc(sizeof(char *) * pipe_num + 1);
 	pip = ft_calloc(4, pipe_num);
 	while (pipe_num)
 	{
-		// 이거 문제 있음
 		pipe(pip + (pipe_num - 1) * 2);
-		// pipe(pip);
 		pipe_num--;
 	}
-
 	pipe_num = pipe_len() + 1;
-
-	// 여기 while문
 	block_token = t_cmd_pipe(&flow);
 	if (is_builtin(block_token->data) && (ft_strcmp(block_token->data, "exit") 
 		|| ft_strcmp(block_token->data, "export") || ft_strcmp(block_token->data, "unset")
 		|| ft_strcmp(block_token->data, "cd")))
 		handler_builtins(block_token->data, block_token);
 	
-	pid = ft_fork();
-	if (!pid)
-	{
-		//            파이프, 순서, 총 크기
-		close_pipe_app(pip, i, pipe_num);
+	close_pipe_app(pip, i, pipe_num);
+	fd = open_fd(block_token);
+	ft_exe(block_token);
+
+	// if (fd < 0)
+	// 	g_glob.exit_stat = 1;
+	// printf("%d\n", fd);
+	// exit(EXIT_SUCCESS);
+
+	// close_pipe(pip, pipe_num);
+	// close_fd();
+
+
+	// pid = ft_fork();
+	// if (!pid)
+	// {
+	// 	//            파이프, 순서, 총 크기
+	//	// close_pipe_app(pip, i, pipe_num);
+	// 	// open_fd(); << fd , pipe 0, 1 << dup2();
+	//	// ft_exe(block_token);
+	// 	// close_pipe();
+	// 	// close_fd();
+	// 	exit(0);
 		
-		// open_fd(); << fd , pipe 0, 1 << dup2();
-		fd = open_fd(block_token);
-		
-		// exe();
-		// close_pipe();
-		// close_fd();
-		exit(0);
 	
-	}
-	waitpid(pid, &status, 0);
+	// }
+	// waitpid(pid, &status, 0);
 	// 여기까지 while문
 
+	// while (pipe_num--)
+	// {
 
-	while (pipe_num--)
-	{	
+	// }
 
-	}
+
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////

@@ -1,0 +1,9 @@
+total 192
+drwxr-xr-x   8 eunjeong  2022_seoul    256 May 12 12:18 .
+drwxr-xr-x   4 eunjeong  2022_seoul    128 May 11 22:07 ..
+-rw-r--r--   1 eunjeong  2022_seoul      0 May 12 12:18 a
+-rw-r--r--   1 eunjeong  2022_seoul    589 May 11 22:07 error.txt
+drwxr-xr-x  11 eunjeong  2022_seoul    352 May 11 22:07 include
+-rw-r--r--   1 eunjeong  2022_seoul   2766 May 12 05:09 makefile
+-rwxr-xr-x   1 eunjeong  2022_seoul  89440 May 12 12:15 minishell
+drwxr-xr-x  10 eunjeong  2022_seoul    320 May 11 22:07 src
