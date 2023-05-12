@@ -50,21 +50,33 @@ void    ft_execve(t_token *block)
 
 	env_2D();
     command = block->data;
-    command_all = make_tok2D(block);
+    // command_all = make_tok2D(block);
+    command_all = malloc(sizeof(char*) * 2);
+    command_all[0] = "ls";
+    command_all[1] = NULL;
+    path = ft_strdup(g_glob.path[path_n]);
     pipe(fd);
     pid = fork();
-    path = ft_strdup(g_glob.path[path_n]);
     if (!pid)
     {
-        close (fd[0]);
-        dup2(fd[1], STDERR_FILENO);
-        close(fd[1]);
+        int open_fd = open("./a", O_RDWR | O_CREAT, 0644);
+        dup2(open_fd, STDOUT_FILENO);
+        close(open_fd);
+        // close(fd[0]);
+        // dup2(fd[1], STDOUT_FILENO);
+        // close(fd[1]);
+        // close(fd[1]);
+
         while (path)
         {
             path = do_join(path, "/");
             path = do_join(path, command);
             if (!access(path, F_OK))
+            {
+                printf("hello3\n");
                 execve(path, command_all, g_glob.env_ori);
+                printf("hello4n");
+            }
             path = ft_strdup(g_glob.path[path_n]);
             path_n++;
         }
@@ -73,6 +85,6 @@ void    ft_execve(t_token *block)
     // free_matrix(command_all); // 2개 이상의 문장이 들어가면 더블프리현상이 발생함.
     free(path);
     close(fd[1]);
-    waitpid(pid, NULL, 0);
     close(fd[0]);
+    waitpid(pid, NULL, 0);
 }

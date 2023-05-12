@@ -35,10 +35,10 @@
 // 	origin_io[WRITE_END] = ft_dup(STDOUT_FILENO);
 // }
 
-// // c0 p0 c1 p1 c2 p2 ... ck pk ck+1 pk+1 ... pn cn+1
-// // p0 : 0, 1
-// // p1 : 2, 3
-// // pk : 2k, 2k + 1
+// c0 p0 c1 p1 c2 p2 ... ck pk ck+1 pk+1 ... pn cn+1
+// p0 : 0, 1
+// p1 : 2, 3
+// pk : 2k, 2k + 1
 
 int	ft_unlink(const char *path)
 {
@@ -158,6 +158,7 @@ int open_fd(t_token *block_token)
 			else
 				printf("< is running\n");
 			(ft_dup2(fd, STDIN_FILENO), close(fd));
+			return (fd);
 		}
 		
 		else if (!ft_strcmp(block->data, ">") || !ft_strcmp(block->data, ">>"))
@@ -168,13 +169,19 @@ int open_fd(t_token *block_token)
 			// 출력 리다이렉션일 경우 (덮어 쓰기)
 			if (!ft_strcmp(block->data, ">>") )
 				fd = open(block->next->data, O_WRONLY | O_CREAT | O_APPEND, 0644);
+
 			// 출력 리다이렉션(새 파일 생성)일 경우
 			else if (!ft_strcmp(block->data, ">") || ft_strlen(block->data) == 1)
+			{
+				printf("hello1\n");	
 				fd = open(block->next->data, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+				printf("hello2\n");	
+			}
 			if (fd == -1)
 				return (-1);
 				// return (perror(err_msg), free(err_msg), -1);
 			(ft_dup2(fd, STDOUT_FILENO), close(fd));
+			return (fd);
 		}
 		block = block->next;
 	}
@@ -225,10 +232,11 @@ void executor()
 {
 	t_token 	*flow = g_glob.tok;
 	t_token		*block_token;
+	t_token		*redir_token;
 	int			pipe_num;
 	int			*pip;
-	int			fd;
-	int			i = 0;
+	// int			i = 0;
+	// int			fd;
 	// pid_t		pid;
 
 	pipe_num = pipe_len();
@@ -239,15 +247,29 @@ void executor()
 		pipe_num--;
 	}
 	pipe_num = pipe_len() + 1;
+	
 	block_token = t_cmd_pipe(&flow);
+
 	if (is_builtin(block_token->data) && (ft_strcmp(block_token->data, "exit") 
 		|| ft_strcmp(block_token->data, "export") || ft_strcmp(block_token->data, "unset")
 		|| ft_strcmp(block_token->data, "cd")))
 		handler_builtins(block_token->data, block_token);
 	
-	close_pipe_app(pip, i, pipe_num);
-	fd = open_fd(block_token);
-	ft_exe(block_token);
+	// close_pipe_app(pip, i, pipe_num);
+	// fd = open_fd(block_token);
+
+	redir_token = get_till_redi(&block_token);
+	while (redir_token)
+	{
+		printf("redir : %s\n", redir_token->data);
+		redir_token = redir_token->next;
+	}
+	
+	// ft_exe(block_token);
+	// ft_exe(block_token, fd);
+	// ft_close_fd(block_token);
+
+
 
 	// if (fd < 0)
 	// 	g_glob.exit_stat = 1;

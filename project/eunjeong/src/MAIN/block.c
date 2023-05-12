@@ -31,8 +31,6 @@ char **make_cmd_pipe(int pipe_num)
     return ret;
 }
 
-
-
 t_token *t_cmd_pipe(t_token **flow)
 {
     t_token *ret_token = NULL;
