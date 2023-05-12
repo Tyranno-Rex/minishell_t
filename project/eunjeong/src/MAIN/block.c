@@ -31,6 +31,42 @@ char **make_cmd_pipe(int pipe_num)
     return ret;
 }
 
+t_token *get_till_redi_1(t_token **flow)
+{
+    t_token *ret_token = NULL;
+    t_token *ret_current = NULL;
+    t_token *flow_cp = *flow;
+
+    while (flow_cp && (flow_cp->type != RREDI && flow_cp->type != RRREDI
+        && flow_cp->type != LREDI && flow_cp->type != HEREDOC))
+    {
+        t_token *new_token = (t_token *)malloc(sizeof(t_token));
+        new_token->data = ft_strdup(flow_cp->data);
+        new_token->type = flow_cp->type;
+        new_token->next = NULL;
+
+        if (ret_token == NULL)
+        {
+            ret_token = new_token;
+            ret_current = new_token;
+        }
+        else
+        {
+            ret_current->next = new_token;
+            ret_current = ret_current->next;
+        }
+
+        flow_cp = flow_cp->next;
+    }
+
+    if (flow_cp)
+        *flow = flow_cp->next;
+    else
+        *flow = NULL;
+
+    return ret_token;
+}
+
 t_token *t_cmd_pipe(t_token **flow)
 {
     t_token *ret_token = NULL;

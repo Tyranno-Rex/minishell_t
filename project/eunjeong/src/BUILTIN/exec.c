@@ -50,10 +50,10 @@ void    ft_execve(t_token *block)
 
 	env_2D();
     command = block->data;
-    // command_all = make_tok2D(block);
+    command_all = make_tok2D(block);
     command_all = malloc(sizeof(char*) * 2);
-    command_all[0] = "ls";
-    command_all[1] = NULL;
+    // command_all[0] = "ls";
+    // command_all[1] = NULL;
     path = ft_strdup(g_glob.path[path_n]);
     pipe(fd);
     pid = fork();

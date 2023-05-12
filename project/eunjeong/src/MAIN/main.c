@@ -220,19 +220,27 @@ void close_pipe(int *pip, int pipe_num)
 
 void ft_exe(t_token *block)
 {
-	if (is_builtin(block->data) && (ft_strcmp(block->data, "pwd")
-		|| ft_strcmp(block->data, "echo")))
-		handler_builtins(block->data, block);
-	else
-		ft_execve(block);
+	t_token *in_pipe;
+
+	in_pipe = get_till_redi_1(&block);
+	while (in_pipe)
+	{	
+		if (is_builtin(in_pipe->data) && (ft_strcmp(block->data, "pwd")
+			|| ft_strcmp(block->data, "echo")))
+			handler_builtins(block->data, block);
+		else
+			ft_execve(block);
 	
+		in_pipe = get_till_redi_1(&block);
+	}
 }
 
 void executor()
 {
 	t_token 	*flow = g_glob.tok;
 	t_token		*block_token;
-	t_token		*redir_token;
+	// t_token		*block_redi;
+	// t_token		*redir_token;
 	int			pipe_num;
 	int			*pip;
 	// int			i = 0;
@@ -248,24 +256,54 @@ void executor()
 	}
 	pipe_num = pipe_len() + 1;
 	
-	block_token = t_cmd_pipe(&flow);
-
-	if (is_builtin(block_token->data) && (ft_strcmp(block_token->data, "exit") 
-		|| ft_strcmp(block_token->data, "export") || ft_strcmp(block_token->data, "unset")
-		|| ft_strcmp(block_token->data, "cd")))
-		handler_builtins(block_token->data, block_token);
 	
+	block_token = t_cmd_pipe(&flow);
+	while (block_token)
+	{
+		printf("%s\n", block_token->data);
+		block_token = t_cmd_pipe(&flow);
+	}
+
+	// if (is_builtin(block_token->data) && (ft_strcmp(block_token->data, "exit") 
+	// 	|| ft_strcmp(block_token->data, "export") || ft_strcmp(block_token->data, "unset")
+	// 	|| ft_strcmp(block_token->data, "cd")))
+	// 	handler_builtins(block_token->data, block_token);
+
+	// ft_exe(block_token);
+	// block_redi = get_till_redi_1(block_token);
+	
+	// block_redi = get_till_redi_1(&flow);
+	// while (block_redi)
+	// {
+	// 	printf("%s\n", block_redi->data);
+	// 	block_redi = get_till_redi_1(&flow);
+	// }
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
 	// close_pipe_app(pip, i, pipe_num);
 	// fd = open_fd(block_token);
 
-	redir_token = get_till_redi(&block_token);
-	while (redir_token)
-	{
-		printf("redir : %s\n", redir_token->data);
-		redir_token = redir_token->next;
-	}
+	// redir_token = get_till_redi(&block_token);
+	// while (block_token)
+	// {
+	// 	printf("redir : %s\n", block_token->data);
+	// 	block_token = block_token->next;
+	// }
+
 	
-	// ft_exe(block_token);
+
 	// ft_exe(block_token, fd);
 	// ft_close_fd(block_token);
 
