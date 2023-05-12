@@ -150,41 +150,101 @@ t_bool	join_n_split(t_token *token)
 	return (TRUE);
 }
 
-void	remove_spaces(t_token *token)
+void   remove_spaces(t_token *token)
 {
-	char	*tmp;
-	t_token	*pre;
-	t_token	*next;
+   t_token   *pre;
+   t_token   *next;
 
-	pre = NULL;
-	while (token)
-	{
-		while (!pre && token->type == SPACES)	// 맨 앞에 나온 SPACES node 삭제
-		{
-			next = token;
-			token = token->next;
-			ft_lstdelone(next);
-			token = token->next;
-		}
-		next = token->next;
-		if (token->next && token->type != SPACES && token->next->type != SPACES)	// 노드가 공백으로 구분되지 않았을 때 두 data 합치고 노드 하나 삭제
-		{	// 아 이거 STR이랑 TMP? 로 구분해야 할 듯
-			tmp = ft_strjoin(token->data, next->data);
-			free(token->data);
-			token->data = tmp;
-			token->next = next->next;
-			ft_lstdelone(next);
-		}
-		else if (token->next && token->type != SPACES && token->next->type == SPACES)
-		{
-			next = token->next;
-			token->next = next->next;
-			ft_lstdelone(next);
-			pre = token;
-			token = token->next;
-		}
-	}
+   pre = NULL;
+   while (token)
+   {
+      while (!pre && token->type == SPACES)   // 맨 앞에 나온 SPACES node 삭제
+      {
+         next = token;
+         token = token->next;
+         ft_lstdelone(next);
+         token = token->next;
+      }
+      next = token->next;
+      if (token->next && token->type != SPACES && token->next->type == SPACES)
+      {
+         next = token->next;
+         token->next = next->next;
+         ft_lstdelone(next);
+         pre = token;
+         token = token->next;
+      }
+      else
+      {
+      pre = token;
+      token = token->next;
+      }
+   }
 }
+
+// void   remove_spaces(t_token *token)
+// {
+// //    char   *tmp;
+//    t_token   *pre;
+//    t_token   *next;
+
+//    pre = NULL;
+//    while (token)
+//    {
+//       while (!pre && token->type == SPACES)   // 맨 앞에 나온 SPACES node 삭제
+//       {
+//          next = token;
+//          token = token->next;
+//          ft_lstdelone(next);
+//          token = token->next;
+//       }
+//       next = token->next;
+//       if (token->next && token->type != SPACES && token->next->type == SPACES)
+//       {
+//          next = token->next;
+//          token->next = next->next;
+//          ft_lstdelone(next);
+//          pre = token;
+//          token = token->next;
+//       }
+//    }
+// }
+
+// void	remove_spaces(t_token *token)
+// {
+// 	char	*tmp;
+// 	t_token	*pre;
+// 	t_token	*next;
+
+// 	pre = NULL;
+// 	while (token)
+// 	{
+// 		while (!pre && token->type == SPACES)	// 맨 앞에 나온 SPACES node 삭제
+// 		{
+// 			next = token;
+// 			token = token->next;
+// 			ft_lstdelone(next);
+// 			token = token->next;
+// 		}
+// 		next = token->next;
+// 		if (token->next && token->type != SPACES && token->next->type != SPACES)	// 노드가 공백으로 구분되지 않았을 때 두 data 합치고 노드 하나 삭제
+// 		{	// 아 이거 STR이랑 TMP? 로 구분해야 할 듯
+// 			tmp = ft_strjoin(token->data, next->data);
+// 			free(token->data);
+// 			token->data = tmp;
+// 			token->next = next->next;
+// 			ft_lstdelone(next);
+// 		}
+// 		else if (token->next && token->type != SPACES && token->next->type == SPACES)
+// 		{
+// 			next = token->next;
+// 			token->next = next->next;
+// 			ft_lstdelone(next);
+// 			pre = token;
+// 			token = token->next;
+// 		}
+// 	}
+// }
 
 t_bool	deal_env(t_token **token)
 {

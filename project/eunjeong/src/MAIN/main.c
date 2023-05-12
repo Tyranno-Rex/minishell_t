@@ -218,19 +218,25 @@ void close_pipe(int *pip, int pipe_num)
 	close(pip[pipe_num + 1]);
 }
 
+
+// 파이프 단위로 나누어서 리다이렉션 단위로 나누기
 void ft_exe(t_token *block)
 {
 	t_token *in_pipe;
 
 	in_pipe = get_till_redi_1(&block);
+	remove_spaces(in_pipe);
 	while (in_pipe)
 	{	
-		if (is_builtin(in_pipe->data) && (ft_strcmp(block->data, "pwd")
-			|| ft_strcmp(block->data, "echo")))
-			handler_builtins(block->data, block);
-		else
-			ft_execve(block);
-	
+		while (in_pipe)
+		{
+			
+			if (is_builtin(in_pipe->data))
+				handler_builtins(in_pipe->data, in_pipe);
+			else
+				ft_execve(in_pipe);
+			in_pipe = in_pipe->next;
+		}
 		in_pipe = get_till_redi_1(&block);
 	}
 }
@@ -258,18 +264,33 @@ void executor()
 	
 	
 	block_token = t_cmd_pipe(&flow);
-	while (block_token)
-	{
-		printf("%s\n", block_token->data);
-		block_token = t_cmd_pipe(&flow);
-	}
-
+	// while (block_token)
+	// {
+	// 	printf("%s\n", block_token->data);
+	// 	block_token = t_cmd_pipe(&flow);
+	// }
 	// if (is_builtin(block_token->data) && (ft_strcmp(block_token->data, "exit") 
 	// 	|| ft_strcmp(block_token->data, "export") || ft_strcmp(block_token->data, "unset")
 	// 	|| ft_strcmp(block_token->data, "cd")))
 	// 	handler_builtins(block_token->data, block_token);
+	ft_exe(block_token);
 
-	// ft_exe(block_token);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	// block_redi = get_till_redi_1(block_token);
 	
 	// block_redi = get_till_redi_1(&flow);

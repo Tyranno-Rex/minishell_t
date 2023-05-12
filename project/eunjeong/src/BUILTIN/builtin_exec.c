@@ -44,35 +44,4 @@ void	ft_exec_env(void)
 	}
 }
 
-void	ft_exec_cd(void)
-{
-	ft_cd();
-}
-
-void	ft_exec_export(void)
-{
-	ft_export();
-}
-
-void	ft_exec_unset(void)
-{
-	ft_unset();
-}
-
-void	ft_exec_execve(void)
-{
-	int check_free_to_process = 0;
-	if (check_free_to_process != 1)
-		ft_execve();
-	else
-	{
-		// if (create_child_process() == 0)
-		// {
-		// 	ft_execve(data->builtin_vars, data->pipeline);
-		// 	free_children_main(data, NULL);
-		// 	exit(EXIT_SUCCESS);
-		// }
-		ft_execve();
-	}
-}
 

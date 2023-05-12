@@ -30,7 +30,7 @@ t_bool	parse_env(char ***env);
 ** deal_env.c
 */
 t_bool	deal_env(t_token **token);
-
+void	remove_spaces(t_token *token);
 /*
 ** env_utils.c
 */
