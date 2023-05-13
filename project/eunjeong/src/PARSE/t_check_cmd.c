@@ -6,18 +6,11 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 17:04:38 by minjinki          #+#    #+#             */
-/*   Updated: 2023/05/11 14:54:14 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/05/13 10:23:49 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
-t_bool	print_syntax_error(char *s)
-{
-	printf("minishell: syntax error near unexpected token '%s'\n", s);
-	g_glob.exit_stat = 258;
-	return (FALSE);
-}
 
 t_bool	check_valid4(t_token *cur)
 {

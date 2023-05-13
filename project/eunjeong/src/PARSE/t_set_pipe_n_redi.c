@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 14:56:11 by MJKim             #+#    #+#             */
-/*   Updated: 2023/05/08 19:10:42 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/05/13 10:21:14 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 ** check if type is pipe or redirection
 */
 void	check_type(t_token *cur)
-{	// 파이프, 리다이렉션 각각에 맞게 타입 지정
+{
 	int	len;
 
 	len = ft_strlen(cur->data);
@@ -41,15 +41,6 @@ void	check_type(t_token *cur)
 			cur->type = PIPE;
 }
 
-// 구문 에러 처리 -> 해야함
-// t_bool	deal_lredis(char *redi)
-// {
-// 	(void)redi;
-// 	// check_error if문 내에 있는 내용 여기로 빼기
-// 	// length에 따라서 60할 지 6060할 지 조건으로 넣기
-// 	return (TRUE);
-// }
-
 t_bool	split_pipe_n_redi(t_token *cur, int type, char *redi)
 {
 	char	*data;
@@ -70,10 +61,6 @@ t_bool	split_pipe_n_redi(t_token *cur, int type, char *redi)
 	return (TRUE);
 }
 
-/*
-** check if type ERROR is |< or |<< -> should be splited as | < and | <<
-*/
-// |< |<<는 동작해야하므로 띄워 놓는다: 진행 중
 t_bool	check_error(t_token *cur)
 {
 	if (ft_strcmp(cur->data, "|<") == 0)
@@ -95,7 +82,7 @@ t_bool	set_pipe_n_redi(void)
 
 	cur = g_glob.tok;
 	while (cur)
-	{	// TMP면 타입 지정, ERROR인 경우 |<, |<<는 정상 노드로 처리
+	{
 		if (cur->type == TMP)
 			check_type(cur);
 		else if (cur->type == ERROR)
@@ -105,7 +92,3 @@ t_bool	set_pipe_n_redi(void)
 	}
 	return (TRUE);
 }
-// 파이프나 리다이 반복일 때 제대로 안 돌아가는 듯
-// |<a 이런 경우 제대로 안돌아감
-// |< 넣었을 때 메모리 이중 해제 발생.. -> 해결
-// -> cur->data tmp에 넣고 메모리 해제해서 그런가

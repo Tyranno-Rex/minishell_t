@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 12:22:34 by minjinki          #+#    #+#             */
-/*   Updated: 2023/03/20 17:03:26 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/05/13 10:23:55 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 */
 void	exit_with_code(char *s, int errno);
 t_bool	print_error(char *s);
+t_bool	print_syntax_error(char *s);
 
 /*
 ** free.c

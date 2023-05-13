@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 13:15:48 by minjinki          #+#    #+#             */
-/*   Updated: 2023/05/11 17:24:12 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/05/13 10:23:08 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ t_bool	split_node(t_token **new_tok, t_token *cur)
 
 void	trim_spaces(t_token **tok)
 {
-	t_token *cur;
+	t_token	*cur;
 	t_token	*pre;
 
 	pre = NULL;
@@ -86,16 +86,6 @@ t_bool	merge_n_split_nodes(t_token **tok)
 
 	new = NULL;
 	cur = *tok;
-	// merge_nodes(*tok);
-	// while (cur)
-	// {
-	// 	if (!split_node(&new, cur))
-	// 		return (FALSE);
-	// 	cur = cur->next;
-	// }
-	// ft_lstclear(&(g_glob.tok));
-	// g_glob.tok = new;
 	trim_spaces(&(g_glob.tok));
-	// 여기서 흐름 저장용 변수에다가 맨 첫 번째 노드 넣어두기
 	return (TRUE);
 }
