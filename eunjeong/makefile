@@ -69,7 +69,6 @@ BUILTIN_SRC	=   builtin\
 				exec\
 				unset
 
-# 이거 왜 안되지..?
 PIPE_DIR	=	src/PIPE/
 PIPE_SRC	=	make_env2D\
 				redir_fd\

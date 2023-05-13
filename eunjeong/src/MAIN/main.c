@@ -11,9 +11,6 @@
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-# define READ_END	0
-# define WRITE_END	1
-
 
 // int	ft_dup(int fildes)
 // {
@@ -39,6 +36,29 @@
 // p0 : 0, 1
 // p1 : 2, 3
 // pk : 2k, 2k + 1
+
+void close_pipe_app(int *pip, int i, int pipe_num)
+{
+	int	j;
+	int	save[2];
+
+	save[0] = -1;
+	save[1] = -1;
+	j = 0;
+	if (i)
+		save[0] = i - 1;
+	if (i != pipe_num + 1)
+		save[1] = i;
+	while (j < pipe_num)
+	{
+		if (j != save[0] && j != save[1])
+		{
+			close(pip[j * 2]);
+			close(pip[j * 2 + 1]); 
+		}
+		j++;
+	}
+}
 
 int	ft_unlink(const char *path)
 {
@@ -66,6 +86,19 @@ pid_t	ft_fork(void)
 	return (ret);
 }
 
+int	ft_pipe(int fildes[2])
+{
+	int	ret;
+
+	ret = pipe(fildes);
+	if (ret == -1)
+	{
+		perror("pipe error occurred");
+		exit(EXIT_FAILURE);
+	}
+	return (ret);
+}
+
 int	ft_dup2(int fildes, int fildes2)
 {
 	int	ret;
@@ -85,8 +118,8 @@ int	get_heredoc_input(char *filename, char *limiter)
 	int		wstatus;
 	pid_t	pid;
 	char	*input_line;
-
-	fd = open(filename, O_WRONLY);
+	
+	fd = open(filename, O_WRONLY | O_CREAT);
 	pid = fork();
 	reset_signal(pid, 1);
 	if (pid == 0)
@@ -103,7 +136,8 @@ int	get_heredoc_input(char *filename, char *limiter)
 		}
 		exit(EXIT_SUCCESS);
 	}
-	(waitpid(pid, &wstatus, 0), close(fd));
+	waitpid(pid, &wstatus, 0);
+	close(fd);
 	return (wexitstatus(wstatus));
 }
 
@@ -123,89 +157,52 @@ char *get_next_path(t_token *block)
 	return (str);
 }
 
-int open_fd(t_token *block_token)
+void	open_fd(t_token *block_token)
 {
 	t_token *block;
-	int		fd = 0;
 	char	*path;
-	// char	*err_msg;
 
 	block = block_token;
+
+	g_glob.oldfd[0] = dup(STDIN_FILENO);
+	g_glob.oldfd[1] = dup(STDOUT_FILENO);
+
 	if (!ft_strcmp(block->data, "<") || !ft_strcmp(block->data, "<<"))
 	{
 		path = get_next_path(block->next);
 		if (path == NULL)
-			return (-1);
-		// 입력 리다이렉션(파일에서 입력)일 경우
-		// printf("test : %s %s\n", block->data, path);
-		fd = open(path, O_RDONLY, 0644);
-		if (fd == -1)
-			return (-1);
-		// 입력 리다이렉션(Here Document)일 경우
+		{
+			g_glob.fd[WEND] = -1;
+			return ;
+		}	
+		g_glob.fd[WEND] = open(path, O_RDONLY, 0644);
+		if (g_glob.fd[WEND] == -1)
+			return ;
 		if (!ft_strcmp(block->data, "<<"))
 		{
-			printf("<< is running\n");
-			get_heredoc_input(block->data, block->next->data);
+			get_heredoc_input(block->next->data, block->next->data);
 			unlink(block->next->data);
 		}
-		else
-			printf("< is running\n");
-		ft_dup2(fd, STDIN_FILENO);
-		close(fd);
-		return (fd);
-	}
-	
+		ft_dup2(g_glob.fd[WEND], STDIN_FILENO);
+	}	
 	else if (!ft_strcmp(block->data, ">") || !ft_strcmp(block->data, ">>"))
 	{
+		// close(g_glob.fd[REND]);
 		path = get_next_path(block->next);
 		if (path == NULL)
-			return (-1);
-		// 출력 리다이렉션일 경우 (덮어 쓰기)
-		if (!ft_strcmp(block->data, ">>") )
-			fd = open(block->next->data, O_WRONLY | O_CREAT | O_APPEND, 0644);
-
-		// 출력 리다이렉션(새 파일 생성)일 경우
+		{
+			g_glob.fd[WEND] = -1;
+			return ;
+		}
+		if (!ft_strcmp(block->data, ">>"))
+			g_glob.fd[WEND] = open(block->next->data, O_WRONLY | O_CREAT | O_APPEND, 0644);
 		else if (!ft_strcmp(block->data, ">") || ft_strlen(block->data) == 1)
-		{
-			printf("hello1\n");	
-			fd = open(block->next->data, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-			printf("hello2\n");	
-		}
-		if (fd == -1)
-			return (-1);
-			// return (perror(err_msg), free(err_msg), -1);
-		printf("%s %d\n", block->next->data, fd);
-		ft_dup2(fd, STDOUT_FILENO);
-		printf("!!!!\n");
-		close(fd);
-		return (fd);
-	}
-	// free(err_msg);
-	return (fd);
-}
-
-void close_pipe_app(int *pip, int i, int pipe_num)
-{
-	int	j;
-	int	save[2];
-
-	save[0] = -1;
-	save[1] = -1;
-	j = 0;
-	if (i)
-		save[0] = i - 1;
-	if (i != pipe_num + 1)
-		save[1] = i;
-	while (j < pipe_num)
-	{
-		if (j != save[0] && j != save[1])
-		{
-			close(pip[j * 2]);
-			close(pip[j * 2 + 1]); 
-		}
-		j++;
+			g_glob.fd[WEND] = open(block->next->data, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		ft_dup2(g_glob.fd[WEND], STDOUT_FILENO);
+		close(g_glob.fd[WEND]);
 	}
 }
+
 
 void close_pipe(int *pip, int pipe_num)
 {
@@ -218,24 +215,50 @@ void ft_exe(t_token *block)
 {
 	(void)block;
 	t_token *in_pipe;
-	int		fd;
 
 	if (check_single_excute())
 		return ;
-	in_pipe = get_till_redi_1(&block, &fd);
+	
+	in_pipe = get_till_redi_1(&block);
+	while (in_pipe)
+	{
+		ft_execve(in_pipe);
+		
+		close(g_glob.fd[WEND]);
+		close(g_glob.fd[REND]);
+		dup2(g_glob.oldfd[0], STDIN_FILENO);
+		close(g_glob.oldfd[0]);
+		dup2(g_glob.oldfd[1], STDOUT_FILENO);
+		close(g_glob.oldfd[1]);
+
+		in_pipe = get_till_redi_1(&block);
+	}
+	
+	
+	// close(g_glob.fd[REND]);
+	
+	// printf("test 1: %d\n", g_glob.fd[WEND]);
+
 	// while (in_pipe)
 	// {
-	// 	printf("%s\n", in_pipe->data);
-	// 	if (is_builtin(in_pipe->data))
-	// 		handler_builtins(in_pipe->data, in_pipe);
-	// 	else
-	// 		ft_execve(in_pipe);
-	// 	close(fd);
-	// 	in_pipe = in_pipe->next;
-	// 	in_pipe = get_till_redi_1(&block, &fd);
+		// in_pipe_test = in_pipe;
+		// while (in_pipe_test)
+		// {
+		// 	printf("%s", in_pipe_test->data);
+		// 	in_pipe_test = in_pipe_test->next;
+		// }
+		
+		// printf("%s\n", in_pipe->data);
+
+		// if (is_builtin(in_pipe->data))
+		// 	handler_builtins(in_pipe->data, in_pipe);
+		// else	
+		// 	ft_execve(in_pipe);
+		// close(g_glob.fd[WEND]);
+		// in_pipe = in_pipe->next;
+		// in_pipe = get_till_redi_1(&block, &fd);
 	// }
 }
-
 
 void executor()
 {
@@ -257,35 +280,15 @@ void executor()
 		pipe_num--;
 	}
 	pipe_num = pipe_len() + 1;
+	
 	block_token = t_cmd_pipe(&flow);
 	ft_exe(block_token);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	// block_token = t_cmd_pipe(&flow);
+	// while (block_token)
+	// {
+	// 	ft_exe(block_token);
+	// }
 
 
 
@@ -389,17 +392,24 @@ void	minishell(void)
 	
 	while (TRUE)
 	{
+		int i = 0;
+		printf("redi check %d\n", i+= 1);
 		g_glob.cmd = readline(" minishell_$ ");
 		if (!(g_glob.cmd))
 			return ;
+		printf("redi check %d\n", i+= 1);
 		if (!parse(g_glob.cmd))
 		{
 			free_cmd(g_glob.cmd);
 			continue ;
 		}
+		printf("redi check %d\n", i+= 1);
 		env_2D();
+		printf("redi check %d\n", i+= 1);
 		executor();
+		printf("redi check %d\n", i+= 1);
 		free_cmd(g_glob.cmd);
+		printf("redi check %d\n", i+= 1);
 	}
 }
 

@@ -5,7 +5,7 @@ int check_excute_one()
 	t_glob tmp = g_glob;
 	int		i;
 
-	i = 0;
+	i = 2;
 	while (tmp.tok)
 	{
 		// printf("%s\n", tmp.tok->data);
@@ -15,14 +15,14 @@ int check_excute_one()
 			i = 1;
 		tmp.tok = tmp.tok->next;
 	}
-	return (2);
+	return (i);
 }
 
 int	check_single_excute()
 {
 	char	**cmd_argv;
 
-	cmd_argv = make_tok2D();
+	cmd_argv = make_tok2D(g_glob.tok);
 	if(check_excute_one() == 1)
 	{
 		handler_builtins(g_glob.tok->data, g_glob.tok);

@@ -37,17 +37,21 @@
 # include "pipe.h"
 
 t_glob	g_glob;
+#define PREV 0
+#define NOW  1
 
+#define WEND 0
+#define REND 1
 
 
 int		pipe_len();
 t_token *t_cmd_pipe(t_token **flow);
 char    **make_cmd_pipe(int pipe_num);
 t_token *get_till_redi(t_token **flow);
-int     open_fd(t_token *block_token);
+void	open_fd(t_token *block_token);
 int	    check_single_excute();
-t_token *get_till_redi_1(t_token **flow, int *fd);
-char    **make_tok2D(void);
+t_token *get_till_redi_1(t_token **flow);
+char    **make_tok2D(t_token *block);
 
 
 // int	    check_single_builtin();
