@@ -6,14 +6,14 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:40:46 by MJKim             #+#    #+#             */
-/*   Updated: 2023/05/04 18:08:51 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/05/13 10:28:59 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
 t_env	*env_search_key(char *key)
-{	// key에 해당하는 환경변수 찾기, 있으면 노드 반환, 없으면 NULL
+{
 	t_env	*cur;
 
 	cur = g_glob.env;
@@ -27,7 +27,7 @@ t_env	*env_search_key(char *key)
 }
 
 void	env_free_one(t_env *env)
-{	// 노드 하나 없애기 -> 쓰이는 곳 없어서 삭제할 듯
+{
 	if (env)
 	{
 		if (env->key)

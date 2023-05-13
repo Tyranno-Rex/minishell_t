@@ -6,7 +6,7 @@
 /*   By: minjinki <minjinki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/19 13:49:31 by minjinki          #+#    #+#             */
-/*   Updated: 2023/05/13 10:13:32 by minjinki         ###   ########.fr       */
+/*   Updated: 2023/05/13 10:28:13 by minjinki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,10 @@ t_bool	split_by_space(t_token **tmp, t_token *cur)
 {
 	int		start;
 	int		len;
-	int		n;
 	char	*s;
 
 	start = -1;
-	while (cur->data[++start] && start < ft_strlen(cur->data))
+	while (cur->data[++start] && start < (int)ft_strlen(cur->data))
 	{
 		while (cur->data[start] && ft_is_space(cur->data[start]))
 			start++;
