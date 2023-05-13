@@ -3,9 +3,6 @@
 int	is_builtin(char *cmd)
 {
 	int		count;
-	t_glob	tmp;
-
-	tmp = g_glob;
 	
 	if (!cmd)
 		return (0);

@@ -33,7 +33,8 @@ ENV_SRC		=	env_utils\
 MAIN_DIR	=	src/MAIN/
 MAIN_SRC	=	main\
 				block\
-				redirect_parse
+				redirect_parse\
+				one_execute
 				# single_builtin
 				# single_redirect
 

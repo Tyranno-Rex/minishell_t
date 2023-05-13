@@ -131,9 +131,6 @@ int open_fd(t_token *block_token)
 	// char	*err_msg;
 
 	block = block_token;
-	// err_msg = ft_strjoin("minishell: ", path);
-	// 문제는 filename에 대한 확신이 없음
-	// filename이 옆에 꺼라고 > 생각하니까 next의 data라고 정의함.
 	if (!ft_strcmp(block->data, "<") || !ft_strcmp(block->data, "<<"))
 	{
 		path = get_next_path(block->next);
@@ -144,18 +141,17 @@ int open_fd(t_token *block_token)
 		fd = open(path, O_RDONLY, 0644);
 		if (fd == -1)
 			return (-1);
-			// return (perror(err_msg), free(err_msg), -1);
 		// 입력 리다이렉션(Here Document)일 경우
 		if (!ft_strcmp(block->data, "<<"))
 		{
 			printf("<< is running\n");
-			// filepath이것만 check하기
 			get_heredoc_input(block->data, block->next->data);
 			unlink(block->next->data);
 		}
 		else
 			printf("< is running\n");
-		(ft_dup2(fd, STDIN_FILENO), close(fd));
+		ft_dup2(fd, STDIN_FILENO);
+		close(fd);
 		return (fd);
 	}
 	
@@ -217,29 +213,29 @@ void close_pipe(int *pip, int pipe_num)
 	close(pip[pipe_num + 1]);
 }
 
-
 // 파이프 단위로 나누어서 리다이렉션 단위로 나누기
 void ft_exe(t_token *block)
 {
+	(void)block;
 	t_token *in_pipe;
+	int		fd;
 
-	in_pipe = get_till_redi_1(&block);
-	// printf("block : %s\n", block->data);
-	while (in_pipe)
-	{
-		printf("%s\n", in_pipe->data);
-		// if (is_builtin(in_pipe->data))
-		// 	handler_builtins(in_pipe->data, in_pipe);
-		// else
-		// 	ft_execve(in_pipe);
-		in_pipe = in_pipe->next;
-		in_pipe = get_till_redi_1(&block);
-	}
-
-	// ft_dup2(fd, STDIN_FILENO);
-	// close(fd);
-	// remove_spaces(in_pipe);
+	if (check_single_excute())
+		return ;
+	in_pipe = get_till_redi_1(&block, &fd);
+	// while (in_pipe)
+	// {
+	// 	printf("%s\n", in_pipe->data);
+	// 	if (is_builtin(in_pipe->data))
+	// 		handler_builtins(in_pipe->data, in_pipe);
+	// 	else
+	// 		ft_execve(in_pipe);
+	// 	close(fd);
+	// 	in_pipe = in_pipe->next;
+	// 	in_pipe = get_till_redi_1(&block, &fd);
+	// }
 }
+
 
 void executor()
 {
@@ -264,6 +260,36 @@ void executor()
 	block_token = t_cmd_pipe(&flow);
 	ft_exe(block_token);
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	
 	// while (block_token)
 	// {
@@ -276,21 +302,6 @@ void executor()
 	// 	handler_builtins(block_token->data, block_token);
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	// block_redi = get_till_redi_1(block_token);
 	
 	// block_redi = get_till_redi_1(&flow);
@@ -300,18 +311,6 @@ void executor()
 	// 	block_redi = get_till_redi_1(&flow);
 	// }
 	
-
-
-
-
-
-
-
-
-
-
-
-
 
 	// close_pipe_app(pip, i, pipe_num);
 	// fd = open_fd(block_token);
@@ -327,7 +326,6 @@ void executor()
 
 	// ft_exe(block_token, fd);
 	// ft_close_fd(block_token);
-
 
 
 	// if (fd < 0)
